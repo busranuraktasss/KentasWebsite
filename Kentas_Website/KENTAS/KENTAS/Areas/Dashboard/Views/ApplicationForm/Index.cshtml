@@ -1,0 +1,338 @@
+﻿
+@{
+    ViewBag.Title = "Başvuru Formları";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+@section css{
+    <style type="text/css">
+        *{
+            vertical-align:middle !important;
+        }
+        #map_canvas {
+            height: 50vh;
+        }
+
+
+        @@media (max-width: 490px) {
+            .e_close {
+                display: none;
+            }
+        }
+
+        .dt_centered {
+            text-align: center;
+        }
+
+        input[type="search"] {
+            border: 1px solid #aaaaaac4;
+            border-radius: 4px;
+        }
+        .checkbox-wrapper-2 .ikxBAC {
+            appearance: none;
+            text-align: center;
+            background-color: #dfe1e4;
+            border-radius: 72px;
+            border-style: none;
+            flex-shrink: 0;
+            height: 20px;
+            margin: 0;
+            position: relative;
+            width: 30px;
+        }
+
+            .checkbox-wrapper-2 .ikxBAC::before {
+                bottom: -6px;
+                content: "";
+                left: -6px;
+                position: absolute;
+                right: -6px;
+                top: -6px;
+            }
+
+            .checkbox-wrapper-2 .ikxBAC,
+            .checkbox-wrapper-2 .ikxBAC::after {
+                transition: all 100ms ease-out;
+            }
+
+                .checkbox-wrapper-2 .ikxBAC::after {
+                    background-color: #fff;
+                    border-radius: 50%;
+                    content: "";
+                    height: 14px;
+                    left: 3px;
+                    position: absolute;
+                    top: 3px;
+                    width: 14px;
+                }
+
+        .checkbox-wrapper-2 input[type=checkbox] {
+            cursor: default;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:hover {
+            background-color: #c9cbcd;
+            transition-duration: 0s;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:checked {
+            background-color: #34AADC;
+        }
+
+            .checkbox-wrapper-2 .ikxBAC:checked::after {
+                background-color: #fff;
+                left: 13px;
+            }
+
+        .checkbox-wrapper-2 :focus:not(.focus-visible) {
+            outline: 0;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:checked:hover {
+            background-color: #56CAFB;
+        }
+
+    </style>
+}
+
+<div >
+    <table id="applicationForm_table" class="table table-bordered table-striped table-responsive-sm" style="width:100%; overflow-x:auto;">
+        <thead>
+            <tr>
+                <th class="dt_centered e_close" width="9%">T.C.</th>
+                <th class="dt_centered" width="13%">AD SOYAD</th>
+                <th class="dt_centered" width="7%">ARAÇ TİP</th>
+                <th class="dt_centered" width="7%">PLAKA</th>
+                <th class="dt_centered" width="7%">TEL</th>
+                <th class="dt_centered e_close" width="25%">ADRES</th>
+                <th class="dt_centered" width="16%">MEKANLAR</th>
+                <th class="dt_centered" width="9%" data-toggle="tooltip" data-placement="top" title="Başvuru Tarihi">B.Tarihi</th>
+                <th class="dt_centered" width="5%">Durum</th>
+                <th class="dt_centered" width="2%">#</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Hizmet İşlemleri</h4>
+            </div>
+            <div class="modal-body">
+                <form id="service-form">
+                    <input type="hidden" value="0" name="Id" id="Id" />
+                    <div class="form-group">
+                        <label for="Title">Başlık</label>
+                        <input type="text" class="form-control" id="Title" name="Title" placeholder="Hizmet adı" required />
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label for="Sabahsaat">Sabah Çalışma Saati</label>
+                            <input type="time" class="form-control" id="Sabahsaat" name="Sabahsaat" placeholder="Örnek: 08:30" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Aksamsaat">Akşam Çalışma Saati</label>
+                            <input type="time" class="form-control" id="Aksamsaat" name="Aksamsaat" placeholder="Örnek: 22:30" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Subtitile">Açıklama/Tanım</label>
+                        <textarea rows="3" class="form-control" id="Subtitile" name="Subtitile" placeholder="Hizmet açıklaması" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Adress">Adres</label>
+                        <textarea rows="3" class="form-control" id="Adress" name="Adress" placeholder="Adres" required></textarea>
+                    </div>
+
+                    <div class="form-inline mb-3">
+                        <div class="form-group">
+                            <label for="Lat">Kordinat</label>
+                            <input type="text" class="form-control" id="Lat" name="Lat" placeholder="41.00" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Lng">&nbsp;</label>
+                            <input type="text" class="form-control" id="Lng" name="Lng" placeholder="-41.00" required />
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;" id="map_canvas"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <button type="button" class="btn btn-primary" onclick="saveService()">Kaydet <i class="fa fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/rg-1.0.0/datatables.min.css" />
+
+@section scripts {
+    @*<script type="text/javascript" src="~/Content/OnlineIslem/js/jquery.dataTables.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/rg-1.0.0/datatables.min.js"></script>
+
+
+    <script type="text/javascript">
+        var l = 39.7667061;
+        var n = 30.5256311;
+        var applicationFormTable = null;
+        $(() => {
+            //$($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+
+            getForms();
+        })
+
+        var getForms = () => {
+            if (applicationFormTable == null)
+                applicationFormTable = $('#applicationForm_table').DataTable({
+                    language: {
+                        info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
+                        infoEmpty: "Gösterilecek hiç kayıt yok.",
+                        loadingRecords: "Kayıtlar yükleniyor.",
+                        lengthMenu: "Sayfada _MENU_ kayıt göster",
+                        zeroRecords: "Tablo boş",
+                        search: "Arama:",
+                        infoFiltered: "(toplam _MAX_ kayıttan filtrelenenler)",
+
+
+                        paginate: {
+                            first: "İlk",
+                            previous: "Önceki",
+                            next: "Sonraki",
+                            last: "Son"
+                        },
+                    },
+
+                        ajax: {
+                        url: '@Url.Action("getForms", "ApplicationForm")',
+                        type: "POST",
+                        datatype: "data.json"
+                    },
+                    order: [[8, "asc"] ],
+                    columns: [
+
+                        {
+                            "render": (data, type, row) => {
+                                return row.tcno;
+                            }, "name": "tcno"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.name + ' ' + row.surname;
+                            }, "name": "name", "name": "surname"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.aractip;
+                            }, "name": "aractip"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.plaka;
+                            }, "name": "plaka"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.phone;
+                            }, "name": "phone"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.Adress;
+                            }, "name": "Adress"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.ourservice;
+                            }, "name": "ourservice"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return row.createdDate;
+                            }, "name": "createdDate"
+                        },
+                        {
+                            "className":"dt_centered",
+                            "render": function (data, type, row) {
+                                let check = row.status == 1 ? 'checked' : '';
+                                return `<div class="checkbox-wrapper-2">
+                                            <input type="checkbox" class="sc-gJwTLC ikxBAC" id="checked_${row.status}" onclick="javascript:checkFormId(${row.Id});" ${check}>
+                                        </div>`;
+                            }, "name": "Id"
+                        },
+                        {
+                            "render": (data, type, row) => {
+                                return ` <a href="javascript:deleteForm(${row.Id});" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>`;
+                            }, "name": "Id"
+                        },
+
+                    ],
+                    initComplete: function (settings, json) {
+                        $('#locationTable_filter input').unbind();
+                        $('#locationTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                locationTable.search(this.value).draw();
+                            }
+                        });
+
+                        $('.dataTables_filter input').unbind().keyup(function (e) {
+
+                            var value = $(this).val();
+                            if (value.length > 3) {
+                                applicationFormTable.search(value).draw();
+                            } else {
+                                //optional, reset the search if the phrase
+                                //is less then 3 characters long
+                                applicationFormTable.search('').draw();
+                            }
+
+                        })
+                    }
+                })
+
+
+
+        }
+
+        var checkFormId = (sId) => {
+            $.post('@Url.Action("checkForm", "ApplicationForm")', { request: sId }, (d, s) => {
+                alert("durum değiştirildi");
+                location.reload();
+            })
+                
+
+        }
+
+
+        var deleteForm = (sId) => {
+            var r = confirm("Seçili Kayıt silinsinmi ?");
+            if (r == true) {
+                $.post('@Url.Action("deleteForm", "ApplicationForm")', { request : sId}, (d, s) => {
+
+                    if (s === "success") {
+                        if (d.status) {
+                            applicationFormTable.ajax.reload();
+
+                        }
+                        alert(d.msg);
+                    }
+
+                })
+
+            }
+        }
+
+    </script>
+}

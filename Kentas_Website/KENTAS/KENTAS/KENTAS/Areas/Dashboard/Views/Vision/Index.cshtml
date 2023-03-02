@@ -1,0 +1,32 @@
+﻿@model IEnumerable<KENTAS.Models.Vision>
+
+@{
+    ViewBag.Title = "Vizyonumuz";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            VİZYON AÇIKLAMA
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.visionDesc)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.visionId }, new { @class = "btn btn-sm btn-success" }) 
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,35 @@
+﻿@model KENTAS.Models.OrganizationChart
+
+@{
+    ViewBag.Title = "Güncelle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "OrganizationChart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+     
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.OrganizationChartId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OrganizationChartPhoto,"ORGANİZASYON ŞEMASI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="OrganizationChartPhoto" class="form-control" required placeholder="Dosya Seç." />
+                @Html.ValidationMessageFor(model => model.OrganizationChartPhoto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

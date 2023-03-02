@@ -1,0 +1,154 @@
+﻿@model IEnumerable<KENTAS.Models.PhotoGalery>
+
+@{
+    ViewBag.Title = "Galeri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.css" rel="stylesheet" />*@
+    <style type="text/css">
+        .filter_btn {
+            display: block;
+            list-style: none;
+            width: 100%;
+            text-align: center;
+        }
+
+            .filter_btn li {
+                display: inline-block;
+            }
+        .my_btn {
+            text-align: center;
+            height: 250px;
+            width: 250px;
+            display: flex;
+            
+            background-size: cover !important;
+            color: #fff;
+            text-shadow: 1px 1px black;
+            text-align: center;
+            flex-direction: column-reverse;
+        }
+    </style>
+}
+
+<div class="container bgwhite mt-4 ">
+
+    <div class="row p-1">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af; background-image:url(/Content/images/g_bg.png)">
+            <h6 class="pl-3 my-auto" style="color:white">GALERİ</h6>
+        </div>
+
+    </div>
+
+    <h6 class="my-auto p-2" style="color:midnightblue">KENTAŞ FOTOĞRAF GALERİ</h6>
+
+    <div class="tz-gallery pt-2" style="height:800px; overflow-x:hidden;">
+
+
+        <div class="row ">
+            <div class="mbr-gallery-filter container gallery-filter-active">
+                <ul buttons="0" class="filter_btn">
+                    @using (KENTAS.Models.Entities ct = new KENTAS.Models.Entities())
+                    {
+                        var currentData = ct.GaleriBasliklaris.ToList();
+
+                        foreach (var item in currentData)
+                        {
+                            var _bgImg = item.PhotoGaleries.Count() ==0  ? "/Uploads/PhotoGalery/ArkaPlan.jpg" : item.PhotoGaleries.FirstOrDefault().photoGaleryImage.Replace("~", "..");
+                            <li><a style="background: url('@_bgImg') center center no-repeat" class="btn btn-outline-info my_btn mr-3 mb-3" title="@item.SubTitle" href="@Url.Action("ShowDetails","Galeri")?h=@item.Id">@item.Title</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@*<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+            <img class="img-rounded" src="~/Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg" />
+        </a>
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+            <img class="img-rounded" src="~/Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096213.jpg" />
+        </a>
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+        </a>
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+            <img class="img-rounded" src="~/Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096214.jpg" />
+        </a>
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+            <img class="img-rounded" src="~/Uploads/PhotoGalery/f9fe3f12-33e8-440d-8c46-aafc5f0488c2.png" />
+        </a>
+        <a class="lightbox" href="../Uploads/PhotoGalery/big-6231-1-2020-11-11-1605096212.jpg">
+            <img class="img-rounded" src="~/Uploads/PhotoGalery/fe0a8243-c38e-4765-863d-5b37e10aa1c7.png" />
+        </a>
+    </div>*@
+@*@foreach (var item in Model)
+    {
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+        <a class="lightbox" href="@Url.Content(item.photoGaleryImage)">
+            <img src="@Url.Content(item.photoGaleryImage)" alt="photo" class="img-rounded" />
+        </a>
+    </div>
+    }*@
+@*@using (KENTAS.Models.Entities ct = new KENTAS.Models.Entities())
+    {
+        var currentData = ct.GaleriBasliklaris.ToList();
+        <div class="form-group">
+            <div class="col-md-4 main-bg">
+                <select class="form-control" name="TitileId" id="TitileId" style="width:100%;" onchange="javascript: getGalery(this)">
+                    <option value="1" title="Seçim Yap" selected>Seçim Yapınız</option>
+
+                    @foreach (var item in currentData)
+                    {
+                        <option value="@item.Id" title="@item.SubTitle">@item.Title</option>
+
+                    }
+
+                </select>
+            </div>
+        </div>
+
+    }*@
+
+@section scripts{
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.js"></script>*@
+
+    <script type="text/javascript">
+        $((_$) => {
+            $($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+            //baguetteBox.run('.tz-gallery');
+        });
+    </script>
+}
+
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.photoGaleryImage)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.photoGaleryImage)" style="height:100px;" alt="photo" />
+                </td>
+                <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.photoGaleryId }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.photoGaleryId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.photoGaleryId })
+                    </td>
+            </tr>
+        }
+
+    </table>*@

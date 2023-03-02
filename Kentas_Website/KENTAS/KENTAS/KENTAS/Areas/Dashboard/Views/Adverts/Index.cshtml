@@ -1,0 +1,56 @@
+﻿@model IEnumerable<KENTAS.Models.Advert>
+
+@{
+    ViewBag.Title = "Duyurular";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" btn btn-info" style="color:InfoText;">
+    @Html.ActionLink("Yeni Ekle", "Create")
+</div>
+
+<table class="table table-bordered table-striped table-responsive-sm ">
+    <tr>
+        <th class="text-center">
+            DUYURULAR BAŞLIK AÇIKLAMA
+        </th>
+        <th class="text-center">
+            DUYURULAR AÇIKLAMA
+        </th>
+        <th class="text-center">
+            DUYURULAR SEKME
+        </th>
+        <th class="text-center">
+            DUYURULAR FOTOĞRAF
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.adHeaderDesc)
+            </td>
+            <td>
+                @Html.Raw(item.adDesc)
+            </td>
+            <td>
+                @Html.Raw(item.adTab)
+            </td>
+            <td>
+                <img src="@Url.Content(item.adImage)" style="height:60px;" alt="Advert" />
+            </td>
+            <td>
+                <div class="btn-group">
+                    @Html.ActionLink("Güncelle", "Edit", new { id = item.adId }, new { @class = "btn btn-sm btn-success" })
+                    @Html.ActionLink("Sil", "Delete", new { id = item.adId }, new { @class = "btn btn-sm btn-danger" })
+                </div>
+
+            </td>
+        </tr>
+    }
+
+</table>

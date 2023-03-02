@@ -1,0 +1,39 @@
+﻿@model IEnumerable<KENTAS.Models.CompanyValue>
+
+@{
+    ViewBag.Title = "Şirket Değeri";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered table-striped table-responsive-sm ">
+    <tr>
+        <th class="text-center">
+            ŞİRKET DEĞERLERİ FOTOĞRAFI
+        </th>
+        <th class="text-center">
+            ŞİRKET DEĞERLERİ BAŞLIK
+        </th>
+        <th class="text-center" style="width:800px;">
+            ŞİRKET DEĞERLERİ AÇIKLAMA
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td >
+            <img src="@Url.Content(@item.CompanyValuesPhotos)" alt="companyValue" style="width:200px; height:200px;" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyValuesTitle)
+        </td>
+        <td>
+            @Html.Raw(item.CompanyValuesDescription)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id = item.CompanyValueId }, new { @class = "btn btn-sm btn-success" })
+        </td>
+    </tr>
+}
+
+</table>

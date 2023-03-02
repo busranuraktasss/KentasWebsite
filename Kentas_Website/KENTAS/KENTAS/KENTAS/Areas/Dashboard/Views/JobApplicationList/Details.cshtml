@@ -1,0 +1,30 @@
+﻿@model KENTAS.Models.JobApplicationForm
+
+@{
+    ViewBag.Title = "Başvuru Yapan Aday Detayları";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h3>İş Başvurusu Yapan Aday Detayları</h3>
+
+<div>
+    <h4 class="p-3" style="font-weight:bold;">KİŞİSEL BİLGİLER</h4>
+
+    <dl class="dl-horizontal">
+        <dt>Başvurulan Pozisyon:</dt>
+        <dd>@Html.DisplayFor(model => model.BasvurulanPozisyon)</dd>
+        <dt>Ad:</dt>
+        <dd>@Html.DisplayFor(model => model.Ad)</dd>
+        <dt>Soyad:</dt>
+        <dd>@Html.DisplayFor(model => model.Soyad)</dd>
+        <dt>Tel:</dt>
+        <dd>@Html.DisplayFor(model => model.CepTel)</dd>
+        <dt>Cv:</dt>
+        <dd><a href="@Model.CVUrl" download>Cv indir</a></dd>
+
+    </dl>
+</div>
+<p>
+   
+    @Html.ActionLink("Geri Dön", "Index")
+</p>

@@ -1,0 +1,41 @@
+﻿@*@model IEnumerable<KENTAS.Models.JobApplicationForm>*@
+@using KENTAS.Models
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<JobApplicationForm>
+
+
+@{ ViewBag.Title = "İnsan Kaynakları Başvuruları";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml"; }
+
+<h2>İnsan Kaynakları Başvuruları</h2>
+
+<table class="table table-responsive table-bordered table-condensed table-hover">
+    <thead>
+        <tr>
+            <th>Pozisyon</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Tel</th>
+            <th>Cv</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.BasvurulanPozisyon)</td>
+                <td>@Html.DisplayFor(modelItem => item.Ad)</td>
+                <td>@Html.DisplayFor(modelItem => item.Soyad)</td>
+                <td>@Html.DisplayFor(modelItem => item.CepTel)</td>
+                <td><a href="@item.CVUrl" download>Cv indir</a></td>
+                <td class="text-center">
+                    @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "btn btn-sm btn-danger" })
+                    @Html.ActionLink("Detay", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))

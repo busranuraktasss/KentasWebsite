@@ -1,0 +1,532 @@
+﻿
+@{
+    ViewBag.Title = "AnketSorular";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/AdminLayout/css/sweetalert2.min.css" rel="stylesheet" />
+
+@section css{
+    <style type="text/css">
+        * {
+            vertical-align: middle !important;
+        }
+
+        textarea {
+            resize: none !important;
+        }
+
+        #map_canvas {
+            height: 50vh;
+        }
+
+        @@media (max-width: 490px) {
+            .e_close {
+                display: none;
+            }
+        }
+
+        .form-control {
+            color: #000000;
+        }
+
+        .back-button a:link, .back-button a:visited {
+            color: white;
+        }
+
+        .back-button:hover a, .back-button:focus a {
+            color: #4CD964;
+        }
+
+        .question_style {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
+        /*Button Style*/
+        #delete {
+            background: #EEBAAC;
+        }
+
+            #delete:hover {
+                background: #EDA994;
+            }
+
+        #arrange-btn {
+            background: #E9D2A9;
+        }
+
+            #arrange-btn:hover {
+                background: #E4C084;
+            }
+
+        #answers-btn {
+            background: #CCD8D8;
+        }
+
+            #answers-btn:hover {
+                background: #A5BDBD;
+            }
+
+        /*Datatable Style*/
+        .dtSurvey th {
+            text-align: center;
+        }
+
+        .dtSurvey td {
+            width: 150px;
+        }
+
+        table.dataTable th,
+        table.dataTable td {
+            white-space: nowrap;
+        }
+
+        .dtCentered {
+            text-align: center;
+        }
+
+        #delete {
+            margin-right: 15px;
+        }
+
+        /*Radio Buttons*/
+        input[type="radio"] {
+            margin: 2px 5px 0 0;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            outline: none;
+            content: none;
+            border: 1px solid #d3d3d3;
+            background: white;
+            box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+        }
+
+            input[type="radio"]:checked {
+                padding: 0;
+                appearance: none;
+                outline: none;
+                content: none;
+                border: none;
+            }
+
+                input[type="radio"]:checked::before {
+                    position: absolute;
+                    content: "\00A0\2713\00A0" !important;
+                    border: 1px solid #d3d3d3;
+                    font-weight: bolder;
+                    font-size: 14px;
+                    color: green !important;
+                }
+
+        .table_style {
+            overflow: auto;
+            max-width: 700px;
+        }
+
+        .cAnahtar_style {
+            width: 70px !important;
+        }
+
+        /*Scroll Bar*/
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+        }
+
+        .fa-trash-o {
+            padding-bottom: 3px;
+        }
+
+        .fa-save {
+            padding-bottom: 2px;
+        }
+    </style>
+}
+
+<!--AddQuestionButton-->
+<div class=" btn-group" style="color:InfoText;">
+    <a href="javascript:addNewQuestion();" class="btn btn-info ">Soru Ekle <i class="fa fa-plus"></i></a>
+</div>
+
+<!--Add Question Modal-->
+<div class="modal fade" id="_addOrUpdateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_addOrUpdateQuestionModalLabel">@Model.Adi</h4>
+            </div>
+            <div class="modal-body">
+                <form id="_addOrUpdateQuestionForm">
+                    <input type="hidden" value="0" id="_addOrUpdateFormQuestion" name="_addOrUpdateFormQuestion" />
+
+                    <div class="form-group">
+                        <label for="Title"><span class="text-danger">*</span>Soru</label>
+                        <textarea type="text" class="form-control question_style" id="_questionName" name="_questionName" maxlength="200" required></textarea><br />
+                        <label for="Title"><span class="text-danger">*</span>Cevap Tipi</label>
+                        <div class="form-check form-check-inline col-5" style="padding-left:5%">
+                            <input class="form-check-input" type="radio" name="cevap_tipi" id="_text" value="true" checked />
+                            <label class="form-check-label" style="font:15px; margin-top:11px;" for="_text">Yorum</label>
+                        </div>
+                        <div class="form-check form-check-inline col-5" style="padding-left:5%">
+                            <input class="form-check-input" type="radio" name="cevap_tipi" id="_test" value="false" />
+                            <label class="form-check-label" style="font:15px; margin-top:11px;" for="_test">Şıklı</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" onclick="javascript: getUpdateOrAdd();">Kaydet <i class="fa fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Question Table -->
+<div class="px-1 col-12 dtSurvey">
+    <div class="row ">
+        <h3 class="page-title col-sm-10 pt-1 text-start">Anket : @Model.Adi </h3>
+    </div>
+    <div class="table-responsive p-2">
+        <table id="_questionTable" class="table table-striped table-bordered dt-responsive nowrap" style="vertical-align:middle; width:100%;">
+            <thead>
+                <tr>
+                    <th>Soru</th>
+                    <th>Cevap Tipi</th>
+                    <th>Sil / Güncelle</th>
+                    <th>Cevap Anahtarı</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<br />
+<br />
+<div>
+    <button class="back-button btn btn-success" onclick="location.href='@Url.Action("Index")'">@Html.Raw("Geri Dön")</button>
+</div>
+
+<script type="text/javascript" src="~/Content/AdminLayout/assets/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Content/AdminLayout/js/sweetalert2.min.js"></script>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/OnlineIslem/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+
+        questionTable = null;
+
+        $(() => {
+            showQuestionAjax();
+        })
+
+        window.onload = function () {
+            Swal.fire({
+                toast: false,
+                position: 'top-end',
+                title: 'Anketin görüntülenebilmesi için en az bir soru girilmelidir.',
+                icon: 'info',
+                showConfirmButton: false,
+                timer: 8000,
+                backdrop: false,
+            })
+        }
+
+        $('#_addOrUpdateQuestionModal').on('shown.bs.modal', function () {
+            $('#_questionName').focus()
+        })
+
+        var addNewQuestion = () => {
+            $('#_addOrUpdateQuestionModal').modal('show');
+        }
+
+        var saveQuestion = () => {
+            var AnketController = @Model.Id;
+            var SoruController = document.getElementById("_questionName").value;
+            //Cevap tipi 1 ise test , 0 ise yorum
+            if ($('#_text').prop('checked')) {
+                var CevapTipiControl = 0;
+            }
+            else CevapTipiControl = 1;
+
+            if (!SoruController) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Soru Kısmı Boş Bırakılamaz.',
+                    confirmButtonText: 'Tamam',
+                });
+            } else if (SoruController[0] == " ") {
+                Swal.fire({ icon: 'error', text: 'Sorunun ilk karakteri boşluk olamaz.Lütfen kontrol ediniz.', confirmButtonText: 'Tamam', });
+            }
+
+            else {
+                $.post('@Url.Action("SaveQuestion", "Surveys")', { anketId: AnketController, soru: SoruController, cevapTipi: CevapTipiControl }, (d, s) => {
+                if (d.Status == true) {
+
+                    Swal.fire({
+                        toast: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Ekleme işlemi başarıyla gerçekleşti.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+
+                    })
+                    if (questionTable != null)
+                        questionTable.ajax.reload();
+
+                    document.getElementById("_addOrUpdateQuestionForm").reset();
+
+                    $('#_addOrUpdateQuestionModal').modal('hide');
+
+                }
+                else {
+                    if (d.data == 1) {
+                        Swal.fire({
+                            icon: 'info',
+                            text: 'Soru mevcut.Lütfen başka bir soru giriniz.'
+                        });
+                    } else {
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Ekleme işlemi gerçekleşemedi.'
+                    });
+
+                    }
+                }
+            })
+            }
+        }
+
+        var showQuestionAjax = () => {
+            var anketId = @Model.Id;
+            if (questionTable == null)
+                questionTable = $('#_questionTable').DataTable({
+                    processing: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    serverSide: true,
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("ShowQuestionAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "json",
+                        data: function (d) {
+                            d.anketId = anketId;
+                        },
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.Soru;
+                            }, "name": "Soru"
+                        },
+                        {
+                            "className": "dtCentered cAnahtar_style",
+                            "render": function (data, type, row) {
+                                if (row.CevapTipi == 1) {
+                                    return "Şıklı";
+                                }
+                                return "Yorum" ;
+                            }, "name": "CevapTipi"
+                        },
+                        {
+                            "className": "dtCentered cAnahtar_style",
+                            "render": function (data, type, row) {
+                                return `<button type="button" id="delete" class="btn btn-dark pt-2" onclick="javascript:deleteQuestion(${row.Id})">Sil <i class="fa fa-trash-o"></i></button>
+                                        <button type="button" id="arrange-btn" class="btn btn-dark pt-2" onclick="javascript:getSetQuestion(${row.Id})">Düzenle <i class="fa fa-edit"></i></button>`;
+                            }, "name": "Id", "name": "Id"
+                        },
+                        {
+                            "className": "dtCentered cAnahtar_style",
+                            "render": function (data, type, row) {
+                                if (row.CevapTipi == 1) {
+                                    return `<button type="button" id="answers-btn" class="btn btn-dark pt-2" onclick="javascript:Answers(${row.Id})">${row.Count} Şık</button>`
+
+                                }
+                                else {
+                                    return "";
+                                }
+                            },"name": "Id","name": "Count"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#questionTable_filter input').unbind();
+                        $('#questionTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                questionTable.search(this.value).draw();
+                            }
+                        });
+
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var checkCevapTipi = (checkId) => {
+            $.getJSON('@Url.Action("CheckCevapTipi", "Surveys")', { request: checkId }, (d, s) => {
+                if (s == 'success') {
+                    if (questionTable != null)
+                        questionTable.ajax.reload();
+                    alert("Durum değiştirildi.");
+                }
+                else {
+                    alert("Durum değiştirilemedi.");
+                }
+            })
+        }
+
+        var deleteQuestion = (delId) => {
+            $.post('@Url.Action("getQuestionName", "Surveys")', { sId: delId }, (d, s) => {
+                var _questionName = d.data;
+
+                Swal.fire({
+                title: _questionName + ' ' +'sorusunu silmek istediğinize emin misiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                cancelButtonText: 'Hayır',
+                confirmButtonColor: '#4a804d',
+                cancelButtonColor: '#b22222',
+                confirmButtonText: 'Evet'
+            })
+                .then((result) => {
+                    if (result.value == true) {
+                        $.getJSON('@Url.Action("DeleteQuestion", "Surveys")', { request: delId }, (d, s) => {
+                            if (s === "success") {
+                                if (d.Status == true) {
+                                    questionTable.ajax.reload();
+                                    Swal.fire({ title: 'Silme işlemi gerçekleşti.', confirmButtonColor: '#1c6071', confirmButtonText: 'Tamam' });
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'Silme işlemi gerçekleşemedi.'
+                                    });
+                                }
+                            }
+                            if (questionTable != null)
+                                questionTable.ajax.reload();
+                        });
+                    }
+                });
+
+            })
+
+        }
+
+        var getUpdateOrAdd = () => {
+            if (document.getElementById("_addOrUpdateFormQuestion").value > 0) {
+                javascript: updateQuestion();
+            }
+            else {
+                javascript: saveQuestion();
+            }
+        }
+
+        //Set Question
+        var getSetQuestion = (upId) => {
+            $('#_addOrUpdateFormQuestion').val("");
+            $.getJSON('@Url.Action("GetSetQuestion", "Surveys")', { sId: upId }, (d, s) => {
+                if (s === 'success') {
+                    $('#_questionName').val(d.data.Soru);
+                    $('#_addOrUpdateFormQuestion').val(d.data.Id);
+
+                    if (d.data.CevapTipi == 1)
+                        document.getElementById('_test').checked = true;
+                    else
+                        document.getElementById('_text').checked = true;
+                    $('#_addOrUpdateQuestionModal').modal('show');
+                }
+            })
+        }
+
+        var updateQuestion = () => {
+            var AnketIdController = @Model.Id;
+            var SoruIdController = document.getElementById("_addOrUpdateFormQuestion").value;
+            var SoruController = document.getElementById("_questionName").value;
+
+            if ($('#_text').prop('checked')) {
+                var CevapTipiControl = 0;
+            }
+            else CevapTipiControl = 1;
+
+            if (!SoruController) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Soru Kısmı Boş Bırakılamaz.',
+                    confirmButtonText: 'Tamam',
+                });
+            }
+            else
+            {
+                $.post('@Url.Action("UpdateQuestion", "Surveys")', { Id: SoruIdController, soru: SoruController, cevapTipi: CevapTipiControl, anketId: AnketIdController }, (d, s) => {
+                    if (d.Status == true) {
+                        Swal.fire({
+                            toast: false,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Güncelleme işlemi başarıyla gerçekleşti.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            backdrop: false,
+
+                        })
+                        if (questionTable != null)
+                            questionTable.ajax.reload();
+
+                        document.getElementById("_addOrUpdateQuestionForm").reset();
+
+                        $('#_addOrUpdateQuestionModal').modal('hide');
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            text: 'Güncelleme işlemi gerçekleşemedi.'
+                        });
+                    }
+
+
+                });
+            }
+        }
+
+        var Answers = (sId) => {
+            window.location.href = '@Url.Action("Answers", "Surveys")' +"/"+ sId;
+        }
+    </script>
+}

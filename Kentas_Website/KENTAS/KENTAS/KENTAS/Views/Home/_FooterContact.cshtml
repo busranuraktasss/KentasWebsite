@@ -1,0 +1,9 @@
+﻿@*@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Contacts.FirstOrDefault();
+}
+
+<p class="p_block" style="color:white;">
+    Telefon: @data.contactPhoneNumber  GSM: @data.contactFaxNumber </br>
+    <span style="color:#01849A">Tüm Hakları Saklıdır. &copy; @DateTime.Now.Year</span>
+</p>*@

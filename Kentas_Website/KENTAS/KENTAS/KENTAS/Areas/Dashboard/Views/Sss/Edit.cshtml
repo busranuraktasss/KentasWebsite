@@ -1,0 +1,61 @@
+﻿@model KENTAS.Models.SSSorular
+@{
+    ViewBag.Title = "Güncelle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SSS Güncelleme</h2>
+
+
+
+@using (Html.BeginForm("Edit", "Sss", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tarih, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tarih, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tarih, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Soru, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Soru, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Soru, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cevap, "CEVAP", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea name="Cevap" class="ckeditor">@Model.Cevap</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kayıt" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+    <div class=" btn btn-info mb-3" style="color: InfoText; @*margin:10px 0px 0px 2200px;*@ ">
+        @Html.ActionLink("Geri Dön", "Index")
+    </div>
+
+@section scripts{
+    <script type="text/javascript">
+        CKEDITOR.replace('editor')
+    </script>
+
+}
+

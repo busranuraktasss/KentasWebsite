@@ -1,0 +1,35 @@
+﻿@model IEnumerable<KENTAS.Models.Brand>
+
+@{
+    ViewBag.Title = "Markalar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container bgwite mt-4 radius_contains" style="background-color:white;">
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af;">
+            <h6 class="pl-3 my-auto" style="color:white">MARKALAR</h6>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4 text-center">
+                <div class="row">
+                    <div class="col-md-12 text-center"><img class="borderDemo" src="@Url.Content(@item.BrandPhoto)" alt="humanresource" style="width:200px; height:200px;" /></div>
+                </div>
+                <div class="col-md-12 text-center"><label style="font-size:large; font-weight:bold; color:midnightblue;">@Html.DisplayFor(modelItem => item.BrandTitle)</label> <br /><label style="font-size:large;">@Html.Raw(item.BrandDescription)</label></div>
+            </div>
+        }
+
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

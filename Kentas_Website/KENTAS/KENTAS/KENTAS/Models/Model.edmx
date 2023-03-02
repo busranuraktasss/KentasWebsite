@@ -1,0 +1,1086 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Kentas1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Abouts">
+          <Key>
+            <PropertyRef Name="aboutId" />
+          </Key>
+          <Property Name="aboutId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aboutHeaderDesc" Type="nvarchar(max)" />
+          <Property Name="aboutDesc" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="activitiesId" />
+          </Key>
+          <Property Name="activitiesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="activitiesHeaderDesc" Type="nvarchar(max)" />
+          <Property Name="activitiesDesc" Type="nvarchar(max)" />
+          <Property Name="activitiesImage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Activities_Images">
+          <Key>
+            <PropertyRef Name="fId" />
+          </Key>
+          <Property Name="fId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fimgUrl" Type="nvarchar(max)" />
+          <Property Name="fbagId" Type="int" />
+          <Property Name="isdelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Authorization" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Adverts">
+          <Key>
+            <PropertyRef Name="adId" />
+          </Key>
+          <Property Name="adId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adHeaderDesc" Type="nvarchar(max)" />
+          <Property Name="adDesc" Type="nvarchar(max)" />
+          <Property Name="adTab" Type="nvarchar(max)" />
+          <Property Name="adImage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Adverts_Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imgUrl" Type="text" />
+          <Property Name="bagId" Type="int" />
+          <Property Name="isdelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandPhoto" Type="nvarchar(max)" />
+          <Property Name="BrandTitle" Type="nvarchar" MaxLength="2000" />
+          <Property Name="BrandDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CompanyValue">
+          <Key>
+            <PropertyRef Name="CompanyValueId" />
+          </Key>
+          <Property Name="CompanyValueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyValuesPhotos" Type="nvarchar(max)" />
+          <Property Name="CompanyValuesTitle" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CompanyValuesDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="contactImageSrc" Type="nvarchar(max)" />
+          <Property Name="contactPhoneNumber" Type="nvarchar(max)" />
+          <Property Name="contactFaxNumber" Type="nvarchar(max)" />
+          <Property Name="contactAddress" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Footers">
+          <Key>
+            <PropertyRef Name="footerId" />
+          </Key>
+          <Property Name="footerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="footerLogo" Type="nvarchar(max)" />
+          <Property Name="footerLocalNumber" Type="nvarchar(max)" />
+          <Property Name="footerGsmNumber" Type="nvarchar(max)" />
+          <Property Name="footerDesc" Type="nvarchar(max)" />
+          <Property Name="footerLogo2" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GaleriBasliklari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SubTitle" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="GeneralManager">
+          <Key>
+            <PropertyRef Name="GeneralManagerId" />
+          </Key>
+          <Property Name="GeneralManagerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GeneralManagerLogo" Type="nvarchar(max)" />
+          <Property Name="GeneralManagerDescription" Type="nvarchar(max)" />
+          <Property Name="GeneralManagerName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Headers">
+          <Key>
+            <PropertyRef Name="headerId" />
+          </Key>
+          <Property Name="headerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="headerLogo" Type="nvarchar(max)" />
+          <Property Name="headerAddress" Type="nvarchar(max)" />
+          <Property Name="headerPhoneNumber" Type="nvarchar(max)" />
+          <Property Name="headerFaxNumber" Type="nvarchar(max)" />
+          <Property Name="headerPresidentLogo" Type="nvarchar(max)" />
+          <Property Name="headerPresidentName" Type="nvarchar(max)" />
+          <Property Name="headerPresidentDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HumanResource">
+          <Key>
+            <PropertyRef Name="HumanResourceId" />
+          </Key>
+          <Property Name="HumanResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HumanResourcePhoto" Type="nvarchar(max)" />
+          <Property Name="HumanResourceTitle" Type="nvarchar" MaxLength="2000" />
+          <Property Name="HumanResourceDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Identity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="keyword" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="JobApplicationForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BasvurulanPozisyon" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="300" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="400" />
+          <Property Name="CepTel" Type="nvarchar" MaxLength="24" />
+          <Property Name="CVUrl" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Kvkk">
+          <Key>
+            <PropertyRef Name="KvkkId" />
+          </Key>
+          <Property Name="KvkkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KvkkDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Missions">
+          <Key>
+            <PropertyRef Name="missionId" />
+          </Key>
+          <Property Name="missionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="missionDesc" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="newsId" />
+          </Key>
+          <Property Name="newsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="newsHeaderDesc" Type="nvarchar(max)" />
+          <Property Name="newsDesc" Type="nvarchar(max)" />
+          <Property Name="newsImage" Type="nvarchar(max)" />
+          <Property Name="newsTabItem" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="News_Images">
+          <Key>
+            <PropertyRef Name="nId" />
+          </Key>
+          <Property Name="nId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nimgUrl" Type="nvarchar(max)" />
+          <Property Name="nbagId" Type="int" />
+          <Property Name="isdelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="OrganizationChart">
+          <Key>
+            <PropertyRef Name="OrganizationChartId" />
+          </Key>
+          <Property Name="OrganizationChartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationChartPhoto" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OurServices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lat" Type="nvarchar" MaxLength="250" />
+          <Property Name="Lng" Type="nvarchar" MaxLength="250" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Subtitile" Type="nvarchar" MaxLength="500" />
+          <Property Name="WorkingHours" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="PageHeaders">
+          <Key>
+            <PropertyRef Name="pageHeaderId" />
+          </Key>
+          <Property Name="pageHeaderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aboutHeader" Type="nvarchar(max)" />
+          <Property Name="visionHeader" Type="nvarchar(max)" />
+          <Property Name="missionHeader" Type="nvarchar(max)" />
+          <Property Name="photoGaleryHeader" Type="nvarchar(max)" />
+          <Property Name="contactHeader" Type="nvarchar(max)" />
+          <Property Name="whatwedoHeader" Type="nvarchar(max)" />
+          <Property Name="newsHeader" Type="nvarchar(max)" />
+          <Property Name="advertsHeader" Type="nvarchar(max)" />
+          <Property Name="activityHeader" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PhotoGaleries">
+          <Key>
+            <PropertyRef Name="photoGaleryId" />
+          </Key>
+          <Property Name="photoGaleryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="photoGaleryImage" Type="nvarchar(max)" />
+          <Property Name="TitileId" Type="int" />
+        </EntityType>
+        <EntityType Name="PrePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ownership" Type="nvarchar" MaxLength="50" />
+          <Property Name="NameOrTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="IdentificationNumber" Type="bigint" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="2500" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Sliders">
+          <Key>
+            <PropertyRef Name="sliderId" />
+          </Key>
+          <Property Name="sliderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sldierDesc" Type="nvarchar(max)" />
+          <Property Name="sliderImage" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SSSorular">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tarih" Type="date" Nullable="false" />
+          <Property Name="Soru" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cevap" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Plaka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TcKimlikNo" Type="nvarchar" MaxLength="11" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="500" />
+          <Property Name="AracTipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="CepTel" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Visions">
+          <Key>
+            <PropertyRef Name="visionId" />
+          </Key>
+          <Property Name="visionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="visionDesc" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Whatwedoes">
+          <Key>
+            <PropertyRef Name="whatwedoId" />
+          </Key>
+          <Property Name="whatwedoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="whatwedoHeaderDesc" Type="nvarchar(max)" />
+          <Property Name="whatwedoDesc" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_PhotoGaleries_GaleriBasliklari">
+          <End Role="GaleriBasliklari" Type="Self.GaleriBasliklari" Multiplicity="0..1" />
+          <End Role="PhotoGaleries" Type="Self.PhotoGaleries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GaleriBasliklari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoGaleries">
+              <PropertyRef Name="TitileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Kentas1ModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Abouts" EntityType="Self.Abouts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activities_Images" EntityType="Self.Activities_Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adverts" EntityType="Self.Adverts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adverts_Images" EntityType="Self.Adverts_Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyValue" EntityType="Self.CompanyValue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Footers" EntityType="Self.Footers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GaleriBasliklari" EntityType="Self.GaleriBasliklari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GeneralManager" EntityType="Self.GeneralManager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Headers" EntityType="Self.Headers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HumanResource" EntityType="Self.HumanResource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Identity" EntityType="Self.Identity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobApplicationForm" EntityType="Self.JobApplicationForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kvkk" EntityType="Self.Kvkk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Missions" EntityType="Self.Missions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News_Images" EntityType="Self.News_Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationChart" EntityType="Self.OrganizationChart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OurServices" EntityType="Self.OurServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PageHeaders" EntityType="Self.PageHeaders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoGaleries" EntityType="Self.PhotoGaleries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrePayment" EntityType="Self.PrePayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sliders" EntityType="Self.Sliders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SSSorular" EntityType="Self.SSSorular" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionForm" EntityType="Self.SubscriptionForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visions" EntityType="Self.Visions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Whatwedoes" EntityType="Self.Whatwedoes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PhotoGaleries_GaleriBasliklari" Association="Self.FK_PhotoGaleries_GaleriBasliklari">
+            <End Role="GaleriBasliklari" EntitySet="GaleriBasliklari" />
+            <End Role="PhotoGaleries" EntitySet="PhotoGaleries" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Kentas1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Kentas1Model.C__MigrationHistory" />
+          <EntitySet Name="Abouts" EntityType="Kentas1Model.About" />
+          <EntitySet Name="Activities" EntityType="Kentas1Model.Activity" />
+          <EntitySet Name="Activities_Images" EntityType="Kentas1Model.Activities_Images" />
+          <EntitySet Name="Admins" EntityType="Kentas1Model.Admin" />
+          <EntitySet Name="Adverts" EntityType="Kentas1Model.Advert" />
+          <EntitySet Name="Adverts_Images" EntityType="Kentas1Model.Adverts_Images" />
+          <EntitySet Name="Brands" EntityType="Kentas1Model.Brand" />
+          <EntitySet Name="CompanyValues" EntityType="Kentas1Model.CompanyValue" />
+          <EntitySet Name="Contacts" EntityType="Kentas1Model.Contact" />
+          <EntitySet Name="Footers" EntityType="Kentas1Model.Footer" />
+          <EntitySet Name="GaleriBasliklaris" EntityType="Kentas1Model.GaleriBasliklari" />
+          <EntitySet Name="GeneralManagers" EntityType="Kentas1Model.GeneralManager" />
+          <EntitySet Name="Headers" EntityType="Kentas1Model.Header" />
+          <EntitySet Name="HumanResources" EntityType="Kentas1Model.HumanResource" />
+          <EntitySet Name="Identities" EntityType="Kentas1Model.Identity" />
+          <EntitySet Name="JobApplicationForms" EntityType="Kentas1Model.JobApplicationForm" />
+          <EntitySet Name="Kvkks" EntityType="Kentas1Model.Kvkk" />
+          <EntitySet Name="Missions" EntityType="Kentas1Model.Mission" />
+          <EntitySet Name="News" EntityType="Kentas1Model.News" />
+          <EntitySet Name="News_Images" EntityType="Kentas1Model.News_Images" />
+          <EntitySet Name="OrganizationCharts" EntityType="Kentas1Model.OrganizationChart" />
+          <EntitySet Name="OurServices" EntityType="Kentas1Model.OurService" />
+          <EntitySet Name="PageHeaders" EntityType="Kentas1Model.PageHeader" />
+          <EntitySet Name="PhotoGaleries" EntityType="Kentas1Model.PhotoGalery" />
+          <EntitySet Name="PrePayments" EntityType="Kentas1Model.PrePayment" />
+          <EntitySet Name="Sliders" EntityType="Kentas1Model.Slider" />
+          <EntitySet Name="SSSorulars" EntityType="Kentas1Model.SSSorular" />
+          <EntitySet Name="SubscriptionForms" EntityType="Kentas1Model.SubscriptionForm" />
+          <EntitySet Name="sysdiagrams" EntityType="Kentas1Model.sysdiagram" />
+          <EntitySet Name="Visions" EntityType="Kentas1Model.Vision" />
+          <EntitySet Name="Whatwedoes" EntityType="Kentas1Model.Whatwedo" />
+          <AssociationSet Name="FK_PhotoGaleries_GaleriBasliklari" Association="Kentas1Model.FK_PhotoGaleries_GaleriBasliklari">
+            <End Role="GaleriBasliklari" EntitySet="GaleriBasliklaris" />
+            <End Role="PhotoGalery" EntitySet="PhotoGaleries" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="About">
+          <Key>
+            <PropertyRef Name="aboutId" />
+          </Key>
+          <Property Name="aboutId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aboutHeaderDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="aboutDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="activitiesId" />
+          </Key>
+          <Property Name="activitiesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="activitiesHeaderDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="activitiesDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="activitiesImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Activities_Images">
+          <Key>
+            <PropertyRef Name="fId" />
+          </Key>
+          <Property Name="fId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fimgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fbagId" Type="Int32" />
+          <Property Name="isdelete" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Authorization" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Advert">
+          <Key>
+            <PropertyRef Name="adId" />
+          </Key>
+          <Property Name="adId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adHeaderDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="adDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="adTab" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="adImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Adverts_Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bagId" Type="Int32" />
+          <Property Name="isdelete" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandId" />
+          </Key>
+          <Property Name="BrandId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BrandTitle" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="BrandDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CompanyValue">
+          <Key>
+            <PropertyRef Name="CompanyValueId" />
+          </Key>
+          <Property Name="CompanyValueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyValuesPhotos" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyValuesTitle" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyValuesDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="contactId" />
+          </Key>
+          <Property Name="contactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="contactImageSrc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="contactPhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="contactFaxNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="contactAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Footer">
+          <Key>
+            <PropertyRef Name="footerId" />
+          </Key>
+          <Property Name="footerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="footerLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="footerLocalNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="footerGsmNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="footerDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="footerLogo2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GaleriBasliklari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SubTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhotoGaleries" Relationship="Kentas1Model.FK_PhotoGaleries_GaleriBasliklari" FromRole="GaleriBasliklari" ToRole="PhotoGalery" />
+        </EntityType>
+        <EntityType Name="GeneralManager">
+          <Key>
+            <PropertyRef Name="GeneralManagerId" />
+          </Key>
+          <Property Name="GeneralManagerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GeneralManagerLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GeneralManagerDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GeneralManagerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Header">
+          <Key>
+            <PropertyRef Name="headerId" />
+          </Key>
+          <Property Name="headerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="headerLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerPhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerFaxNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerPresidentLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerPresidentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="headerPresidentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="HumanResource">
+          <Key>
+            <PropertyRef Name="HumanResourceId" />
+          </Key>
+          <Property Name="HumanResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HumanResourcePhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HumanResourceTitle" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="HumanResourceDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Identity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="keyword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="JobApplicationForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BasvurulanPozisyon" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="CepTel" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Name="CVUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Kvkk">
+          <Key>
+            <PropertyRef Name="KvkkId" />
+          </Key>
+          <Property Name="KvkkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KvkkDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Mission">
+          <Key>
+            <PropertyRef Name="missionId" />
+          </Key>
+          <Property Name="missionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="missionDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="newsId" />
+          </Key>
+          <Property Name="newsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="newsHeaderDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newsImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newsTabItem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="News_Images">
+          <Key>
+            <PropertyRef Name="nId" />
+          </Key>
+          <Property Name="nId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nimgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="nbagId" Type="Int32" />
+          <Property Name="isdelete" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="OrganizationChart">
+          <Key>
+            <PropertyRef Name="OrganizationChartId" />
+          </Key>
+          <Property Name="OrganizationChartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationChartPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="OurService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lat" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Lng" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Adress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Subtitile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="WorkingHours" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PageHeader">
+          <Key>
+            <PropertyRef Name="pageHeaderId" />
+          </Key>
+          <Property Name="pageHeaderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aboutHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="visionHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="missionHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="photoGaleryHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="contactHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="whatwedoHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="newsHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="advertsHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="activityHeader" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PhotoGalery">
+          <Key>
+            <PropertyRef Name="photoGaleryId" />
+          </Key>
+          <Property Name="photoGaleryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="photoGaleryImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitileId" Type="Int32" />
+          <NavigationProperty Name="GaleriBasliklari" Relationship="Kentas1Model.FK_PhotoGaleries_GaleriBasliklari" FromRole="PhotoGalery" ToRole="GaleriBasliklari" />
+        </EntityType>
+        <EntityType Name="PrePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ownership" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NameOrTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdentificationNumber" Type="Int64" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="2500" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="sliderId" />
+          </Key>
+          <Property Name="sliderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sldierDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sliderImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SSSorular">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Soru" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cevap" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SubscriptionForm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Plaka" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TcKimlikNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AracTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CepTel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Vision">
+          <Key>
+            <PropertyRef Name="visionId" />
+          </Key>
+          <Property Name="visionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="visionDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Whatwedo">
+          <Key>
+            <PropertyRef Name="whatwedoId" />
+          </Key>
+          <Property Name="whatwedoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="whatwedoHeaderDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="whatwedoDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_PhotoGaleries_GaleriBasliklari">
+          <End Type="Kentas1Model.GaleriBasliklari" Role="GaleriBasliklari" Multiplicity="0..1" />
+          <End Type="Kentas1Model.PhotoGalery" Role="PhotoGalery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GaleriBasliklari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoGalery">
+              <PropertyRef Name="TitileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Kentas1ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="Kentas1Model.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abouts">
+            <EntityTypeMapping TypeName="Kentas1Model.About">
+              <MappingFragment StoreEntitySet="Abouts">
+                <ScalarProperty Name="aboutDesc" ColumnName="aboutDesc" />
+                <ScalarProperty Name="aboutHeaderDesc" ColumnName="aboutHeaderDesc" />
+                <ScalarProperty Name="aboutId" ColumnName="aboutId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="Kentas1Model.Activity">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="activitiesImage" ColumnName="activitiesImage" />
+                <ScalarProperty Name="activitiesDesc" ColumnName="activitiesDesc" />
+                <ScalarProperty Name="activitiesHeaderDesc" ColumnName="activitiesHeaderDesc" />
+                <ScalarProperty Name="activitiesId" ColumnName="activitiesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities_Images">
+            <EntityTypeMapping TypeName="Kentas1Model.Activities_Images">
+              <MappingFragment StoreEntitySet="Activities_Images">
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="fbagId" ColumnName="fbagId" />
+                <ScalarProperty Name="fimgUrl" ColumnName="fimgUrl" />
+                <ScalarProperty Name="fId" ColumnName="fId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="Kentas1Model.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Authorization" ColumnName="Authorization" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adverts">
+            <EntityTypeMapping TypeName="Kentas1Model.Advert">
+              <MappingFragment StoreEntitySet="Adverts">
+                <ScalarProperty Name="adImage" ColumnName="adImage" />
+                <ScalarProperty Name="adTab" ColumnName="adTab" />
+                <ScalarProperty Name="adDesc" ColumnName="adDesc" />
+                <ScalarProperty Name="adHeaderDesc" ColumnName="adHeaderDesc" />
+                <ScalarProperty Name="adId" ColumnName="adId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adverts_Images">
+            <EntityTypeMapping TypeName="Kentas1Model.Adverts_Images">
+              <MappingFragment StoreEntitySet="Adverts_Images">
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="bagId" ColumnName="bagId" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="Kentas1Model.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="BrandDescription" ColumnName="BrandDescription" />
+                <ScalarProperty Name="BrandTitle" ColumnName="BrandTitle" />
+                <ScalarProperty Name="BrandPhoto" ColumnName="BrandPhoto" />
+                <ScalarProperty Name="BrandId" ColumnName="BrandId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyValues">
+            <EntityTypeMapping TypeName="Kentas1Model.CompanyValue">
+              <MappingFragment StoreEntitySet="CompanyValue">
+                <ScalarProperty Name="CompanyValuesDescription" ColumnName="CompanyValuesDescription" />
+                <ScalarProperty Name="CompanyValuesTitle" ColumnName="CompanyValuesTitle" />
+                <ScalarProperty Name="CompanyValuesPhotos" ColumnName="CompanyValuesPhotos" />
+                <ScalarProperty Name="CompanyValueId" ColumnName="CompanyValueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="Kentas1Model.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="contactAddress" ColumnName="contactAddress" />
+                <ScalarProperty Name="contactFaxNumber" ColumnName="contactFaxNumber" />
+                <ScalarProperty Name="contactPhoneNumber" ColumnName="contactPhoneNumber" />
+                <ScalarProperty Name="contactImageSrc" ColumnName="contactImageSrc" />
+                <ScalarProperty Name="contactId" ColumnName="contactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Footers">
+            <EntityTypeMapping TypeName="Kentas1Model.Footer">
+              <MappingFragment StoreEntitySet="Footers">
+                <ScalarProperty Name="footerLogo2" ColumnName="footerLogo2" />
+                <ScalarProperty Name="footerDesc" ColumnName="footerDesc" />
+                <ScalarProperty Name="footerGsmNumber" ColumnName="footerGsmNumber" />
+                <ScalarProperty Name="footerLocalNumber" ColumnName="footerLocalNumber" />
+                <ScalarProperty Name="footerLogo" ColumnName="footerLogo" />
+                <ScalarProperty Name="footerId" ColumnName="footerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GaleriBasliklaris">
+            <EntityTypeMapping TypeName="Kentas1Model.GaleriBasliklari">
+              <MappingFragment StoreEntitySet="GaleriBasliklari">
+                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GeneralManagers">
+            <EntityTypeMapping TypeName="Kentas1Model.GeneralManager">
+              <MappingFragment StoreEntitySet="GeneralManager">
+                <ScalarProperty Name="GeneralManagerName" ColumnName="GeneralManagerName" />
+                <ScalarProperty Name="GeneralManagerDescription" ColumnName="GeneralManagerDescription" />
+                <ScalarProperty Name="GeneralManagerLogo" ColumnName="GeneralManagerLogo" />
+                <ScalarProperty Name="GeneralManagerId" ColumnName="GeneralManagerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Headers">
+            <EntityTypeMapping TypeName="Kentas1Model.Header">
+              <MappingFragment StoreEntitySet="Headers">
+                <ScalarProperty Name="headerPresidentDescription" ColumnName="headerPresidentDescription" />
+                <ScalarProperty Name="headerPresidentName" ColumnName="headerPresidentName" />
+                <ScalarProperty Name="headerPresidentLogo" ColumnName="headerPresidentLogo" />
+                <ScalarProperty Name="headerFaxNumber" ColumnName="headerFaxNumber" />
+                <ScalarProperty Name="headerPhoneNumber" ColumnName="headerPhoneNumber" />
+                <ScalarProperty Name="headerAddress" ColumnName="headerAddress" />
+                <ScalarProperty Name="headerLogo" ColumnName="headerLogo" />
+                <ScalarProperty Name="headerId" ColumnName="headerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HumanResources">
+            <EntityTypeMapping TypeName="Kentas1Model.HumanResource">
+              <MappingFragment StoreEntitySet="HumanResource">
+                <ScalarProperty Name="HumanResourceDescription" ColumnName="HumanResourceDescription" />
+                <ScalarProperty Name="HumanResourceTitle" ColumnName="HumanResourceTitle" />
+                <ScalarProperty Name="HumanResourcePhoto" ColumnName="HumanResourcePhoto" />
+                <ScalarProperty Name="HumanResourceId" ColumnName="HumanResourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Identities">
+            <EntityTypeMapping TypeName="Kentas1Model.Identity">
+              <MappingFragment StoreEntitySet="Identity">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="keyword" ColumnName="keyword" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobApplicationForms">
+            <EntityTypeMapping TypeName="Kentas1Model.JobApplicationForm">
+              <MappingFragment StoreEntitySet="JobApplicationForm">
+                <ScalarProperty Name="CVUrl" ColumnName="CVUrl" />
+                <ScalarProperty Name="CepTel" ColumnName="CepTel" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="BasvurulanPozisyon" ColumnName="BasvurulanPozisyon" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kvkks">
+            <EntityTypeMapping TypeName="Kentas1Model.Kvkk">
+              <MappingFragment StoreEntitySet="Kvkk">
+                <ScalarProperty Name="KvkkDescription" ColumnName="KvkkDescription" />
+                <ScalarProperty Name="KvkkId" ColumnName="KvkkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Missions">
+            <EntityTypeMapping TypeName="Kentas1Model.Mission">
+              <MappingFragment StoreEntitySet="Missions">
+                <ScalarProperty Name="missionDesc" ColumnName="missionDesc" />
+                <ScalarProperty Name="missionId" ColumnName="missionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="Kentas1Model.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="newsTabItem" ColumnName="newsTabItem" />
+                <ScalarProperty Name="newsImage" ColumnName="newsImage" />
+                <ScalarProperty Name="newsDesc" ColumnName="newsDesc" />
+                <ScalarProperty Name="newsHeaderDesc" ColumnName="newsHeaderDesc" />
+                <ScalarProperty Name="newsId" ColumnName="newsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News_Images">
+            <EntityTypeMapping TypeName="Kentas1Model.News_Images">
+              <MappingFragment StoreEntitySet="News_Images">
+                <ScalarProperty Name="isdelete" ColumnName="isdelete" />
+                <ScalarProperty Name="nbagId" ColumnName="nbagId" />
+                <ScalarProperty Name="nimgUrl" ColumnName="nimgUrl" />
+                <ScalarProperty Name="nId" ColumnName="nId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationCharts">
+            <EntityTypeMapping TypeName="Kentas1Model.OrganizationChart">
+              <MappingFragment StoreEntitySet="OrganizationChart">
+                <ScalarProperty Name="OrganizationChartPhoto" ColumnName="OrganizationChartPhoto" />
+                <ScalarProperty Name="OrganizationChartId" ColumnName="OrganizationChartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OurServices">
+            <EntityTypeMapping TypeName="Kentas1Model.OurService">
+              <MappingFragment StoreEntitySet="OurServices">
+                <ScalarProperty Name="WorkingHours" ColumnName="WorkingHours" />
+                <ScalarProperty Name="Subtitile" ColumnName="Subtitile" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageHeaders">
+            <EntityTypeMapping TypeName="Kentas1Model.PageHeader">
+              <MappingFragment StoreEntitySet="PageHeaders">
+                <ScalarProperty Name="activityHeader" ColumnName="activityHeader" />
+                <ScalarProperty Name="advertsHeader" ColumnName="advertsHeader" />
+                <ScalarProperty Name="newsHeader" ColumnName="newsHeader" />
+                <ScalarProperty Name="whatwedoHeader" ColumnName="whatwedoHeader" />
+                <ScalarProperty Name="contactHeader" ColumnName="contactHeader" />
+                <ScalarProperty Name="photoGaleryHeader" ColumnName="photoGaleryHeader" />
+                <ScalarProperty Name="missionHeader" ColumnName="missionHeader" />
+                <ScalarProperty Name="visionHeader" ColumnName="visionHeader" />
+                <ScalarProperty Name="aboutHeader" ColumnName="aboutHeader" />
+                <ScalarProperty Name="pageHeaderId" ColumnName="pageHeaderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoGaleries">
+            <EntityTypeMapping TypeName="Kentas1Model.PhotoGalery">
+              <MappingFragment StoreEntitySet="PhotoGaleries">
+                <ScalarProperty Name="TitileId" ColumnName="TitileId" />
+                <ScalarProperty Name="photoGaleryImage" ColumnName="photoGaleryImage" />
+                <ScalarProperty Name="photoGaleryId" ColumnName="photoGaleryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrePayments">
+            <EntityTypeMapping TypeName="Kentas1Model.PrePayment">
+              <MappingFragment StoreEntitySet="PrePayment">
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="IdentificationNumber" ColumnName="IdentificationNumber" />
+                <ScalarProperty Name="NameOrTitle" ColumnName="NameOrTitle" />
+                <ScalarProperty Name="Ownership" ColumnName="Ownership" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="Kentas1Model.Slider">
+              <MappingFragment StoreEntitySet="Sliders">
+                <ScalarProperty Name="sliderImage" ColumnName="sliderImage" />
+                <ScalarProperty Name="sldierDesc" ColumnName="sldierDesc" />
+                <ScalarProperty Name="sliderId" ColumnName="sliderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SSSorulars">
+            <EntityTypeMapping TypeName="Kentas1Model.SSSorular">
+              <MappingFragment StoreEntitySet="SSSorular">
+                <ScalarProperty Name="Cevap" ColumnName="Cevap" />
+                <ScalarProperty Name="Soru" ColumnName="Soru" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionForms">
+            <EntityTypeMapping TypeName="Kentas1Model.SubscriptionForm">
+              <MappingFragment StoreEntitySet="SubscriptionForm">
+                <ScalarProperty Name="CepTel" ColumnName="CepTel" />
+                <ScalarProperty Name="AracTipi" ColumnName="AracTipi" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="TcKimlikNo" ColumnName="TcKimlikNo" />
+                <ScalarProperty Name="Plaka" ColumnName="Plaka" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Kentas1Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visions">
+            <EntityTypeMapping TypeName="Kentas1Model.Vision">
+              <MappingFragment StoreEntitySet="Visions">
+                <ScalarProperty Name="visionDesc" ColumnName="visionDesc" />
+                <ScalarProperty Name="visionId" ColumnName="visionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Whatwedoes">
+            <EntityTypeMapping TypeName="Kentas1Model.Whatwedo">
+              <MappingFragment StoreEntitySet="Whatwedoes">
+                <ScalarProperty Name="whatwedoDesc" ColumnName="whatwedoDesc" />
+                <ScalarProperty Name="whatwedoHeaderDesc" ColumnName="whatwedoHeaderDesc" />
+                <ScalarProperty Name="whatwedoId" ColumnName="whatwedoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

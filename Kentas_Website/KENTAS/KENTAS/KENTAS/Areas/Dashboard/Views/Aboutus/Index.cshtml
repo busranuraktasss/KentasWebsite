@@ -1,0 +1,38 @@
+﻿@model IEnumerable<KENTAS.Models.About>
+
+@{
+    ViewBag.Title = "Hakkımızda";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            HAKKIMIZDA BAŞLIK AÇIKLAMA
+        </th>
+        <th class="text-center">
+            HAKKIMIZDA AÇIKLAMA
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.aboutHeaderDesc)
+        </td>
+        <td>
+            @Html.Raw(item.aboutDesc)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.aboutId }, new { @class = "btn btn-sm btn-success" }) 
+           
+        </td>
+    </tr>
+}
+
+</table>

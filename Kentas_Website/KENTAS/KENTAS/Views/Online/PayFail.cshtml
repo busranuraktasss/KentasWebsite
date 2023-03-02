@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "PayFail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <link href="~/Content/css/notification.css" rel="stylesheet" />
+}
+
+<div class="container bgwite mt-4" style="background-color:white;">
+
+    <div class="col-md-12 pt-4 pb-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body" style="height:50vh;">
+                <h4 class="card-title">
+                    Ödeme işlemi Başarısız oldu
+                </h4>
+                <i class="fa fa-7x fa-times-circle text-danger mb-4 mt-4"></i>
+                <p class="card-text">
+                    <span>Referans No: <b id="id-ref">-</b></span>
+                </p>
+                <a href="javascript:window.location.href ='../Home/'" class="btn btn-primary shadow">Anasayfa'a Dön</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script src="~/Scripts/alert_modal.js"></script>
+    <script type="text/javascript">
+        var ref = sessionStorage.getItem('VerifyEnrollmentRequestId');
+        var md = sessionStorage.getItem('md');
+        var plaka = sessionStorage.getItem('plaka');
+        var ids = sessionStorage.getItem('DebtsIds') ? sessionStorage.getItem('DebtsIds').split(',') : [];
+        sessionStorage.clear();
+
+        $((_$) => {
+            if (!ref || !md) {
+                window.location.href = `@Url.Action("Index","Home")`;
+                return;
+            }
+            $('#id-ref').html(ref);
+
+        });
+
+    </script>
+
+
+}

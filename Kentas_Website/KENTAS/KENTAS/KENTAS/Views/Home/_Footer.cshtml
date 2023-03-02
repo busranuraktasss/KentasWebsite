@@ -1,0 +1,72 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Footers.FirstOrDefault();
+    var cdata = db.Contacts.FirstOrDefault();
+
+}
+<style type="text/css">
+    ul#sosyal {
+        padding: 0;
+        width: 120px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+        ul#sosyal li {
+            display: block;
+            list-style: none;
+            float: left;
+            height: 50px;
+            width: 50px;
+            border-radius: 5px;
+        }
+
+            ul#sosyal li a {
+                display: inline-block;
+                overflow:hidden;
+                transition: all 400ms;
+            }
+                ul#sosyal li a:hover {
+                    filter: drop-shadow(0px 0px 4px #fff);
+                    transition: all 400ms;
+                }
+
+
+                ul#sosyal li a img {
+                    display: inline-block;
+                    height:50px;
+                    width:50px;
+                }
+
+            ul#sosyal li:last-child {
+                margin-left: 5px;
+            }
+</style>
+<div>
+    <img class="mb-3" src="@Url.Content(@data.footerLogo)" alt="Logo" style="height:120px;" />
+
+	<img class="mt-3" src="~/Content/images/oid.png" alt="Logo" style="height:90px;" />
+    <img class="mt-3" src="@Url.Content(@data.footerLogo2)" alt="Logo" style="height:120px;" />
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul id="sosyal">
+            <li>
+                <a href="https://www.instagram.com/eskisehirkentas/" target="_blank">
+                    <img src="~/Content/images/instagram.png" />
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com/eskisehirkenta1" target="_blank">
+                    <img src="~/Content/images/twitter.png" />
+                </a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<p class="p_block" style="color:white;">
+    Telefon: @cdata.contactPhoneNumber  GSM: @cdata.contactFaxNumber </br>
+    <span style="color:#01849A">Tüm Hakları Saklıdır. &copy; @DateTime.Now.Year</span>
+</p>

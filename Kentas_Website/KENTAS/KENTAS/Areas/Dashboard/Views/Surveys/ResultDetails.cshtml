@@ -1,0 +1,713 @@
+﻿
+@{
+    ViewBag.Title = "AnketSonuçları";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/AdminLayout/css/sweetalert2.min.css" rel="stylesheet" />
+
+@section css{
+    <style type="text/css">
+        * {
+            vertical-align: middle !important;
+        }
+
+        #map_canvas {
+            height: 50vh;
+        }
+
+        .row {
+            display: inline-flex;
+            width: 100%;
+            align-items: center;
+        }
+
+        @@media (max-width: 490px) {
+            .e_close {
+                display: none;
+            }
+        }
+
+        .form-control {
+            color: #000000;
+        }
+
+        /*Button Style*/
+        .btn-outline-secondary:hover, .btn-outline-secondary focus {
+            color: #34AADC;
+        }
+
+        .statistics-btn {
+            background: #BDDCBD;
+        }
+
+            .statistics-btn:hover {
+                background: #A7D1A7;
+            }
+
+        .partips-btn {
+            background: #CCD8D8;
+        }
+
+            .partips-btn:hover {
+                background: #A5BDBD;
+            }
+
+        .back-button{
+            margin-top:20px;
+        }
+
+        .back-button a:link, .back-button a:visited {
+            color: white;
+        }
+
+        .back-button:hover a, .back-button:focus a {
+            color: #4CD964;
+        }
+
+        /*Datatable Style*/
+        .dtSurvey th {
+            text-align: center;
+        }
+
+        .dtSurvey td {
+            width: 150px;
+        }
+
+        table.dataTable th,
+        table.dataTable td {
+            white-space: nowrap;
+        }
+
+        .dtCentered {
+            text-align: center;
+        }
+
+        #delete {
+            margin-right: 15px;
+        }
+
+        .backResultDetails, .dtParticipantsAnswer {
+            display: none;
+        }
+
+        .table_style {
+            overflow: auto;
+            max-width: 150px;
+        }
+
+        .pie {
+            --p: 20;
+            --b: 8px;
+            --c: darkred;
+            --w: 70px;
+            width: var(--w);
+            aspect-ratio: 1;
+            position: relative;
+            display: inline-grid;
+            margin: 5px;
+            place-content: center;
+            font-size: 15px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+            .pie:before,
+            .pie:after {
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+            }
+
+            .pie:before {
+                inset: 0;
+                background: radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat, conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+                -webkit-mask: radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+                mask: radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            }
+
+            .pie:after {
+                inset: calc(50% - var(--b)/2);
+                background: var(--c);
+                transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+            }
+
+        .animate {
+            animation: p 1s .5s both;
+        }
+
+        .no-round:before {
+            background-size: 0 0,auto;
+        }
+
+        .no-round:after {
+            content: none;
+        }
+
+        /*Scroll Bar*/
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height:4px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+        }
+    </style>
+}
+
+<!-- Results Table -->
+<div class="px-1 col-12 dtResults">
+    <div class="row ">
+        <h3 class="page-title col-sm-11 pt-1 text-start">@Model.Adi Anketi Sonuçlar Tablosu</h3>
+        <div class="btn-group" style="color:InfoText;">
+            <a id="katilimciCevaplari" class="btn btn-outline-secondary" style="border: 1px solid #34AADC">Katılımcı Cevapları <i class="fa fa-reply-all" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div class="table-responsive p-2">
+        <table id="_resultsTable" class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="dtCentered">Soru</th>
+                    <th>Cevap İstatikleri</th>
+                    <th>Katılımcı Bilgileri</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<!-- Answers Yorum Button Modal -->
+<div class="modal fade" id="_answersCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_answerCommentModalLabel">Yorumlar</h4>
+            </div>
+            <div class="modal-body">
+                <form id="_answerCommentForm">
+                    <input type="hidden" value="0" id="_answercommentform" name="_answercommentform" />
+                    <div class="form-group">
+                        <div class="table-responsive p-2">
+                            <table id="_commentTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Ad Soyad</th>
+                                        <th>Yorum</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Answers Button Modal -->
+<div class="modal fade" id="_answersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_answerModalLabel">Cevap İstatiği</h4>
+            </div>
+            <div class="modal-body">
+                <form id="_answerForm">
+                    <input type="hidden" value="0" id="_answerform" name="_answerform" />
+                    <div class="form-group">
+                        <div class="table-responsive p-2">
+                            <table id="_answerTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Şıklar</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="backResults">
+    <button class="back-button btn btn-success" onclick="location.href='@Url.Action("Results")'">@Html.Raw("Geri Dön")</button>
+</div>
+
+<!-- Katılımcı Cevapları Tablosu -->
+<div class="px-1 col-12 dtParticipantsAnswer">
+    <div class="row">
+        <h3 class="page-title col-sm-10 pt-1 text-start">@Model.Adi Anketi Katılımcı Cevapları Tablosu</h3>
+    </div>
+    <div class="table-responsive p-2">
+        <table id="_participantsTable" class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="dtCentered" style="width:15%;">Ad Soyad</th>
+                    <th class="dtCentered" style="width:15%;">E-mail</th>
+                    <th style="width:15%;">Telefon Numarası</th>
+                    <th style="width:15%;">Cevapları Görüntüle</th>
+                    <th class="dtCentered" style="width:40%;">Öneri</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="backResultDetails">
+    <button id="backResultDetails" class="back-button btn btn-success">Geri Dön</button>
+</div>
+
+<!-- Answers Button Modal -->
+<div class="modal fade" id="_participantAnswersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="height:50px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_participantAnswerModalLabel"> </h4>
+            </div>
+            <div class="modal-body">
+                <form id="_participantAnswerForm">
+                    <input type="hidden" value="0" id="_participantanswerform" name="_participantanswerform" />
+                    <div class="form-group">
+                        <div class="table-responsive p-2">
+                            <table id="_participantAnswerTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Soru</th>
+                                        <th>Cevap</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Content/AdminLayout/assets/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Content/AdminLayout/js/sweetalert2.min.js"></script>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/OnlineIslem/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+
+        resultsTable = null;
+        answerTable = null;
+        commentTable = null;
+        participantsTable = null;
+        participantAnswerTable = null;
+        $(() => {
+            getResultsAjax();
+        })
+
+        $('#katilimciCevaplari').click(function () {
+            document.querySelector(".dtResults").style.display = 'none';
+            document.querySelector(".backResults").style.display = 'none';
+            document.querySelector(".backResultDetails").style.display = 'block';
+            document.querySelector(".dtParticipantsAnswer").style.display = 'block';
+
+            getParticipantAnswers();
+        });
+
+        $('#backResultDetails').click(function () {
+            document.querySelector(".backResultDetails").style.display = 'none';
+            document.querySelector(".dtParticipantsAnswer").style.display = 'none';
+            document.querySelector(".dtResults").style.display = 'block';
+            document.querySelector(".backResults").style.display = 'block';
+         });
+
+        var Participants = (sId) => {
+            //Katılımcı var mı kontrol edip sayfaya yönlendireceğiz
+
+            console.log("katılımcı bilgisii" + sId);
+
+            $.post('@Url.Action("ParticipantsControl", "Surveys")', { sId: sId }, (d, s) => {
+            
+                if (d.data == true) {
+                    window.location.href = '@Url.Action("Participants", "Surveys")' + "/" + sId;
+
+                } else {
+                    Swal.fire({ icon: 'info', text: 'Katılımcı bilgisi bulunmamaktadır.', confirmButtonText: 'Tamam', });
+                }
+            })
+        }
+
+        var getResultsAjax = () => {
+            if (resultsTable == null)
+                resultsTable = $('#_resultsTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getResultsAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = @Model.Id;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.Soru;
+                            }, "name": "Soru"
+                        },
+                        {
+                            "className": "dtCentered",
+                            "render": function (data, type, row) {
+                                if (row.CevapTipi == 1) {
+                                    return `<button type="button" class="btn btn-dark pt-2 statistics-btn" onclick="javascript:getStatistics(${row.Id})">Cevaplar</button>`;
+                                }
+                                else {
+                                    return `<button type="button" class="btn btn-dark pt-2 statistics-btn" onclick="javascript:getComment(${row.Id})">Yorumlar</button>`;
+                                }
+                            }, "name": "Id", "name": "Id"
+                        },
+                        {
+                            "className": "dtCentered",
+                            "render": function (data, type, row) {
+                                return `<button type="button" class="btn btn-dark pt-2 partips-btn" onclick="javascript:Participants(${row.Id})">Katılımcılar</button>`;
+                            }, "name": "SoruId"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#resultsTable_filter input').unbind();
+                        $('#resultsTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                resultsTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var getStatistics = (sId) => {
+            $('#_answerForm').val("");
+                 if (answerTable == null)
+                     answerTable = $('#_answerTable').DataTable({
+                     processing: false,
+                    serverSide: false,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                         paging: false,
+                         autoWidth: false,
+                         ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                         order: [[1, "asc"]],
+                         ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getAnswerIstatistics", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = sId;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "dtCentered",
+                            "data": "MekanAdi",
+                            "render": (data, type, row) => {
+                                return row.Icerik;
+                            }, "name": "Icerik"
+                        },
+                        {
+                            "className": "dtCentered",
+                            "render": (data, type, row) => {
+                                var yuzdelik = (100 * row.SecilmeSayisi) / row.ToplamSecilmeSayisi;
+                                var _yuzdelik = parseFloat(yuzdelik).toFixed(2);
+
+                                if (row.ToplamSecilmeSayisi == 0) {
+                                    return ` <div class="pie animate" style="--p:0;--c:#00a0df"> 0%</div>`;
+
+                                } else {
+                                    return ` <div class="pie animate" style="--p:${yuzdelik};--c:#00a0df"> ${_yuzdelik}%</div>`;
+
+                                }
+                            }, "name": "SecilmeSayisi"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#answerTablee_filter input').unbind();
+                        $('#answerTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                answerTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+            $('#_answersModal').modal('show');
+        }
+
+        var getComment = (sId) => {
+            if (commentTable == null)
+                commentTable = $('#_commentTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"},
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getParticipantsCommentAll", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = sId;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.AdiSoyadi;
+                            }, "name": "AdiSoyadi"
+                        },
+                        {
+                            "render": function (data, type, row) {
+                                return row.Cevap;
+                            }, "name": "Cevap"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#commentTable_filter input').unbind();
+                        $('#commentTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                commentTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+            $('#_answersCommentModal').modal('show');
+        }
+
+        var getParticipantAnswers = () => {
+            if (participantsTable == null)
+                participantsTable = $('#_participantsTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getParticipantAnswersAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = @Model.Id;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+
+                            "render": (data, type, row) => {
+                                return row.AdiSoyadi;
+                            }, "name": "AdiSoyadi"
+                        },
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.Eposta;
+                            }, "name": "Eposta"
+                        },
+                        {
+                            "className": "dtCentered",
+                            "render": (data, type, row) => {
+                                return row.Tel;
+                            }, "name": "Tel"
+                        },
+                        {
+                            "className": "dtCentered",
+                            "render": function (data, type, row) {
+                                return `<button type="button" id="answer" class="btn btn-dark pt-2 statistics-btn" onclick="javascript:getAnswer(${row.Id})">Cevaplar</button>`;
+                            }, "name": "Id"
+                        },
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.Oneri;
+                            }, "name": "Oneri"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#participantsTable_filter input').unbind();
+                        $('#participantsTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                participantsTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var getAnswer = (sId) => {
+            $.post('@Url.Action("GetParticipantInfo", "Surveys")', { sId: sId }, (d, s) => {
+                console.log(d.data);
+                $("#_participantAnswerModalLabel").text(d.data);
+
+                if (participantAnswerTable != null) {
+                    participantAnswerTable.destroy();
+                    participantAnswerTable = null;
+                }
+
+                if (participantAnswerTable == null)
+                participantAnswerTable = $('#_participantAnswerTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getAnswerAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = sId;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.Soru;
+                            }, "name": "Soru"
+                        },
+                        {
+                            "className": "table_style",
+                            "render": function (data, type, row) {
+                                return row.Cevap;
+                            }, "name": "Cevap"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#participantAnswerTable_filter input').unbind();
+                        $('#participantAnswerTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                participantAnswerTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+
+            })
+
+
+
+
+            $('#_participantAnswersModal').modal('show');
+        }
+    </script>
+}

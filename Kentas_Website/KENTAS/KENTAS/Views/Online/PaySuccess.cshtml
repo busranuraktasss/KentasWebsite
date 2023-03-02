@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "PaySuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <link href="~/Content/css/notification.css" rel="stylesheet" />
+    <link href="~/Content/css/order.css" rel="stylesheet" />
+}
+
+
+<div class="container bgwite mt-4" style="background-color:white;">
+
+    <div class="col-md-12 pt-4 pb-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body" style="height:50vh; display:none" id="onay_content">
+                <h4 class="card-title">Ödeme işlemi Başarılı</h4>
+                <i class="fa fa-check-circle fa-7x text-success mb-4 mt-4"></i>
+                <p class="card-text">
+                    <span>Referans No: <b id="id-ref">-</b></span>
+                </p>
+                <a href="javascript:window.location.href ='../Home/'" class="btn btn-primary shadow">Anasayfa'a Dön</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="processing" id="example_processing"><h5 style="transform: translate(-50%, 3.5rem)!important">İşleminiz devam ediyor.<br />Lütfen bekleyiniz..</h5></div>
+
+@section scripts{
+    <script src="~/Scripts/alert_modal.js"></script>
+    <script type="text/javascript">
+        var ref = localStorage.getItem('VerifyEnrollmentRequestId');
+        var md = localStorage.getItem('md');
+        var plaka = localStorage.getItem('plaka');
+        var ids = localStorage.getItem('DebtsIds') ? localStorage.getItem('DebtsIds').split(',') : [];
+
+        $((_$) => {
+            $("#example_processing").show();
+
+            setTimeout(() => {
+                if (!ref || !md) {
+                   window.location.href = `@Url.Action("Index","Home")`;
+                   return;
+                }
+                $('#id-ref').html(ref);
+                odeyenKaydet();
+
+            }, 3000);
+        });
+
+        var odemeAl = () => {
+            $("#example_processing").show();
+            $.ajax({
+                url: '@Url.Action("GetPaymentDepts", "online")',
+                data: JSON.stringify({ Plaka: plaka, DebtsIds: ids, RequestId: ref }),
+                type: "POST",
+                async: true,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    $("#example_processing").hide();
+                    if (response) {
+                        if (!response.success) {
+                            myAlert('HATA !', response.msg, 3);
+                        } else {
+                            myAlert('BAŞARILI', response.msg, 1);
+                            $('#onay_content').fadeIn();
+
+                            localStorage.clear();
+                        }
+                    }
+                }
+            });
+        }
+
+        var odeyenKaydet = () => {
+            $.ajax({
+                url: '@Url.Action("setOdemeYapan", "online")',
+                data: JSON.stringify({
+                    Type: localStorage.getItem('mtip'),
+                    Sahip: localStorage.getItem('sahip'),
+                    Ad: localStorage.getItem('ad'),
+                    TcNo: localStorage.getItem('tcno'),
+                    Tel: localStorage.getItem('tel'),
+                    Mail: localStorage.getItem('mail'),
+                    Adres: localStorage.getItem('adres'),
+                    Cvv: localStorage.getItem('p_cvc'),
+                    Amount: localStorage.getItem('p_amount'),
+                    LicensPlate: localStorage.getItem('plaka')
+
+                }),
+                type: "POST",
+                async: true,
+                dataType: "json",
+                contentType: "application/json",
+                success: function (d) {
+                    $("#example_processing").hide();
+                    if (d) {
+                        if (d.status == false) {
+                            myAlert('HATA !', d.msg, 3);
+                        } else {
+                            myAlert('BAŞARILI', d.msg, 1);
+                            ref = d.VerifyEnrollmentRequestId;
+                            $('#id-ref').html(ref);
+                            odemeAl();
+                        }
+                    }
+                }
+            });
+        }
+
+        function IPAdres() { return '@Request.UserHostAddress'; }
+
+    </script>
+
+
+}

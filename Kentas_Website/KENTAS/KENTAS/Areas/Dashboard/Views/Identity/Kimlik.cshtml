@@ -1,0 +1,42 @@
+﻿@model IEnumerable<KENTAS.Models.Identity>
+
+@{
+    ViewBag.Title = "Kimlik Bilgileri";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kimlik</h2>
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            ANAHTAR KELİMELER
+        </th>
+        <th class="text-center">
+            SİTE AÇIKLAMA
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>     
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.keyword)
+        </td>
+        <td>
+            @Html.Raw(item.description)
+        </td>
+        <td>
+            <div class="btn-group">
+                @Html.ActionLink("Güncelle", "Edit", new { id = item.id }, new { @class = "btn btn-sm btn-success" })
+               
+            </div>
+            
+        </td>
+    </tr>
+}
+
+</table>

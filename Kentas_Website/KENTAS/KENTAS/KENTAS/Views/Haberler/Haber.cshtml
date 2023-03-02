@@ -1,0 +1,89 @@
+﻿@model IEnumerable<KENTAS.Models.News>
+
+@{
+    ViewBag.Title = "Haberler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .hbg {
+        background: url(../Content/images/f_bg.jpg) center center no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<div class="container bgwhite mt-4">
+    <div class="row p-1">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3 hbg" style="background-color:#00a0af">
+            <h6 class="pl-3 my-auto" style="color:white">HABERLER</h6>
+        </div>
+    </div>
+    <div style="height:800px; overflow-y:auto; overflow-x:hidden;">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-2 px-5">
+                @foreach (var item in Model.ToList())
+                {
+                    <div class="row border radius_contains mb-3">
+                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 pt-2 pb-2">
+                            <img src="@Url.Content(item.newsImage)" class="radius_contains" style="width:100%;" alt="Haber" />
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 pt-xl-4 pt-lg-4 pt-md-2 ">
+                            <h6 class="mb-1 mt-2 text-uppercase newsListHeaderElipsis" style="color:midnightblue;"> @Html.Raw(item.newsHeaderDesc)</h6>
+                            <h6 class="mb-1 newsListDescElipsis" style="color:midnightblue;">  @Html.Raw(item.newsDesc)</h6>
+                            <a style="font-size:14px; color:#00a0af; " class="mt-1">@Html.ActionLink("Detaylı İncele", "Details", new { id = item.newsId })</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.newsHeaderDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.newsDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.newsImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.newsTabItem)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.newsHeaderDesc)
+                </td>
+                <td>
+                    @Html.Raw(item.newsDesc)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.newsImage)" style="height:60px;" alt="Haber" />
+                </td>
+                <td>
+                    @Html.Raw(item.newsTabItem)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Detaylı İncele", "Details", new { id = item.newsId })
+
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+@section scripts{
+    <script type="text/javascript">
+        $($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+    </script>
+} 

@@ -1,0 +1,58 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Contacts.FirstOrDefault();
+}
+<div class="col-12  ">
+    <div class="google-maps p-2">
+        <iframe class="rounded" src="@data.contactImageSrc" frameborder="0" allowfullscreen></iframe>
+
+    </div>
+</div>
+
+<div class="col-12  ">
+    <div class="row align-items-center  ">
+        <div class="col-12 ">
+            <img src="~/Content/Images/telefon.png" style="width:20px; height:20px; " class="ml-2" />
+
+            <small class="text-muted" style="color:white;">Tel:</small>
+            <small style="color:white;">@data.contactPhoneNumber (Tel)</small>
+
+        </div>
+
+        <div class="col-12">
+            <img src="~/Content/Images/fax.png" style="width:20px; height:20px; " class="ml-2" />
+
+            <small class="text-muted" style="color:white;">Tel:</small>
+            <small style="color:white;"> @data.contactFaxNumber (Fax Tel - Evrak)</small>
+        </div>
+
+        <div class="col-12">
+            <img src="~/Content/Images/adres.png" style="width:20px; height:20px; " class="ml-2" />
+            <small class="text-muted" style="color:white">Adres:</small>
+            <small style="color:white;"> @data.contactAddress</small>
+        </div>
+
+        <div class="col-12">
+
+
+
+            <center>
+                <a href="https://www.instagram.com/eskisehirkentas/" target="_blank">
+                    <img style="height:25px; width:25px;" src="~/Content/images/instagram.png" /> &nbsp;eskisehirkentas
+
+                </a>
+                &nbsp;&nbsp;
+                <a href="https://twitter.com/eskisehirkenta1" target="_blank">
+                    <img style="height:25px; width:25px;" src="~/Content/images/twitter.png" />&nbsp; eskisehirkenta1
+                    @*<link style="color: #6c757d"> eskisehirkenta1 </link>*@
+
+                </a>
+            </center>
+
+
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Adverts.Select(s => new
+    {
+        s.adId,
+        s.adHeaderDesc,
+        s.adDesc,
+        s.adImage,
+        s.adTab,
+
+    }).OrderByDescending(s => s.adId).Take(5).ToList();
+}
+
+
+
+<div class="tab-content tabs border-top">
+    @{int t = 0;}
+
+    @foreach (var item in data)
+    {
+        t++;
+
+        var active = t == 1 ? "active show" : "";
+        <div role="tabpanel" class="tab-pane fade in @active" id="Sectiona_@item.adId">
+
+            <div style="word-wrap: break-word;" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 float-left mt-2">
+                <div class="radius_contains border p-1 mt-2">
+                    <img src="@Url.Content(item.adImage)" class="radius_contains" style="width:100%; height:240px;" alt="advert">
+                </div>
+            </div>
+            <div style="word-wrap: break-word;" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-sm-12 float-left mt-3">
+                <div style="overflow-y:auto; overflow-x:hidden; height:200px;">
+                    <h5 class="pt-4 pb-3 text-xl-left text-lg-left text-md-left text-center" style="color: midnightblue; font-weight: 700;">@Html.Raw(item.adHeaderDesc)</h5>
+                    <div class="p_nav_content text-xl-left text-lg-left text-md-left mb-2 ">
+                        @Html.Raw(item.adDesc)
+                    </div>
+                </div>
+                <a href="@Url.Action("Details","Duyurular")/@item.adId" class="text-muted" style="color: midnightblue;">
+                    Devamı İçin Tıklayınız
+                    <i class="fa fa-long-arrow-alt-right fa-lg"></i>
+                </a>
+
+            </div>
+        </div>
+
+    }
+    <div style="word-wrap: break-word; " class="scb col-xl-4 col-lg-4 col-md-12 col-sm-12  mt-xl-0 mt-lg-0 mt-md-2 mt-2  float-left new_p">
+        <ul id="rb_list_a" class="nav nav-tabs" role="tablist">
+            @{int h = 0;}
+
+            @foreach (var item in data)
+            {
+
+                h++;
+
+                var active = h == 1 ? "active" : "";
+                <li role="presentation" class="@active border-bottom text-xl-left text-lg-left text-md-center border-left">
+                    <a href="#Sectiona_@item.adId" aria-controls="home"
+                       role="tab" data-toggle="tab">@Html.Raw(item.adTab) </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

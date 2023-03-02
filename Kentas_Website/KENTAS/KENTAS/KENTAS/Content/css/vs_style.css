@@ -1,0 +1,159 @@
+.vertical-tab {
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    outline: 0px;
+}
+
+.vertical-tab {
+    font-family: 'Poppins', sans-serif;
+    display: table;
+    background-color: white;
+    height: 280px;
+    width: 100%;
+}
+
+
+
+    .vertical-tab .nav-tabs {
+        display: table-cell;
+        width: 1%;
+        min-width: 30%;
+        vertical-align: top;
+        border: none;
+    }
+
+
+        .vertical-tab .nav-tabs li {
+            float: none;
+            vertical-align: top;
+            overflow: hidden;
+            height: 70px;
+            padding: 2%;
+        }
+
+            .vertical-tab .nav-tabs li:hover {
+                color: white;
+                background-color: midnightblue;
+            }
+
+                .vertical-tab .nav-tabs li:hover:after {
+                    content: '';
+                    position: absolute;
+                    width: 0;
+                    height: 0;
+                    /*border-right: 20px solid midnightblue;
+                    border-top: 10px solid transparent;
+                    border-bottom: 10px solid transparent;
+                    margin-left: -32%;
+                    margin-top: -3%;*/
+                }
+
+
+
+            .vertical-tab .nav-tabs li a {
+                color: midnightblue;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+                text-align: center;
+                padding: 5px;
+                margin: 0;
+                border-radius: 0;
+                border: none;
+                transition: all 0.3s ease;
+            }
+
+
+            .vertical-tab .nav-tabs li:hover a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .vertical-tab .nav-tabs li:last-child a {
+                margin-bottom: 0;
+            }
+
+            .vertical-tab .nav-tabs li a:hover,
+            .vertical-tab .nav-tabs li.active a,
+            .vertical-tab .nav-tabs li.active a:hover {
+                color: #fff;
+                background-color: midnightblue;
+                border: none;
+            }
+
+            .vertical-tab .nav-tabs li.active {
+                background-color: midnightblue;
+            }
+
+    .vertical-tab .tab-content {
+        color: #fff;
+        background-color: white;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        line-height: 25px;
+        margin-top: 10px;
+        display: table-cell;
+        position: relative;
+    }
+
+        .vertical-tab .tab-content h3 {
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 7px 0;
+        }
+
+@media only screen and (max-width: 479px) {
+    .vertical-tab .nav-tabs {
+        width: 100%;
+        border: none;
+        display: block;
+    }
+
+    .vertical-tab .tab-content {
+        padding: 25px 20px;
+        margin-top: 0;
+        display: block;
+    }
+
+        .vertical-tab .tab-content h3 {
+            font-size: 18px;
+        }
+}
+
+.slide_area_1 {
+    width: 45%;
+    float: left;
+    padding: 1%;
+}
+
+
+.slide_area_2 {
+    width: 55%;
+    float: left;
+    padding: 2%;
+}
+
+.bgwhite {
+    background-color: white !important;
+}
+
+.p_nav_content {
+    line-height: 14px;
+    font-size: 14px;
+    color: midnightblue;
+    font: Trebuchet MS, sans-serif;
+}
+
+.p_nav_content_2 {
+    line-height: 16px;
+    font-size: 16px;
+    font: Trebuchet MS, sans-serif;
+}
+
+.login-bg {
+    vertical-align:central
+
+}

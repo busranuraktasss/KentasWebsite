@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<KENTAS.Models.GeneralManager>
+
+@{
+    ViewBag.Title = "Genel Müdür";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <style type="text/css">
+        .metin {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .text-indent label{
+            text-indent:30px;
+        }
+
+        @@media only screen and (min-width: 375px) {
+            .col-xl-4 /*Nav Logolar*/ {
+                margin-bottom: 10px;
+                justify-content: space-around;
+            }
+
+            .justify-content-center {
+                margin-top: 8px;
+            }
+        }
+    </style>
+}
+
+<div class="container bgwite mt-4 radius_contains" style="background-color:white;">
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af;">
+            <h6 class="pl-3 my-auto" style="color:white">GENEL MÜDÜR</h6>
+        </div>
+
+    </div>
+    <div class="row metin">
+        @foreach (var item in Model)
+        {
+
+
+            <div class="col-md-12 text-center"><img class="borderDemo p-3" src="@Url.Content(@item.GeneralManagerLogo)" alt="GeneralManager" style="width:200px; height:200px;" /></div>
+
+            <div class="col-md-12 text-center" style="color:midnightblue; font-size:large; font-weight:bold;"><label class=" p-3"> @Html.DisplayFor(modelItem => item.GeneralManagerName)</label></div>
+
+            <div class="col-md-12 mb-5  text-indent" style="color:midnightblue;"> <label class=""> @Html.DisplayFor(modelItem => item.GeneralManagerDescription)</label></div>
+
+        }
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<KENTAS.Models.News>
+
+@{
+    ViewBag.Title = "Haberler";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+    <div class=" btn btn-info" style="color:InfoText;">
+        @Html.ActionLink("Yeni Ekle", "Create")
+    </div>
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            HABERLER BAŞLIK AÇIKLAMA
+        </th>
+        <th class="text-center">
+            HABERLER AÇIKLAMA
+        </th>
+        <th class="text-center">
+            HABERLER FOTOĞRAF
+        </th>
+        <th class="text-center">
+            HABERLER SEKME
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.newsHeaderDesc)
+        </td>
+        <td>
+            @Html.Raw(item.newsDesc)
+        </td>
+        <td>
+            <img src="@Url.Content(item.newsImage)" style="height:60px;" alt="Haber"/>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.newsTabItem)
+        </td>
+        <td>
+            <div>
+                @Html.ActionLink("Güncelle", "Edit", new { id = item.newsId }, new { @class = "btn btn-sm btn-success" })
+                @Html.ActionLink("Sil", "Delete", new { id = item.newsId }, new { @class = "btn btn-sm btn-danger" })
+            </div>
+           
+        </td>
+    </tr>
+}
+
+</table>

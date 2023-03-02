@@ -1,0 +1,28 @@
+﻿@model IEnumerable<KENTAS.Models.Kvkk>
+
+@{
+    ViewBag.Title = "KVKK";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th>
+            KVKK METNİ
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.KvkkDescription)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id = item.KvkkId }, new { @class = "btn btn-sm btn-success" })
+        </td>
+    </tr>
+}
+
+</table>

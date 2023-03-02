@@ -1,0 +1,276 @@
+﻿
+@{
+    ViewBag.Title = "Hizmetler";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <style type="text/css">
+        #map_canvas {
+            height: 50vh;
+        }
+
+       
+        @@media (max-width: 490px) {
+            .e_close {
+                display:none;
+            }
+        }
+    </style>
+}
+
+<div class=" btn-group" style="color:InfoText;">
+    <a href="javascript:addNewService();" class="btn btn-success ">Yeni Ekle <i class="fa fa-plus"></i></a>
+</div>
+<hr />
+<div style="width:100%; overflow-x:auto;">
+    <table class="table table-bordered table-striped table-responsive-sm">
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th class="e_close">Açıklama</th>
+                <th>Kordinatlar</th>
+                <th>Çalışma Saatleri</th>
+                <th class="e_close">Adres</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Hizmet İşlemleri</h4>
+            </div>
+            <div class="modal-body">
+                <form id="service-form">
+                    <input type="hidden" value="0" name="Id" id="Id" />
+                    <div class="form-group">
+                        <label for="Title">Başlık</label>
+                        <input type="text" class="form-control" id="Title" name="Title" placeholder="Hizmet adı" required />
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label for="Sabahsaat">Sabah Çalışma Saati</label>
+                            <input type="time" class="form-control" id="Sabahsaat" name="Sabahsaat" placeholder="Örnek: 08:30" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Aksamsaat">Akşam Çalışma Saati</label>
+                            <input type="time" class="form-control" id="Aksamsaat" name="Aksamsaat" placeholder="Örnek: 22:30" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Subtitile">Açıklama/Tanım</label>
+                        <textarea rows="3" class="form-control" id="Subtitile" name="Subtitile" placeholder="Hizmet açıklaması" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Adress">Adres</label>
+                        <textarea rows="3" class="form-control" id="Adress" name="Adress" placeholder="Adres" required></textarea>
+                    </div>
+
+                    <div class="form-inline mb-3">
+                        <div class="form-group">
+                            <label for="Lat">Kordinat</label>
+                            <input type="text" class="form-control" id="Lat" name="Lat" placeholder="41.00" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Lng">&nbsp;</label>
+                            <input type="text" class="form-control" id="Lng" name="Lng" placeholder="-41.00" required />
+                        </div>
+                    </div>
+
+                    <div style="margin-top:15px;" id="map_canvas"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <button type="button" class="btn btn-primary" onclick="saveService()">Kaydet <i class="fa fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx5ma4IL_UxSVattayQ9xUm7JsejzWdbU&callback=initMap&libraries=&v=weekly" async></script>*@
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&key=AIzaSyBx5ma4IL_UxSVattayQ9xUm7JsejzWdbU"></script>
+
+    <script type="text/javascript">
+        var l = 39.7667061;
+        var n = 30.5256311;
+        $(() => {
+            $($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+
+            getServices();
+            initialize();
+        })
+
+        var getServices = () => {
+            $('#table-body').empty();
+            $.getJSON('@Url.Action("getServices", "Services")', (d, s) => {
+                if (s === "success") {
+                    for (let item of d.items) {
+                        let str = `<tr id="row_${item.Id}">
+                                    <td>${item.Title}</td>
+                                    <td class="e_close">${item.Subtitile}</td>
+                                    <td><img class="img-thumbnail img-responsive" src="https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=150x150&maptype=hybrid&key=AIzaSyBx5ma4IL_UxSVattayQ9xUm7JsejzWdbU&markers=color:red%7Clabel:HH%7C${item.Lat},${item.Lng}" /></td>
+                                    <td>${item.WorkingHours}</td>
+                                    <td class="e_close">${item.Adress}</td>
+                                    <td>
+                                         <a href="javascript:editService(${item.Id});" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
+                                         <a href="javascript:deleteService(${item.Id});" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                    </td>
+                                   </tr>`;
+                        $('#table-body').append(str);
+                    }
+                }
+            });
+        }
+
+        var addNewService = () => {
+            $('#myModal').modal('show');
+            $('#Id').val('0');
+            $('#Title').val('');
+            $('#Sabahsaat').val('');
+            $('#Aksamsaat').val('');
+            $('#Subtitile').val('');
+            $('#Adress').val('');
+            $('#Lat').val('');
+            $('#Lng').val('');
+        }
+
+        //AIzaSyBx5ma4IL_UxSVattayQ9xUm7JsejzWdbU
+        var saveService = () => {
+            let hata = false;
+            $('[required]').each((index, item) => {
+                if (!item.value) {
+                    item.focus();
+                    alert('Eksik yerleri doldurunuz. Detay: ' + item.getAttribute('placeholder'));
+                    hata = true;
+                    return false;
+                }
+            })
+
+            if (!hata) {
+                var formData = new FormData(document.getElementById('service-form'));
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("addService", "Services")',
+                    data: formData,
+                    async: true,
+                    contentType: false,
+                    processData: false,
+                    success: function (d) {
+                        if (d.status) {
+                            alert(d.msg);
+                            getServices();
+                            $('#myModal').modal('hide');
+                        }
+                        else {
+                            alert(d.msg);
+                        }
+                    },
+                    error: function (ma, st) {
+                    if (ma.status === 0) {
+                        alert('bağlantı yok, ağı doğrulayın.');
+                    } else if (ma.status == 404) {
+                        alert('Requested page not found. [404]');
+                    } else if (ma.status == 500) {
+                        alert('Dahili Sunucu Hatası [500].');
+                    } else if (st === 'parsererror') {
+                        alert('İstenen JSON ayrıştırması başarısız');
+                    } else if (st === 'timeout') {
+                        alert('Zaman aşımı hatası.');
+                    } else if (st === 'abort') {
+                        alert('Ajax isteği reddedildi.');
+                    } else {
+                        alert('Yakalanmamış Hata.\n' + ma.responseText);
+                    }
+                    //var myWindow = window.open("", "_Blank",);
+                    //myWindow.document.write(ma.responseText);
+                },
+                });
+            }
+        }
+
+        function initialize() {
+            var myLatlng = new google.maps.LatLng(l,n);
+            var myOptions = {
+                zoom: 15,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+
+            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+            addMarker(myLatlng, 'Default Marker', map);
+
+            map.addListener('click', function (event) {
+                //addMarker(event.latLng, 'Click Generated Marker', map);
+            });
+        }
+
+        function handleEvent(event) {
+            document.getElementById('Lat').value = event.latLng.lat();
+            document.getElementById('Lng').value = event.latLng.lng();
+        }
+
+        function addMarker(latlng, title, map) {
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: title,
+                draggable: true
+            });
+
+            marker.addListener('drag', handleEvent);
+            marker.addListener('dragend', handleEvent);
+        }
+
+        var editService = (sId) => {
+            $.getJSON('@Url.Action("getOneService", "Services")', { request: sId }, (d, s) => {
+
+                if (s === "success") {
+                    let res = d.data;
+
+                    $('#myModal').modal('show');
+                    $('#Id').val(res.Id);
+                    $('#Title').val(res.Title);
+                    $('#Sabahsaat').val(res.WorkingHours.split('/')[0].trim());
+                    $('#Aksamsaat').val(res.WorkingHours.split('/')[1].trim());
+                    $('#Subtitile').val(res.Subtitile);
+                    $('#Adress').val(res.Adress);
+                    $('#Lat').val(res.Lat);
+                    $('#Lng').val(res.Lng);
+                    l = parseFloat(res.Lat);
+                    n = parseFloat(res.Lng);
+                    initialize();
+
+                }
+            })
+        }
+
+        var deleteService = (sId) => {
+            var r = confirm("Seçili Kayıt silinsinmi ?");
+            if (r == true) {
+                $.get('@Url.Action("deleteService", "Services")', {request : sId}, (d, s) => {
+
+                    if (s === "success") {
+                        if (d.status) {
+                            $('#row_' + sId).fadeOut();
+                        }
+                        alert(d.msg);
+                    }
+
+                })
+
+            }
+        }
+
+    </script>
+}

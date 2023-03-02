@@ -1,0 +1,52 @@
+﻿@model KENTAS.Models.SSSorular
+
+@{
+    ViewBag.Title = "SSS Sil";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Silmek İstediğinize Emin Misiniz?</h3>
+<div>
+    <h4>SSS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            SORU
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Soru)
+        </dd>
+
+        <dt>
+            CEVAP
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cevap)
+        </dd>
+        <dt>
+            TARİH
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <div class=" btn btn-info mb-3" style="color: InfoText; @*margin:10px 0px 0px 2200px;*@ ">
+        @Html.ActionLink("Geri Dön", "Index")
+    </div> |
+    <input type="submit" value="Sil" class="btn btn-danger" />
+
+</div>
+    }
+</div>

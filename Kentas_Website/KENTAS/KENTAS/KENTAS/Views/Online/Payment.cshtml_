@@ -1,0 +1,272 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css {
+    <style>
+        .mainDiv {
+            width: 360px;
+            height: auto;
+            position: absolute;
+            color: black;
+            border: 6px inset red;
+            border-radius: 15px;
+            display: inline;
+            padding: 15px;
+            box-shadow: 10px 10px 5px #888;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+
+        .innerSpan {
+            width: 175px;
+            float: left;
+            padding: 4px 0 0 0;
+        }
+
+      
+    </style>
+}
+
+<div class="container bgwite mt-4" style="background-color:white;">
+
+
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3 hbg" style="background-color:#00a0af; background-image:url(/Content/images/borc.png)">
+            <h6 class="pl-3 my-auto" style="color:white">BORÇ ÖDEME</h6>
+        </div>
+
+    </div>
+
+    <h4 class="mb-3" style="color: midnightblue;">KREDİ KARTI İLE BORÇ ÖDEME</h4>
+    <p style="color: midnightblue;">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+        text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+    </p>
+
+
+    <form class="needs-validation" novalidate id="pos_form">
+        <div class="row">
+            <div class="col-md-7 mb-3">
+                <label for="cc-name" style="color: #0099A9;">Kart Üzerindeki İsim</label>
+                <input type="text" class="form-control" id="cc-name" placeholder="Kart Üzerindeki İsmi Yazınız" required="" name="CardHoldersName" />
+                <div class="invalid-feedback">
+                    Kart üzerindeki isim alanı boş bırakılamaz ve rakamsal karakterler kullanılamaz.
+                </div>
+            </div>
+            <div class="col-md-7 mb-3">
+                <label for="cc-number" style="color: #0099A9;">Kart No</label>
+                <input type="number" class="form-control" id="cc-number" name="Pan" placeholder="Kart No Yazınız" required="">
+                <div class="invalid-feedback">
+                    Kart numarası boş geçilemez
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <label for="cc-expiration" style="color: #0099A9;">Son Kullanma Tarihi</label>
+            </div>
+            <div class="col-md-3 ">
+                <div class="row">
+
+                    <div class="col-md-4 mb-3 pr-lg-0">
+                        <select class="form-select form-control" style="text-align-last:center;" id="moon" required>
+                            <option selected disabled value="">Ay</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Son kullanma tarihi ay bilgsi boş geçilemez
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 mb-3 pl-1">
+
+                        <select class="form-select form-control " style="text-align-last:center; " id="year" required>
+                            <option selected disabled value="">Yıl</option>
+                            <option value="21">2021</option>
+                            <option value="22">2022</option>
+                            <option value="23">2023</option>
+                            <option value="24">2024</option>
+                            <option value="25">2025</option>
+                            <option value="26">2026</option>
+                            <option value="27">2027</option>
+                            <option value="28">2028</option>
+                            <option value="29">2029</option>
+                            <option value="30">2030</option>
+                            <option value="31">2031</option>
+                            <option value="32">2032</option>
+                            <option value="33">2033</option>
+                            <option value="34">2034</option>
+                            <option value="35">2035</option>
+                            <option value="36">2036</option>
+                            <option value="37">2037</option>
+                            <option value="38">2038</option>
+                            <option value="39">2039</option>
+                            <option value="40">2040</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Son kullanma tarihi yıl bilgsi boş geçilemez
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <label for="cc-expiration" style="color: #0099A9;">CVC2</label>
+            </div>
+            <div class="col-md-2 mb-3">
+                <input type="number" class="form-control" style="text-align-last:center; " id="cc-cvv" placeholder="" minlength="3" maxlength="3" required name="Cvv" />
+                <div class="invalid-feedback">
+                    CVC2 alanı boş geçilemez.
+                </div>
+            </div>
+            <div class="col-md-2 mb-3 pl-0 pt-1">
+                <a href="#" style="color:#5eb9c4;">CVC2 nedir ?</a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-7">
+                <div class="form-check">
+                    <input class="form-check-input" style="background-color: aquamarine;" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        3D kullanmak istiyorum. <a href="#" style=" color:#5eb9c4;">3D nedir ?</a>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="form-check">
+                    <input class="form-check-input" style="background-color: #5eb9c4;" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <a href="#" style=" color:#5eb9c4;">Ön Bilgilendirme Formu</a>'nu ve <a href="#" style=" color:#5eb9c4;">Mesafeli Satış Sözleşmesi</a>'ni okudum ve onaylıyorum.
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <label class="pl-0 font-weight-light" style="font-size:12px;">Geçerli kredi kartları</label>
+                    </div>
+                    <div class="col-md-8 p-0">
+                        <img src="~/Content/images/allcard.gif" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-md-10 ml-2">
+                        <label class="mb-1" style="color: midnightblue; font-weight: bold;">Toplam Ödenecek Tutar</label>
+                    </div>
+                    <div class="col-md-4 ml-1" style="text-align:center;">
+                        <label class="mb-3" style="color: midnightblue;  font-weight: bold;">290 TL</label>
+                    </div>
+                    <div class="col-md-12 ml-1">
+                        <button class="btn btn-primary px-5 py-2 rounded mb-3" style="background-color: midnightblue; font-weight: bold;" type="button" id="submit">Ödeme Yap</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <input type="hidden" value="1" name="PurchaseAmount" id="CurrencyAmount" />
+        <input type="hidden" value="949" name="Currency" id="CurrencyCode" />
+        <input type="hidden" name="ExpiryDate" id="ExpiryDate" />
+        <input type="hidden" name="BrandName" id="BrandName" value="100" />
+
+    </form>
+
+
+
+</div>
+
+
+<div style="display:none;" id="post-form-content"></div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        document.getElementById('submit').addEventListener('click', () => {
+            var formdata = new FormData(document.getElementById('pos_form'));
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getPayment", "Online")',
+                data: formdata,
+                async: true,// false //(default: true)
+                contentType: false, //"application/json; charset=utf-8", "application/json", "multipart/form-data", "application/x-www-form-urlencoded", "text/plain",
+                processData: false,// default: true
+                success: function (d) {
+                    console.log('Gelen -> ', d);
+                    if (d.html) {
+                        $('#post-form-content').html(d.html);
+                        setTimeout(() => { postPage(); }, 200);
+                    }
+                },
+                error: function (ma, st) {
+                    if (ma.status === 0) {
+                        alert('bağlantı yok, ağı doğrulayın.');
+                    } else if (ma.status == 404) {
+                        alert('Requested page not found. [404]');
+                    } else if (ma.status == 500) {
+                        alert('Dahili Sunucu Hatası [500].');
+                    } else if (st === 'parsererror') {
+                        alert('İstenen JSON ayrıştırması başarısız');
+                    } else if (st === 'timeout') {
+                        alert('Zaman aşımı hatası.');
+                    } else if (st === 'abort') {
+                        alert('Ajax isteği reddedildi.');
+                    } else {
+                        alert('Yakalanmamış Hata.\n' + ma.responseText);
+                    }
+                    //var myWindow = window.open("", "_Blank",);
+                    //myWindow.document.write(ma.responseText);
+                },
+            });
+        });
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        $(function () {
+
+            let _amount = sessionStorage.getItem('CurrencyAmount') || 0;
+            //$('#CurrencyAmount').val(_amount);
+
+            document.getElementById('moon').addEventListener('change', (e) => {
+                $('#ExpiryDate').val(`${document.getElementById('year').value}${document.getElementById('moon').value}`)
+            });
+            document.getElementById('year').addEventListener('change', (e) => {
+                $('#ExpiryDate').val(`${document.getElementById('year').value}${document.getElementById('moon').value}`)
+            });
+
+
+        })();
+        function postPage() {
+            document.forms["frmMpiForm"].submit();
+        }
+    </script>
+
+    
+} 

@@ -1,0 +1,364 @@
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+@media (min-width: 576px) {
+    .container, .container-sm {
+        max-width: 540px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .container, .container-sm, .container-md {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container, .container-sm, .container-md, .container-lg {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container, .container-sm, .container-md, .container-lg, .container-xl {
+        max-width: 1140px;
+    }
+}
+
+.height-110 {
+    height: 110px;
+}
+
+.whitefont {
+    color: white;
+}
+
+.margin-left3 {
+    font-size: large;
+}
+
+.curent {
+    font-size: large;
+}
+
+.whitefont {
+    color: white;
+}
+
+.navmenubg {
+    background-color: #022a5e;
+    background-attachment: fixed;
+}
+
+.menubg {
+    background-color: #e0e0e0;
+    background-image: url("../../Content/images/menubgp.png");
+}
+
+.body {
+    background-image: url("../../Content/images/b.png");
+    height: 100vh !important;
+}
+
+.top1bottom1 {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.paddingzero {
+    padding: 0px;
+    background-repeat: no-repeat;
+}
+
+.paddingleftzero {
+    padding-left: 0px;
+}
+
+.paddingrighttzero {
+    padding-right: 0px;
+}
+
+.sbtn {
+    border-radius: 50px !important;
+    background-color: #ffd24a !important;
+    padding: 10px !important;
+    width: 200px !important;
+    color: #022a5e;
+}
+
+.sliderbtn-l {
+    padding-top: 13.5% !important;
+    padding-bottom: 13.5% !important;
+    padding-left: 11% !important;
+    padding-right: 11% !important;
+    border-radius: 2%;
+}
+
+.btn btn-primary btn-lg span.text {
+    padding: 100px;
+}
+
+.agrid {
+    background-color: white;
+    border-radius: 6px;
+}
+
+.agriddb {
+    background-color: #022a5e;
+    border-radius: 10px !important;
+}
+
+.cf {
+    clear: both;
+    padding-top: 5%;
+}
+
+.aboutbg {
+}
+
+.sliderbtn-l {
+    padding-top: 13.5% !important;
+    padding-bottom: 13.5% !important;
+    padding-left: 11% !important;
+    padding-right: 11% !important;
+    border-radius: 6%;
+}
+
+
+    .sliderbtn-l:hover {
+        padding-top: 13.5% !important;
+        padding-bottom: 13.5% !important;
+        padding-left: 11% !important;
+        padding-right: 11% !important;
+        border-radius: 6%;
+    }
+
+
+.sliderbtn-r {
+    padding-top: 13.5% !important;
+    padding-bottom: 13.5% !important;
+    padding-left: 11% !important;
+    padding-right: 11% !important;
+    border-radius: 6%;
+}
+
+    .sliderbtn-r:hover {
+        padding-top: 13.5% !important;
+        padding-bottom: 13.5% !important;
+        padding-left: 11% !important;
+        padding-right: 11% !important;
+        border-radius: 6%;
+    }
+
+.google-maps {
+    overflow: hidden;
+    padding: 2%;
+    width: 100%;
+}
+
+    .google-maps iframe {
+        height: 275px;
+        width: 100%;
+    }
+
+.footerbg {
+}
+
+.carousel-indicators-round {
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+}
+
+.biradius {
+    border-radius: 50%;
+}
+
+.radius_contains {
+    border-radius: 10px;
+}
+
+.myclear {
+    width: 100%;
+    height: 5px;
+}
+
+.p_block {
+    display: block;
+    line-height: 24px;
+    display: block;
+}
+
+.bosluk {
+    margin: 1.5em .5em;
+    max-width: calc(50% - 1em) !important;
+}
+
+
+
+@media (min-width: 576px) {
+
+    .newsPadding {
+        padding-left: 0;
+        padding-right:0;
+        padding-top: 0;
+    }
+
+
+}
+
+
+@media (min-width: 768px) {
+
+    .newsPadding {
+        padding-left: 6rem;
+        padding-right: 6rem;
+        padding-top: 2rem;
+    }
+   
+}
+
+
+@media (min-width: 992px) {
+
+    .newsPadding {
+        padding-left: 6rem;
+        padding-right: 6rem;
+        padding-top: 2rem;
+    }
+}
+   
+
+
+@media (min-width: 1200px) {
+    .newsPadding {
+        padding-left: 6rem;
+        padding-right: 6rem;
+        padding-top: 2rem;
+    }
+   
+}
+
+
+.body::-webkit-scrollbar {
+    display: none;
+}
+
+
+.new_p {
+    height: 280px;
+   
+    overflow: auto;
+}
+
+.faElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.visElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.newsElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+.ha1Elipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.ha2Elipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
+.neler1Elipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.neler2Elipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+.companyValueElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+}
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 5px;
+   
+}
+
+
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    background-color:dimgray;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+       display:none
+    }
+
+.newsListHeaderElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.newsListDescElipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+.borderDemo {
+    border: 5px solid #1C6EA4;
+    border-radius: 40px 0px 40px 0px;
+}

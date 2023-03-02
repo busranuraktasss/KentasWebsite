@@ -1,0 +1,39 @@
+﻿@model IEnumerable<KENTAS.Models.Brand>
+
+@{
+    ViewBag.Title = "Marka";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th>
+           MARKA FOTOĞRAFI
+        </th>
+        <th>
+           MARKA BAŞLIK
+        </th>
+        <th>
+           MARKA AÇIKLAMA
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content(@item.BrandPhoto)" alt="brand" style="width:200px; height:200px;" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrandTitle)
+        </td>
+        <td>
+            @Html.Raw(item.BrandDescription)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id = item.BrandId }, new { @class = "btn btn-sm btn-success" })
+        </td>
+    </tr>
+}
+
+</table>

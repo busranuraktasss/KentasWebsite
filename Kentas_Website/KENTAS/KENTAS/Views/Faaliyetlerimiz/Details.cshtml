@@ -1,0 +1,105 @@
+﻿@model KENTAS.Helper.Common.Activities_api
+
+@{
+    ViewBag.Title = "Faaliyet Detayları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container bgwhite mt-4">
+
+    <div class="row p-1">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af; background-image:url(/Content/images/fd_bg.png)">
+            <h6 class="pl-3 my-auto" style="color:white">FAALİYETLER</h6>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+
+            <div id="news" class=" owl-carousel owl-theme newsPadding ">
+                @foreach (var item in Model.Resimler)
+                {
+                    <div class="item radius_contains border p-1 ">
+                        <img src="@Url.Content(item.fimgUrl)" class="img-fluid radius_contains" style="width:100%; height:450px;" />
+                    </div>
+                }
+
+            </div>
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 px-5 py-3 ">
+                <div class="row">
+                    <h6 class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-0 text-uppercase" style="color:midnightblue;">
+                        @Html.DisplayFor(model => model.activitiesHeaderDesc)
+                    </h6>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 p-0 " style="overflow:auto; color:midnightblue;">
+                        @Html.Raw(Model.activitiesDesc)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.activitiesHeaderDesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.activitiesHeaderDesc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.activitiesDesc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.activitiesDesc)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.activitiesImage)
+            </dt>
+
+            <dd>
+                <img src="@Url.Content(Model.activitiesImage)" style="height:60px;" alt="Activite" />
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.activitiesId }) |
+        @Html.ActionLink("Back to List", "Faaliyet")
+    </p>*@

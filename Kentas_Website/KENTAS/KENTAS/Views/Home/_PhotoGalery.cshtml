@@ -1,0 +1,21 @@
+﻿@{
+    var ct = new KENTAS.Models.Entities();
+    var data = ct.PhotoGaleries.ToList();
+
+}
+
+@foreach (var item in data)
+{
+    <div class="lightbox-gallery">
+        <div class="container">
+
+            <div class="item radius_contains border p-1 row photos">
+                <a href="@Url.Content(item.photoGaleryImage)" data-lightbox="@item.GaleriBasliklari.Title">
+                    <img src="@Url.Content(item.photoGaleryImage)" class="img-fluid radius_contains" style="width:100%; height:200px;" />
+                </a>
+            </div>
+        </div>
+
+    </div>
+}
+

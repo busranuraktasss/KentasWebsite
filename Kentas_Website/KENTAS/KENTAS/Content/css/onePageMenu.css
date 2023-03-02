@@ -1,0 +1,22 @@
+﻿#area_product {
+    position: relative;
+    border: 1px dashed #ff0000;
+    /*width: 600px;
+    height: 330px;*/
+    padding: 5px;
+    clear: both;
+}
+
+/*#overflow_text {
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 360px;
+    height: 300px;
+    float: left;
+}*/
+
+#menu_scroll {
+    float: left;
+    margin-right: 20px;
+}

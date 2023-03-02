@@ -1,0 +1,30 @@
+﻿@model IEnumerable<KENTAS.Models.Kvkk>
+
+@{
+    ViewBag.Title = "KVKK";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container bgwite mt-4 radius_contains" style="background-color:white;">
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af;">
+            <h6 class="pl-3 my-auto" style="color:white">KVKK METNİ</h6>
+        </div>
+
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-12 mb-5 text-center"><label class="borderDemo p-5">@Html.Raw(item.KvkkDescription)</label></div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

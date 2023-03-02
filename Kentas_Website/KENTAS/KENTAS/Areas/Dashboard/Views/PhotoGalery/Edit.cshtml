@@ -1,0 +1,38 @@
+﻿@model KENTAS.Models.PhotoGalery
+
+@{
+    ViewBag.Title = "Fotoğraf Güncelle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Güncelle</h2>
+
+@using (Html.BeginForm("Edit", "PhotoGalery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Fotoğraf Galerisi</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.photoGaleryId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.photoGaleryImage, "YENİSİNİ EKLE", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="photoGaleryImage" class="form-control" required placeholder="Dosya Seç." />
+                @Html.ValidationMessageFor(model => model.photoGaleryImage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Güncelle" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class=" btn btn-info mb-3" style="color: InfoText; @*margin:10px 0px 0px 2200px;*@ ">
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

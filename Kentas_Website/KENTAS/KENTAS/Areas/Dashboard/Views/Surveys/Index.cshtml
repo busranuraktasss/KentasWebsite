@@ -1,0 +1,1168 @@
+﻿
+@{
+    ViewBag.Title = "Anket";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/AdminLayout/css/sweetalert2.min.css" rel="stylesheet" />
+
+<!-- Select2 Css-->
+<link href="~/Content/AdminLayout/css/select2.min.css" rel="stylesheet" />
+
+@section css{
+    <style type="text/css">
+        * {
+            vertical-align: middle !important;
+        }
+
+        #map_canvas {
+            height: 50vh;
+        }
+
+        @@media (max-width: 490px) {
+            .e_close {
+                display: none;
+            }
+        }
+
+        .form-control {
+            color: #000000;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC {
+            appearance: none;
+            background-color: #dfe1e4;
+            border-radius: 72px;
+            border-style: none;
+            flex-shrink: 0;
+            height: 20px;
+            margin: 0;
+            position: relative;
+            width: 30px;
+        }
+
+            .checkbox-wrapper-2 .ikxBAC::before {
+                bottom: -6px;
+                content: "";
+                left: -6px;
+                position: absolute;
+                right: -6px;
+                top: -6px;
+            }
+
+            .checkbox-wrapper-2 .ikxBAC,
+            .checkbox-wrapper-2 .ikxBAC::after {
+                transition: all 100ms ease-out;
+            }
+
+                .checkbox-wrapper-2 .ikxBAC::after {
+                    background-color: #fff;
+                    border-radius: 50%;
+                    content: "";
+                    height: 14px;
+                    left: 3px;
+                    position: absolute;
+                    top: 3px;
+                    width: 14px;
+                }
+
+        .checkbox-wrapper-2 input[type=checkbox] {
+            cursor: default;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:hover {
+            background-color: #c9cbcd;
+            transition-duration: 0s;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:checked {
+            background-color: #34AADC;
+        }
+
+            .checkbox-wrapper-2 .ikxBAC:checked::after {
+                background-color: #fff;
+                left: 13px;
+            }
+
+        .checkbox-wrapper-2 :focus:not(.focus-visible) {
+            outline: 0;
+        }
+
+        .checkbox-wrapper-2 .ikxBAC:checked:hover {
+            background-color: #56CAFB;
+        }
+
+        /*Button Style*/
+        .btn-outline-secondary:hover, .btn-outline-secondary focus {
+            color: #34AADC;
+        }
+
+        .fa-plus:before {
+            margin-left: 3px !important;
+        }
+
+        #delete {
+            background: #EEBAAC;
+        }
+
+            #delete:hover {
+                background: #EDA994;
+            }
+
+        #add {
+            background: #CCD8D8;
+        }
+
+            #add:hover {
+                background: #A5BDBD;
+            }
+
+        #arrange-btn {
+            background: #E9D2A9;
+        }
+
+            #arrange-btn:hover {
+                background: #E4C084;
+            }
+
+        #questions-btn {
+            background: #CCD8D8;
+        }
+
+            #questions-btn:hover {
+                background: #A5BDBD;
+            }
+
+        #survey-btn {
+            background: #CCD8D8;
+            background-position: left top;
+        }
+
+            #survey-btn:hover {
+                background: #A5BDBD;
+            }
+
+        .fa-style {
+            font-size: 10px;
+            color: #666666;
+        }
+
+        .dtCentered button:hover .fa-style {
+            color: #424242;
+        }
+
+        /*Datatable Style*/
+        .dtSurvey {
+            width: 100%;
+        }
+
+            .dtSurvey th {
+                text-align: center;
+            }
+
+        table.dataTable th,
+        table.dataTable td {
+            white-space: nowrap;
+        }
+
+        .checkbox-wrapper-2, .dtCentered {
+            text-align: center;
+        }
+
+        /*Radio Buttons*/
+        input[type="radio"] {
+            margin: 2px 5px 0 0;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            outline: none;
+            content: none;
+            border: 1px solid #d3d3d3;
+            background: white;
+            box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+        }
+
+            input[type="radio"]:checked {
+                padding: 0;
+                appearance: none;
+                outline: none;
+                content: none;
+                border: none;
+            }
+
+                input[type="radio"]:checked::before {
+                    position: absolute;
+                    content: "\00A0\2713\00A0" !important;
+                    border: 1px solid #d3d3d3;
+                    font-weight: bolder;
+                    font-size: 14px;
+                    color: green !important;
+                }
+
+        .table_style {
+            overflow: auto;
+            max-width: 150px;
+        }
+
+        .mekanAnket_style {
+            width: 150px;
+        }
+
+        .kayit_style, .iletisim_style, .soru_style {
+            width: 70px !important;
+        }
+
+        /*Scroll Bar*/
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+        }
+
+        .mekan_form {
+            height: 34px;
+            color: black;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.428571429;
+            vertical-align: middle;
+            background-color: #ffffff;
+            border: 1px solid #c7c7cc;
+            border-radius: 4px;
+            -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        .fa-trash-o {
+            padding-bottom: 3px;
+        }
+
+        .fa-save {
+            padding-bottom: 2px;
+        }
+
+        .modal-body label {
+            margin: auto;
+        }
+    </style>
+}
+
+<!--Add Location Button-->
+<div class="btn-group" style="color:InfoText; ">
+    <a href="javascript:addNewPlace();" style="padding: 6px 22px;" class="btn btn-info">Mekanlar</a>
+</div>
+
+<!--Add Survey Button-->
+<div class="btn-group" style="color:InfoText;">
+    <a href="javascript:addNewSurvey();" class="btn btn-info" style="margin-right:12px; margin-left:10px;">Anket Ekle<i class="fa fa-plus"></i></a>
+</div>
+
+<!-- Survey Results Button-->
+<div class="btn-group" style="color:InfoText;">
+    <a id="anketSonuclari" class="btn btn-outline-secondary" style="border: 1px solid #34AADC">Anket Sonuçları <i class="fa fa-list-alt" aria-hidden="true"></i></a>
+</div>
+<hr />
+
+<!-- Place Modal -->
+<div class="modal fade" id="_placeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_placeModalLabel">Mekan İşlemleri</h4>
+            </div>
+            <div class="modal-body">
+                <br />
+                <form id="_placeForm">
+                    <div class="form-group">
+                        <label for="Title"><span class="text-danger">*</span>Mekan Adı</label>
+                        <div>
+                            <input style="width:79%;" type="text" class="mekan_form" id="_placeName" name="_placeName" placeholder="Mekan Adı" maxlength="50" required />
+                            <button style="width: 20%; margin: auto;" type="button" class="btn btn-primary" onclick="javascript: savePlace();">Ekle <i class="fa fa-save"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div class="table-responsive p-2">
+                    <table id="_locationTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th><div class="form-check form-check-inline"><input class="form-check-input" id="alldellocs" type="checkbox" style="margin:auto;"></div>
+                                <th><label for="alldellocs" style="width:100%;">Mekan Adı</label></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div style="text-align:end;"><button type="button" class="btn btn-primary" onclick="javascript: deletePlace();">Seçili Mekanları Sil <i class="fa fa-trash-o"></i></button></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Survey Modal-->
+<div class="modal fade" id="_addSurveyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_addSurveyModalLabel">Anket İşlemleri</h4>
+            </div>
+            <div class="modal-body">
+                <form id="_addSurveyForm">
+                    <input type="hidden" value="0" id="_updateFormSurvey" name="_updateFormSurvey" />
+                    <div class="form-group">
+                        <!-- Place Table -->
+                        <div class="selectLocation">
+                            <table class=" table table-bordered table-striped table-responsive-sm" id="_placeTable">
+                                <tr>
+                                    <td class="text-center col-sm-3" style="width:75px;"><span class="text-danger">*</span>Mekanlar</td>
+                                    <td><select class="col-sm-9 dropdown-control companydrop js-example-basic-multiple _mekanId" id="_mekanId" name="_mekanId[]" multiple="multiple"></select></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <label for="Title"><span class="text-danger">*</span>Anket Adı</label>
+                        <input type="text" class="form-control" id="_surveyName" name="_surveyName" placeholder="Anket Adı" maxlength="50" required /><br />
+
+                        <label class="infoId" for="Title"><span class="text-danger">*</span>İletişim Bilgileri Mecburi Mi?</label>
+                        <div class="form-check form-check-inline col-5 yesCheck" style="padding-left:5%">
+                            <input class="form-check-input _iletisimbilgi" type="radio" name="bilgi" id="_yes" value="true" checked />
+                            <label class="form-check-label" style="font:15px; margin-top:11px;" for="_yes">EVET</label>
+                        </div>
+                        <div class="form-check form-check-inline col-5 noCheck" style="padding-left:5%">
+                            <input class="form-check-input _iletisimbilgi" type="radio" name="bilgi" id="_no" value="false" />
+                            <label class="form-check-label" style="font:15px; margin-top:11px;" for="_no">HAYIR</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" onclick="javascript: getUpdateOrAdd();">Kaydet <i class="fa fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Survey Table -->
+<div class="px-1 col-12 dtSurvey">
+    <div class="row ">
+        <h3 class="page-title col-sm-10 pt-1 text-start">Anket Tablosu</h3>
+    </div>
+
+    <div class="table-responsive p-2">
+        <table id="_surveyTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Anket Adı</th>
+                    <th>Mekan Adı</th>
+                    <th>Mekan Ekle / Çıkar</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>İletişim Bilgisi</th>
+                    <th>Anket Sil / Düzenle</th>
+                    <th>Anket Soruları</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<!--Delete SurveyLocation Modal-->
+<div class="modal fade" id="_deleteSurveyLocModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.location.reload(true);"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="_deleteSurveyLocModal">Anket İşlemleri</h4>
+            </div>
+            <div class="modal-body">
+                <form id="_deleteFormLocation">
+                    <input type="hidden" value="0" id="_deleteformLocation" name="_deleteformLocation" />
+                    <div class="form-group">
+                        <div class="table-responsive p-2">
+                            <table id="_mekanTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th><div class="form-check form-check-inline"><input class="form-check-input" id="alldellocs2" type="checkbox" style="margin:auto;"></div>
+                                        <th><label for="alldellocs2" style="width:100% !important;">Mekan Adı</label></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="document.location.reload(true);" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" onclick="javascript: deleteSurveyLoc();">Çıkar <i class="fa fa-save"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Content/AdminLayout/assets/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="~/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Content/AdminLayout/js/sweetalert2.min.js"></script>
+
+<!-- Select2 Js-->
+<script src="~/Content/AdminLayout/js/select2.min.js" defer></script>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/OnlineIslem/js/jquery.dataTables.js"></script>
+    <script>
+    $('#anketSonuclari').click(function () {
+        document.location = '@Url.Action("Results","Surveys")'; placemodal
+    });
+
+        surveyTable = null;
+        mekanTable = null;
+        locationTable = null;
+
+        $(() => {
+            getSelect1();
+            showSurveyAjax();
+        })
+
+        $('#_addSurveyModal').on('shown.bs.modal', function () {
+            $('#_surveyName').focus()
+        })
+
+        $('#_placeModal').on('shown.bs.modal', function () {
+            $('#_placeName').focus()
+        })
+
+        var getSelect1 = () => {
+            $(document).ready(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetSelect1", "Surveys")',
+                    data: "json",
+                    success: function (data) {
+
+                        for (var i = 0; i < data.data.length; i++) {
+                            var s = s + '<option value="' + data.data[i].Id + '">' + data.data[i].MekanAdi + '</option>';
+                        }
+                        $("#_mekanId").html(s);
+                        $("#_mekanId").select2({
+                            multiple: true,
+                            placeholder: "Lütfen Mekan Seçiniz...",
+                            icon: 'warning',
+                        });
+                    }
+                });
+            });
+        }
+
+        $('#_deleteSurveyLocModal').on('shown.bs.modal', function (e) {
+            mekanTable.columns.adjust();
+        });
+
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2();
+        });
+
+        var addNewPlace = () => {
+            showLocationAjax();
+            $('#_placeModal').modal('show');
+        }
+
+        var addNewSurvey = () => {
+            document.querySelector(".selectLocation").style.display = 'block';
+            $('#_addSurveyModal').modal('show');
+        }
+
+        var savePlace = () => {
+            var MekanController = document.getElementById('_placeName').value;
+
+            if (!MekanController) {
+                Swal.fire({ icon: 'error', text: 'Mekan adı boş bırakılamaz.', confirmButtonText: 'Tamam', });
+
+            } else if (MekanController[0] == " ") {
+                Swal.fire({ icon: 'error', text: 'Mekan adı ilk karakter boşluk olamaz.Lütfen kontrol ediniz.', confirmButtonText: 'Tamam', });
+            }
+            else {
+                $.post('@Url.Action("SavePlace", "Surveys")', { MekanAdi: MekanController }, (d, s) => {
+                if (d.data > 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Mekan zaten var olduğu için eklenemedi.',
+                        confirmButtonText: 'Tamam',
+                    });
+                } else {
+                    Swal.fire({
+                        toast: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Ekleme işlemi başarıyla gerçekleşti.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+
+                    })
+                    document.getElementById("_placeForm").reset();
+
+                    if (locationTable != null)
+                        locationTable.ajax.reload();
+
+
+                    $('#_placeModal').modal('hide');
+
+                getSelect1();
+                }
+            })
+            }
+        }
+
+        var getUpdateOrAdd = () => {
+            var durum = document.querySelector(".selectLocation").style.display;
+
+            if (durum == 'none' && document.getElementById("_updateFormSurvey").value > 0) {
+                javascript: updateSurvey();
+            }
+            else {
+                javascript: saveSurvey();
+            }
+        }
+
+        var showLocationAjax = () => {
+            if (locationTable == null)
+                locationTable = $('#_locationTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("ShowLocationAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json"
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+
+                        {
+                            "className": "dtCentered",
+                            "data": "Id",
+                            "render": (data, type, row) => {
+                                return `<div class="form-check form-check-inline"><input class="form-check-input dellocs" id="${row.Id}" type="checkbox" style="margin:auto;"></div>`;
+                            }, "name": "Id"
+                        },
+                        {
+                            "className": "table_style",
+                            "data": "MekanAdi",
+                            "render": (data, type, row) => {
+                                return `<label for="${row.Id}" style="margin:auto; width:100%;"">${row.MekanAdi}</label>`;
+                            }, "name": "MekanAdi"
+                        },
+
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#locationTable_filter input').unbind();
+                        $('#locationTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                locationTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var showSurveyAjax = () => {
+            if (surveyTable == null)
+                surveyTable = $('#_surveyTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    autoWidth: false,
+                    ScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                    order: [[1, "asc"]],
+                    ordering: false,
+                    ajax: {
+                        url: '@Url.Action("ShowSurveyAjax", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json"
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "table_style",
+                            "render": (data, type, row) => {
+                                return row.AnketAdi;
+                            }, "name": "AnketAdi"
+                        },
+                        {
+                            "className": "table_style",
+                            "data": "MekanAdi",
+                            "render": (data, type, row) => {
+                                return row.MekanAdi;
+                            }, "name": "MekanAdi"
+                        },
+                        {
+                            "className": "dtCentered mekanAnket_style",
+                            "render": function (data, type, row) {
+                                return `<button type="button" id="add" class="btn btn-dark pt-2" onclick="javascript:getLocationAdd(${row.Id});">Ekle <i class="fa fa-plus fa-style"></i></button>
+                                        <button type="button" id="delete" class="btn btn-dark pt-2" onclick="javascript:getLocationDelete(${row.Id});">Çıkar <i class="fa fa-minus fa-style"></i></button>`;
+
+                            }, "name": "Id", "name": "Id"
+                        },
+                        {
+                            "className": "dtCentered kayit_style",
+                            "data": "KTarihi",
+                            "name": "KTarihi",
+                            "render": function (value) {
+                                if (value === null) return "";
+                                var pattern = /Date\(([^)]+)\)/;
+                                var results = pattern.exec(value);
+                                var dt = new Date(parseFloat(results[1]));
+                                return (dt.getDate() <= 9 ? '0' + dt.getDate() : dt.getDate()) + "." +
+                                    (dt.getMonth() < 9 ? '0' + (dt.getMonth()+1) : dt.getMonth() + 1) + "." +
+                                        dt.getFullYear();
+                            }, "autoWidth": true
+                        },
+                        {
+                            "className": "iletisim_style",
+                            "render": function (data, type, row) {
+                                let check = row.IletisimBilgiMecburiMi == 1 ? 'checked' : '';
+                                return `<div class="checkbox-wrapper-2">
+                                            <input type="checkbox" class="sc-gJwTLC ikxBAC" id="checked_${row.Id}" onclick="javascript:checkBilgi(${row.Id});" ${check}>
+                                        </div>`;
+                            }, "name": "IletisimBilgiMecburiMi"
+                        },
+                        {
+                            "className": "dtCentered mekanAnket_style",
+                            "render": function (data, type, row) {
+                                return `<button type="button" id="delete" class="btn btn-dark pt-2" onclick="javascript:deleteSurvey(${row.Id})">Sil <i class="fa fa-trash-o"></i></button>
+                                        <button type="button" id="arrange-btn" class="btn btn-dark pt-2" onclick="javascript:getSetSurvey(${row.Id})">Düzenle <i class="fa fa-edit"></i></button> `;
+
+                            }, "name": "Id", "name": "Id"
+                        },
+                        {
+                            "className": "dtCentered soru_style",
+                            "render": function (data, type, row) {
+                                return `<button type="button" id="questions-btn" class="btn btn-dark pt-2" onclick="javascript:Questions(${row.Id})">${row.Count} Soru</button>`;
+
+                            }, "name": "Id", "name": "Count"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#surveyTable_filter input').unbind();
+                        $('#surveyTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                surveyTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var checkBilgi = (checkId) => {
+            if (document.getElementById('checked_' + checkId).checked == false) {
+                Swal.fire({
+                    title: 'İletişim bilgi durumunu değiştirmek istediğinize emin misiniz?',
+                    icon: 'question',
+                    text: 'İletişim bilgi durumunu değiştirdiğiniz takdirde anket katılımcı bilgisine erişiminiz olmayacaktır.',
+                    showCancelButton: true,
+                    cancelButtonText: 'Hayır',
+                    confirmButtonColor: '#4a804d',
+                    cancelButtonColor: '#b22222',
+                    confirmButtonText: 'Evet'
+                })
+                    .then((result) => {
+                        if (result.value == true) {
+                            $.getJSON('@Url.Action("CheckBilgi", "Surveys")', { request: checkId }, (d, s) => {
+                                if (s == 'success') {
+                                    if (surveyTable != null)
+                                        surveyTable.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        text: 'İletişim bilgisi güncellendi.',
+                                        confirmButtonText: 'Tamam',
+                                    });
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'İletişim bilgisi güncellenemedi.',
+                                        confirmButtonText: 'Tamam',
+                                    });
+                                }
+                            })
+                        } else {
+                            if (surveyTable != null)
+                                surveyTable.ajax.reload();
+                        }
+                    });
+            } else {
+                $.getJSON('@Url.Action("CheckBilgi", "Surveys")', { request: checkId }, (d, s) => {
+                                if (s == 'success') {
+                                    if (surveyTable != null)
+                                        surveyTable.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        text: 'İletişim bilgisi güncellendi.',
+                                        confirmButtonText: 'Tamam',
+                                    });
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'İletişim bilgisi güncellenemedi.',
+                                        confirmButtonText: 'Tamam',
+                                    });
+                                }
+                            })
+            }
+        }
+
+        var clearSurvey = () => {
+            $('#_mekanId').val([]).trigger('change');
+            $('#_surveyName').val('');
+        }
+
+        var saveSurvey = () => {
+            var AnketController = document.getElementById('_surveyName').value;
+            var BilgiControl = document.getElementsByClassName('_iletisimbilgi').value;
+            let MekanController = $('.js-example-basic-multiple').val();
+
+            if ($('#_yes').prop('checked')) {
+                var BilgiControl = true;
+            }
+            else BilgiControl = false;
+
+            if (!MekanController) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Lütfen Mekan Seçiniz.',
+                    confirmButtonText: 'Tamam',
+                });
+            } else if (AnketController[0] == " ") {
+
+                Swal.fire({ icon: 'error', text: 'Anket adı ilk karakter boşluk olamaz.Lütfen kontrol ediniz.', confirmButtonText: 'Tamam', });
+            }
+            else if (!AnketController) {
+
+                Swal.fire({icon: 'error',text: 'Anket adı boş bırakılamaz.',confirmButtonText: 'Tamam',});
+            }
+            else{
+            $.post('@Url.Action("SaveSurvey", "Surveys")', { AnketAdi: AnketController, bilgi: BilgiControl, MekanIds: MekanController }, (d, s) => {
+
+                if (d.Status == true) {
+                    Swal.fire({
+                        toast: false,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Ekleme işlemi başarıyla gerçekleşti.',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        backdrop: false,
+                    })
+                    if (surveyTable != null)
+                        surveyTable.ajax.reload();
+                        clearSurvey();
+                    $('#_addSurveyModal').modal('hide');
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Ekleme işlemi gerçekleşemedi.'
+                    });
+                    clearSurvey();
+                    document.getElementById("_addSurveyForm").reset();
+                }
+            });
+            }
+        }
+
+        var deleteSurvey = (delId) => {
+            Swal.fire({
+                title: 'Silmek istediğinize emin misiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                cancelButtonText: 'Hayır',
+                confirmButtonColor: '#4a804d',
+                cancelButtonColor: '#b22222',
+                confirmButtonText: 'Evet'
+            })
+                .then((result) => {
+                    if (result.value == true) {
+                       $.getJSON('@Url.Action("DeleteSurvey", "Surveys")', { pr: delId }, (d, s) => {
+                            if (s === "success") {
+                                if (d.Status == true) {
+                                    document.getElementById("alldellocs2").checked = false;
+                                    Swal.fire({ title: 'Silme işlemi gerçekleşti.', confirmButtonColor: '#1c6071', confirmButtonText: 'Tamam' });
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'Silme işlemi gerçekleşemedi.'
+                                    });
+                                }
+                            }
+                           if (surveyTable != null)
+                               surveyTable.ajax.reload();
+                        });
+                    }
+                });
+        }
+
+        var getSetSurvey = (upId) => {
+            $('#_updateFormSurvey').val("");
+            document.querySelector(".selectLocation").style.display = 'none';
+            document.querySelector(".infoId").style.display = 'none';
+            document.querySelector(".yesCheck").style.display = 'none';
+            document.querySelector(".noCheck").style.display = 'none';
+            $.getJSON('@Url.Action("GetSetSurvey", "Surveys")', { sId: upId }, (d, s) => {
+                if (s === 'success') {
+                    $('#_surveyName').val(d.data.Adi);
+                    $('#_updateFormSurvey').val(d.data.Id);
+
+                    if (d.data.IletisimBilgiMecburiMi == true)
+                        document.getElementById('_yes').checked = true;
+                    else
+                        document.getElementById('_no').checked = true;
+                    $('#_addSurveyModal').modal('show');
+                }
+            })
+        }
+
+        var updateSurvey = () => {
+            var formId = document.getElementById("_updateFormSurvey").value;
+            var Adi = document.getElementById("_surveyName").value;
+
+            if (!Adi) {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Anket Adı Boş Bırakılamaz.',
+                    confirmButtonText: 'Tamam',
+                });
+            } else if (Adi[0] == " ") {
+                Swal.fire({ icon: 'error', text: 'Anket adı ilk karakter boşluk olamaz.Lütfen kontrol ediniz.', confirmButtonText: 'Tamam', });
+            }
+            else
+            {
+                $.post('@Url.Action("UpdateSurvey", "Surveys")', { Id: formId, Adi: Adi }, (d, s) => {
+                    if (s === 'success') {
+                        if (d.Status == true) {
+                            Swal.fire({
+                                toast: false,
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Güncelleme işlemi başarıyla gerçekleşti.',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                backdrop: false,
+                            })
+                            if (surveyTable != null)
+                                surveyTable.ajax.reload();
+                            $('#_addSurveyModal').modal('hide');
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                text: 'Güncelleme işlemi gerçekleşemedi.'
+                            });
+                            document.getElementById("_addSurveyForm").reset();
+                        }
+                    }
+                });
+            }
+        }
+
+        var Questions = (sId) => {
+            window.location.href = '@Url.Action("Questions", "Surveys")' +"/"+ sId;
+        }
+
+        var getLocationAdd = (sId) => {
+            $('#_updateFormSurvey').val("");
+            document.querySelector(".selectLocation").style.display = 'block';
+            $.getJSON('@Url.Action("GetSetSurvey", "Surveys")', { sId: sId }, (d, s) => {
+                if (s === 'success') {
+                    $('#_surveyName').attr('readonly', 'true');
+                    $('#_surveyName').val(d.data.Adi);
+                    $('#_yes').attr('disabled', 'true');
+                    $('#_no').attr('disabled', 'true');
+                    if (d.data.IletisimBilgiMecburiMi == true)
+                        document.getElementById('_yes').checked = true;
+                    else
+                        document.getElementById('_no').checked = true;
+
+                    $.post('@Url.Action("SelectedLoc","Surveys")', { sId: sId }, (d, s) => {
+
+
+
+                        for (var i = 0; i < d.data.length; i++) {
+                            var s = s + '<option value="' + d.data[i].Id + '">' + d.data[i].adi + '</option>';
+                        }
+                        $("#_mekanId").html(s);
+
+                    });
+
+                    $('#_updateFormSurvey').val(d.data.Id);
+                    $('#_addSurveyModal').modal('show');
+
+                }
+            })
+        }
+
+        var getLocationDelete = (sId) => {
+            $('#_deleteSurveyLocModal').modal('show');
+            $('#_deleteFormLocation').val("");
+            document.querySelector(".selectLocation").style.display = 'block';
+
+                 if (mekanTable == null)
+                     mekanTable = $('#_mekanTable').DataTable({
+                     processing: false,
+                    serverSide: false,
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Turkish.json"
+                    },
+                    paging: false,
+                    sScrollX: "100%",
+                    filter: false,
+                    orderMulti: true,
+                         order: [[1, "asc"]],
+                         ordering: false,
+                    ajax: {
+                        url: '@Url.Action("getLocationDelete", "Surveys")',
+                        type: "POST",
+                        datatype: "data.json",
+                        data: function (d) {
+                            d.sId = sId;
+                        }
+                    },
+                    createdRow: function (row, data, dataIndex) {
+                    },
+                    columnDefs: [],
+                    columns: [
+                        {
+                            "className": "dtCentered",
+                            "render": (data, type, row) => {
+
+                                return `<div class="form-check form-check-inline"><input class="form-check-input locs" id="${row.AnketId}" type="checkbox" style="margin:auto;"></div>`;
+                            }, "name": "AnketId"
+                        },
+                        {
+                            "data": "MekanAdi",
+                            "render": (data, type, row) => {
+                                return `<label for="${row.AnketId}" style="margin:auto; width:100%;">${row.MekanAdi}</label>`;
+                            }, "name": "MekanAdi"
+                        },
+                    ],
+                    fixedColumns: true,
+                    scrollCollapse: true,
+                    initComplete: function (settings, json) {
+                        $('#mekanTable_filter input').unbind();
+                        $('#mekanTable_filter input').bind('keyup', function (e) {
+                            if (e.keyCode == 13) {
+                                mekanTable.search(this.value).draw();
+                            }
+                        });
+                        $('.dataTables_scrollBody').removeAttr('style').css({
+                            'position': 'relative',
+                            'overflow-y': 'auto',
+                            'overflow-x': 'hidden',
+                            'width': '100%',
+                            'max-height': ((window.innerHeight / 2) + 120) + 'px'
+                        });
+                    }
+                })
+        }
+
+        var deleteSurveyLoc = () => {
+            if (document.querySelectorAll('.locs:checked').length == 0) {
+                Swal.fire({
+                    title: 'Lütfen Mekan Seçiniz.',
+                    confirmButtonText: 'Tamam',
+                    icon: 'warning',
+                });
+                return;
+            } else {
+                let selectedLocs = document.querySelectorAll('.locs:checked');
+                let locationControlIDs = [];
+                for (let loc of selectedLocs) {
+                    locationControlIDs.push(loc.id.replace('checked_', ''));
+                }
+
+                Swal.fire({
+                title: 'Seçili Mekanları Anketten çıkarmak istediğinize emin misiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                cancelButtonText: 'Hayır',
+                confirmButtonColor: '#4a804d',
+                cancelButtonColor: '#b22222',
+                confirmButtonText: 'Evet'
+            })
+                .then((result) => {
+                    if (result.value == true) {
+                        $.post('@Url.Action("deleteSurveyLoc", "Surveys")', { request: locationControlIDs }, (d, s) => {
+                            if (s === "success") {
+                                if (d.Status == true) {
+                                    Swal.fire({ title: 'Çıkarma işlemi gerçekleşti.', confirmButtonColor: '#1c6071', confirmButtonText: 'Tamam' });
+                                    document.getElementById("alldellocs2").checked = false;
+                                    $('#_deleteSurveyLocModal').modal('hide');
+                                    surveyTable.ajax.reload();
+
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'Çıkarma işlemi gerçekleşemedi.'
+                                    });
+                                    document.getElementById("alldellocs2").checked = false;
+                                    mekanTable.ajax.reload();
+                                }
+                            }
+                               
+                        });
+                    }
+                });
+            }
+        }
+
+        let selectAllPlaces = () => {
+            $('#selectAll').click(function () {
+                $('#selectBox option').attr("selected", "selected");
+            });
+        }
+
+        var deletePlace = () => {
+            if (document.querySelectorAll('.dellocs:checked').length == 0) {
+                Swal.fire({
+                    title: 'Lütfen Mekan Seçiniz.',
+                    icon: 'warning',
+                    confirmButtonText: 'Tamam',
+                });
+                return;
+            } else {
+                let selectedLocs = document.querySelectorAll('.dellocs:checked');
+                let locationControlIDs = [];
+                for (let dellocs of selectedLocs) {
+                    locationControlIDs.push(dellocs.id.replace('checked_', ''));
+                }
+                Swal.fire({
+                title: 'Seçili Mekanları Silmek istediğinize emin misiniz?',
+                icon: 'question',
+                showCancelButton: true,
+                cancelButtonText: 'Hayır',
+                confirmButtonColor: '#4a804d',
+                cancelButtonColor: '#b22222',
+                confirmButtonText: 'Evet'
+            })
+                .then((result) => {
+                    if (result.value == true) {
+                        $.post('@Url.Action("deletePlace", "Surveys")', { request: locationControlIDs }, (d, s) => {
+                            if (s === "success") {
+                                if (d.Status == true) {
+                                    Swal.fire({ title: 'Çıkarma işlemi gerçekleşti.', confirmButtonColor: '#1c6071', confirmButtonText: 'Tamam' });
+                                    document.getElementById("alldellocs").checked = false;
+                                    surveyTable.ajax.reload();
+                                }
+
+                                else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        text: 'Çıkarma işlemi gerçekleşemedi.'
+                                    });
+                                }
+                            }
+                            if (locationTable != null)
+                                locationTable.ajax.reload();
+                        });
+                    }
+                });
+            }
+
+
+        }
+        $('#alldellocs').change(function (event) {
+            if (this.checked) {
+
+                $(".dellocs").each(function () {
+                    this.checked = true;
+                });
+            } else {
+
+                $(".dellocs").each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+
+        $('#alldellocs2').change(function (event) {
+            if (this.checked) {
+
+                $(".locs").each(function () {
+                    this.checked = true;
+                });
+            } else {
+
+                $(".locs").each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+        //Alert
+        //const Toast = Swal.mixin({
+        //    toast: true,
+        //    position: 'top-end',
+        //    showConfirmButton: false,
+        //    timer: 3000,
+        //    timerProgressBar: true,
+        //    didOpen: (toast) => {
+        //        toast.addEventListener('mouseenter', Swal.stopTimer)
+        //        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        //    }
+        //})
+
+        //Toast.fire({
+        //    icon: 'success',
+        //    title: 'Signed in successfully'
+        //})
+    </script>
+}

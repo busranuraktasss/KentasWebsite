@@ -1,0 +1,62 @@
+﻿@model KENTAS.Models.Activity
+
+@{
+    ViewBag.Title = "Faaliyet Güncelle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    CKEDITOR.replace('editor')
+</script>
+<h2>Faaliyetlerimiz Güncelle</h2>
+
+@using (Html.BeginForm("Edit", "Activities", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.activitiesId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.activitiesHeaderDesc, "BAŞLIK AÇIKLAMA", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.activitiesHeaderDesc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.activitiesHeaderDesc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.activitiesDesc, "AÇIKLAMA", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea name="activitiesDesc" class="ckeditor">@Model.activitiesDesc</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.activitiesImage, "FOTOĞRAF", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               
+                <div class="col-md-5">
+                    <input type="file" name="activitiesImage" class="form-control" multiple="multiple" placeholder="Dosya Seç" />
+                    @Html.ValidationMessageFor(model => model.activitiesImage, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-5">
+                    <img src="@Url.Content(Model.activitiesImage)" style="height:60px;" alt="Activite" />
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

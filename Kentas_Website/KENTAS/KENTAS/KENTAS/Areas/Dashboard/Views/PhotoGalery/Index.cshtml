@@ -1,0 +1,74 @@
+﻿@model  List<KENTAS.Helper.getGalryModel>
+
+@{
+    ViewBag.Title = "Galeri";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class=" btn btn-info col-2" style="color:InfoText;">
+    @Html.ActionLink("Yeni Ekle", "Create")
+</div>
+<div class="center">
+    @using (KENTAS.Models.Entities ct = new KENTAS.Models.Entities())
+    {
+        var currentData = ct.GaleriBasliklaris.ToList();
+        <div class="form-group">
+            <div class="col-md-4 main-bg">
+                <select class="form-control" name="TitileId" id="TitileId" style="width:100%;" onchange="javascript: getGalery(this)">
+                    <option value="1" title="Seçim Yap" selected>Seçim Yapınız</option>
+
+                    @foreach (var item in currentData)
+                    {
+                        <option value="@item.Id" title="@item.SubTitle">@item.Title</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+</div>
+<table class="table table-bordered table-striped table-responsive-sm">
+    <thead>
+
+        <tr>
+            <th class="text-center">
+                OTOPARK
+            </th>
+           
+            <th class="text-center">
+                İŞLEMLER
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class=""><img src="@Url.Content(item.photoGaleryImage)" style="width:100px; height:auto;" alt="photo" /></div>
+                    <div class="btn-group ">
+                        
+                    </div>
+                </td>
+                
+                <td>
+                    <div class="btn-group ">
+                        @Html.ActionLink("Güncelle", "Edit", new { id = item.photoGaleryId }, new { @class = "btn btn-sm btn-success" })
+                        @Html.ActionLink("Sil", "Delete", new { id = item.photoGaleryId }, new { @class = "btn btn-sm btn-danger" })
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scripts{
+    <script type="text/javascript">
+        var getGalery = (_id) => {
+            window.location.href = '@Url.Action("Index", "PhotoGalery")?h=' + _id.value
+        }
+    </script>
+}

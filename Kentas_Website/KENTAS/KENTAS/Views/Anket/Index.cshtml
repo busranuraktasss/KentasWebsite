@@ -1,0 +1,1198 @@
+﻿@{
+    ViewBag.Title = "AnketSayfası";
+    Layout = "~/Views/Anket/_SurveyLayout.cshtml";
+}
+<link href="~/Content/ckeditor/samples/css/vendors.css" rel="stylesheet" />
+<link href="~/Content/ckeditor/samples/css/color.css" rel="stylesheet" />
+<link href="~/Content/ckeditor/samples/css/style.css" rel="stylesheet" />
+<link href="~/Content/AdminLayout/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    * {
+        font-family: "Poppins", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .survey {
+        margin-top: 55px;
+        display: none;
+    }
+
+    .surveyForm {
+        margin-top: 55px;
+        display: none;
+    }
+
+    .locationForm {
+        margin-top: 55px;
+    }
+
+    #wizard_container, #wizard_container2, #wizard_container3, #wizard_container4 {
+        position: relative;
+        max-width: 800px;
+        margin: auto
+    }
+
+    #middle-wizard, #middle-wizard2 {
+        padding: 30% 0 35px 0;
+        text-align: center;
+    }
+
+    .form-select {
+        padding: 6px 55px 6px 10px;
+        border-radius: 6px;
+        font-size: 16px;
+        box-shadow: 0 8px 8px -4px lightblue !important;
+    }
+
+        .form-select:focus {
+            border: 1px solid #03e9f4 !important;
+            box-shadow: 0 8px 8px -4px lightblue !important;
+        }
+
+    .endForm {
+        display: none;
+    }
+
+    .formBox {
+        display: none;
+    }
+
+    .question_title {
+        text-align: center;
+        margin-bottom: 30px
+    }
+
+        .question_title h3 {
+            font-size: 36px;
+            color: #333
+        }
+
+    .btn_2 {
+        display: none;
+        padding: 15px 45px;
+    }
+
+    button.btn_4 {
+        padding: 15px 45px;
+        margin-left: 5px;
+    }
+
+    .btn_3, .btn_6, .btn_5 {
+        border: none;
+        color: #fff;
+        background: #6777a7;
+        outline: none;
+        cursor: pointer;
+        display: none;
+        padding: 15px 30px;
+        text-decoration: none;
+        box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        font-weight: 600;
+        text-align: center;
+        line-height: 1;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px
+    }
+
+
+    a.btn_4,
+    .btn_4, .btn_2, .btn_7, .savebtn {
+        border: none;
+        color: #fff;
+        background: #6777a7;
+        outline: none;
+        cursor: pointer;
+        display: block;
+        padding: 15px 30px;
+        text-decoration: none;
+        box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        font-weight: 600;
+        text-align: center;
+        line-height: 1;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px
+    }
+
+        a.btn_4:hover,
+        .btn_4:hover, btn_3:hover, .btn_2:hover, .btn_6:hover, .btn_7:hover, .savebtn:hover {
+            -webkit-filter: brightness(115%);
+            filter: brightness(115%)
+        }
+
+    /*Survey Questions Style*/
+    .justify-content-center {
+        width: 80%;
+        margin: auto;
+    }
+
+    .checkbox_radio_container {
+        box-shadow: 0 8px 8px -4px lightblue;
+    }
+
+        .checkbox_radio_container .wrapper {
+            height: 50px;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        .checkbox_radio_container .radio {
+            top: 13px;
+        }
+
+        .checkbox_radio_container input[type="checkbox"]:checked ~ .wrapper, .checkbox_radio_container input[type="radio"]:checked ~ .wrapper {
+            background: linear-gradient(-225deg, #003d72 0%, #00abed 50%, #90e5d0 100%);
+            opacity: 0.7;
+        }
+
+        .checkbox_radio_container .radio:before {
+            background: #26CB23;
+        }
+
+        .checkbox_radio_container .radio:after {
+            background: #26CB23;
+        }
+
+    .three:hover {
+        color: #152238;
+        background-color: #f75151;
+        box-shadow: 0px 0px 50px #f75151;
+    }
+
+    .nav-btns {
+        display: inline-flex !important;
+        width: 100%;
+        margin: auto;
+    }
+
+    .btn_2 {
+        padding: 15px 45px;
+        margin-left: 5px;
+    }
+
+    .btn_3, .btn_5, .btn_6, .btn_7 {
+        margin: auto !important;
+    }
+    /*FORM*/
+    .form-content {
+        padding: 0 20px;
+    }
+
+    .p-5 {
+        padding: 2.2rem !important;
+    }
+
+    .survey-form {
+        width: 100%;
+        max-width: 600px;
+        padding: 10px 25px 25px 25px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        background-color: rgba(255,255,255, 0.5);
+    }
+
+    .form-title {
+        display: inline-block;
+        padding: 7px 14px;
+        font-size: 22px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 7px;
+        color: #453e79;
+    }
+
+    /*Text Limitation*/
+    .suggestSth {
+        width: 100%;
+        height: 160px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        font-size: 13px;
+        transition: all ease-in-out .5s;
+        resize: none;
+        background-color: rgba(239, 239, 240, 0.55);
+    }
+
+        .suggestSth:hover {
+            height: 190px;
+            border: none;
+            outline: 0;
+            box-shadow: 0 0 0 2px #3a767a;
+        }
+
+        .suggestSth:focus {
+            outline: none;
+        }
+
+    .suggestTitle {
+        margin-left: 23px;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .charLimit {
+        display: none;
+        float: right;
+        margin: 0 4px 0 0;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.15);
+    }
+
+    .txtLimit {
+        color: #E51937;
+    }
+
+    .endForm {
+        margin-top: 100px;
+    }
+
+    /*Inputs*/
+    .field {
+        margin: 30px auto;
+        font-size: 14px
+    }
+
+        .field > input {
+            width: 100%;
+            border: 2px solid #d9d9d9;
+            border-radius: 5px;
+            outline: 0;
+            padding: 10px 15px 5px;
+        }
+
+        .field > label {
+            color: #333;
+            position: absolute;
+            margin-top: -45px;
+            margin-left: 20px;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: all 0.2s ease;
+            -o-transition: all 0.2s ease;
+        }
+
+        .field > input:hover ~ label,
+        .field > input:focus ~ label,
+        .field > input:valid ~ label {
+            margin-top: -52px;
+            margin-left: 20px;
+            font-size: 13px;
+            color: #03e9f4;
+        }
+
+        .field > input, .input-line {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #95A5A6;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+            .field > input:focus,
+            .field > .input-line:focus {
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
+    /*Swal Popup*/
+    .swal2-popup {
+        width: 24em !important;
+        font-size: 12px;
+    }
+
+    .swal2-styled.swal2-confirm, .swal2-styled.swal2-confirm:focus {
+        border: none;
+        background: #009b98;
+        box-shadow: none;
+    }
+
+    /*Progress Bar*/
+    .progress {
+        display: block;
+        width: 100%;
+        height: 12px;
+        position: relative;
+        z-index: 5;
+        padding-right: 8px;
+        padding-top: 2px;
+    }
+
+    @@media {
+        .progress {
+            height: 10px;
+        }
+    }
+
+    .progress[value] {
+        background-color: transparent;
+        border: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0;
+    }
+
+        .progress[value]::-ms-fill {
+            background-color: #0074d9;
+            border: 0;
+        }
+
+        .progress[value]::-moz-progress-bar {
+            background-color: #0074d9;
+            margin-right: 8px;
+        }
+
+        .progress[value]::-webkit-progress-inner-element {
+            background-color: #eee;
+        }
+
+        .progress[value]::-webkit-progress-value {
+            background-color: #0074d9;
+        }
+
+        .progress[value]::-webkit-progress-bar {
+            background-color: #eee;
+        }
+
+    .progress-circle {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        right: 3px;
+        top: -5px;
+        z-index: 5;
+        border-radius: 50%;
+    }
+
+        .progress-circle:before {
+            content: "✔";
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            color: white;
+            border-radius: 50%;
+            display: block;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+
+    .progress-group {
+        margin-top: 36px;
+    }
+
+    @@media (max-width: 991px) {
+        .progress-group {
+            margin-left: -18px;
+            margin-right: -18px;
+            flex-basis: 100%;
+            padding: 18px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .progress-group {
+            padding: 18px 18px 0;
+            margin-bottom: 12px;
+        }
+    }
+
+    .progress-group .title {
+        margin-bottom: 18px;
+    }
+
+    .progress-group .wrapper {
+        background: white;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        height: 14px;
+        display: flex;
+        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+    }
+
+    .progress-group .step {
+        width: 20%;
+        position: relative;
+    }
+
+        .progress-group .step:after {
+            content: "";
+            height: 30px;
+            width: 30px;
+            background: white;
+            border-radius: 50%;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .progress-group .step:first-of-type .progress {
+            padding-left: 4px;
+        }
+
+            .progress-group .step:first-of-type .progress[value]::-moz-progress-bar {
+                border-radius: 5px 0 0 5px;
+            }
+
+            .progress-group .step:first-of-type .progress[value]::-webkit-progress-value {
+                border-radius: 5px 0 0 5px;
+            }
+
+        .progress-group .step:not(:first-of-type) .progress[value]::-moz-progress-bar {
+            border-radius: 0;
+        }
+
+        .progress-group .step:not(:first-of-type) .progress[value]::-webkit-progress-value {
+            border-radius: 0;
+        }
+
+        .progress-group .step .progress[value] + .progress-circle {
+            background: #eee;
+        }
+
+        .progress-group .step.step01 .progress[value]::-moz-progress-bar {
+            background-color: #010C4E;
+        }
+
+        .progress-group .step.step01 .progress[value]::-webkit-progress-value {
+            background-color: #010C4E;
+        }
+
+        .progress-group .step.step01 .progress[value="100"] + .progress-circle {
+            background-color: #010C4E;
+        }
+
+        .progress-group .step.step02 .progress[value]::-moz-progress-bar {
+            background-color: #002D88;
+        }
+
+        .progress-group .step.step02 .progress[value]::-webkit-progress-value {
+            background-color: #002D88;
+        }
+
+        .progress-group .step.step02 .progress[value="100"] + .progress-circle {
+            background-color: #002D88;
+        }
+
+        .progress-group .step.step03 .progress[value]::-moz-progress-bar {
+            background-color: #017AA9;
+        }
+
+        .progress-group .step.step03 .progress[value]::-webkit-progress-value {
+            background-color: #017AA9;
+        }
+
+        .progress-group .step.step03 .progress[value="100"] + .progress-circle {
+            background-color: #017AA9;
+        }
+
+        .progress-group .step.step04 .progress[value]::-moz-progress-bar {
+            background-color: #03C2B2;
+        }
+
+        .progress-group .step.step04 .progress[value]::-webkit-progress-value {
+            background-color: #03C2B2;
+        }
+
+        .progress-group .step.step04 .progress[value="100"] + .progress-circle {
+            background-color: #03C2B2;
+        }
+
+        .progress-group .step.step05 .progress[value]::-moz-progress-bar {
+            background-color: #05E8B0;
+        }
+
+        .progress-group .step.step05 .progress[value]::-webkit-progress-value {
+            background-color: #05E8B0;
+        }
+
+        .progress-group .step.step05 .progress[value="100"] + .progress-circle {
+            background-color: #05E8B0;
+        }
+
+    .progress-labels {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .progress-labels .label {
+            text-align: center;
+            text-transform: uppercase;
+            margin: 12px 0;
+            width: 20%;
+            font-size: 11px;
+            padding-right: 24px;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+    .page-title {
+        letter-spacing: -0.05rem;
+    }
+
+    #bottom-wizard, #bottom-wizard2, #bottom-wizard3, #bottom-wizard4, #bottom-wizard5 {
+        text-align: center;
+        padding: 0 !important;
+    }
+</style>
+
+<div class="container-fluid d-flex flex-column my-auto">
+    <div id="wizard_container">
+        <form id="wrapped" name="locationForm" class="locationForm" method="POST">
+            <div id="middle-wizard">
+                <div class="step">
+                    <div class="question_title">
+                        <h3>Mekan Seçiniz</h3>
+                        <p>Anket doldurabilmek için seçim yapınız.</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-floating mb-3">
+                            <select class="form-select required" name="lokasyon" id="_selectedLocation" aria-label="_selectedLocation">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom-wizard">
+                <button type="button" name="forward" class="btn_7">İleri</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container-fluid d-flex flex-column my-auto">
+    <div id="wizard_container2">
+        <form id="wrapped2" name="surveyForm" class="surveyForm" method="POST">
+            <div id="middle-wizard2">
+                <div class="step">
+                    <div class="question_title">
+                        <h3>Anket Seçiniz</h3>
+                        <p>Anket doldurabilmek için seçim yapınız.</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-floating mb-3">
+                            <select class="form-select required" name="lokasyon" id="_selectedSurvey" aria-label="_selectedSurvey">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom-wizard2">
+                <button onclick="javascript: goToNext(0);" type="button" name="forward" class="btn_5">İleri</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="survey">
+    <div class="container">
+        <div class="progress-group">
+            <div class="wrapper" id="p-bar">
+
+            </div>
+        </div>
+    </div>
+    <div class="question_title" id="question" style="margin-top:40px;">
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="list_block">
+                <ul id="answers">
+                </ul>
+                <div class="charLimit">
+                    <span id="rchars" class="">200</span>/200 Karakter
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom-wizard3" class="nav-btns justify-content-center">
+        <button type="button" name="backward" class="btn_2">Önceki</button>
+        <button type="button" name="forward" class="btn_4">Sonraki</button>
+    </div>
+</div>
+<div class="formBox p-5">
+    <form class="container justify-content-center survey-form p-5" id="survey_formbox">
+        <div class="form-content main-form">
+            <div class="form-header" style="text-align:center">
+                <h3 class="form-title">Anket Formu</h3>
+            </div>
+            <div class="form-holder field">
+                <input id="ad" type="text" name="ad" class="input-line" maxlength="20" required><br>
+                <label>Ad<span class="text-danger">*</span></label>
+            </div>
+            <div class="form-holder field">
+                <input type="text" name="soyad" class="input-line" maxlength="20" required><br>
+                <label>Soyad<span class="text-danger">*</span></label>
+            </div>
+            <div class="form-holder field">
+                <input type="email" name="email" class="input-line" maxlength="50" required><br>
+                <label>Email<span class="text-danger">*</span></label>
+            </div>
+            <div class="form-holder field">
+                <input type="tel" name="tel" class="input-line" placeholder="(XXX)XXX-XXXX" onkeypress="return isNumberKey(event)" required><br>
+                <label>Telefon Numarası<span class="text-danger">*</span></label>
+            </div>
+            <div class="userBox">
+                <p class="suggestTitle">Öneri</p>
+                <textarea id="suggestSth" class="suggestSth" name="oneri" maxlength="200"></textarea>
+                <div class="charLimit">
+                    <span id="rchars" class="">200</span>/200 Karakter
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="wizard_container3">
+    <div id="bottom-wizard4">
+        <button type="button" name="backward" class="btn_3">Gönder</button>
+    </div>
+</div>
+
+<div class="endForm">
+    <div class="question_title">
+        <h3>TEŞEKKÜRLER</h3>
+    </div>
+</div>
+
+<div id="wizard_container4">
+    <div id="bottom-wizard5">
+        <button type="button" name="backward" class="btn_6">BAŞA DÖN</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Content/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="~/Content/js/bootstrap.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    var i = 0;
+    var f, x;
+    var answerControlIDs = []; // cevapların Id lerini tutan dizi
+    var answerCount = []; // cevapları tutan dizi
+    var answerTextControl = [];//text cevapları tutan dizi
+    var questionCount = [];//soruların Id lerini tutan dizi
+    var answerId = -1;
+    var anketId = document.getElementById("_selectedSurvey").value;
+    var toplam_soru_sayisi = 0;
+
+    $(() => {
+        getSelect1();
+    })
+
+    var getSelect1 = () => {
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSelect1", "Anket")',
+                data: "json",
+                success: function (data) {
+                    var t = '<option value="-1">Lütfen Mekan Adı Seçiniz...</option>';
+                    for (var k = 0; k < data.data.length; k++) {
+                        t += '<option value="' + data.data[k].Id + '">' + data.data[k].Adi + '</option>';
+                    }
+                    $("#_selectedLocation").html(t);
+                }
+            })
+        })
+    }
+
+    var getSelect2 = () => {
+        let mekanId = document.getElementById("_selectedLocation").value;
+        $(document).ready(function () {
+            $.post('@Url.Action("GetSelect2", "Anket")', { mekanId: mekanId }, (d, s) => {
+                if (d.data.length == 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        text: 'Seçtiğiniz Mekanın Anketi Bulunmamaktadır.',
+                        confirmButtonText: 'Tamam'
+                    })
+                } else
+                {
+                    var t = '<option value="-1">Lütfen Anket Adı Seçiniz...</option>';
+                    for (var k = 0; k < d.data.length; k++) {
+                        t += '<option value="' + d.data[k].Id + '">' + d.data[k].Adi + '</option>';
+                    }
+                    $("#_selectedSurvey").html(t);
+                    locationForm.style.display = "none";
+                    document.querySelector(".btn_7").style.display = 'none';
+
+                    if (document.getElementById("_selectedSurvey").length > 2) {
+                        surveyForm.style.display = "block";
+                        document.querySelector(".btn_5").style.display = 'block';
+                    } else {
+
+                        goToNext(d.data[0].Id);
+                    }
+                }
+            })
+        })
+    }
+
+    var progressBar = () => {
+
+        $.post('@Url.Action("progressBarCount", "Anket")', { anketId: anketId }, (d, s) => {
+            toplam_soru_sayisi = d.data;
+            console.log(toplam_soru_sayisi);
+            for (var barCount = 1; barCount < d.data + 1; barCount++) {
+
+                var kacinci_soru = barCount;
+                var p_yuzdelik = (100 * kacinci_soru) / toplam_soru_sayisi;
+
+                $('#p-bar').append(`<div id="bar-${barCount}" class="bar-${barCount} step step02 complete " style="width:${p_yuzdelik}% ">
+                                 <progress class="progress" value="100" max="100" aria-describedby="Step 01"></progress>
+                                 <div class="progress-circle"></div>
+                             </div>`
+                );
+                document.querySelector(".bar-" + barCount).style.display = 'none';
+
+            }
+
+            survey_next();
+        })
+
+    }
+    var progressBar_next = (s_Id) => {
+        var del_bar = s_Id - 1;
+            console.log(del_bar);
+        if (del_bar > 0) {
+            document.querySelector(".bar-" + del_bar).style.display = 'none';
+            document.querySelector(".bar-" + s_Id).style.display = 'block';
+
+        }
+        else {
+            document.querySelector(".bar-" + s_Id).style.display = 'block';
+
+        }
+    }
+    var progressBar_back = (s_Id) => {
+        var del_bar = s_Id + 1;
+
+            document.querySelector(".bar-" + del_bar).style.display = 'none';
+            document.querySelector(".bar-" + s_Id).style.display = 'block';
+
+    }
+
+    var survey = document.querySelector(".survey");
+
+    var surveyForm = document.querySelector(".surveyForm");
+
+    // Mekan Seç 'İleri' Butonu:
+    jQuery('.btn_7').on('click', function () {
+
+        let mekanId = document.getElementById("_selectedLocation").value;
+        if (mekanId == -1) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Lütfen Mekan Adı Seçiniz.',
+                confirmButtonText: 'Tamam',
+            });
+        }
+        else
+        {
+            getSelect2();
+        }
+    })
+
+    // Anket Seç 'İleri' Butonu:
+    var goToNext = (getanketId) => {
+        anketId = getanketId;
+        if (getanketId == 0) {
+            anketId = document.getElementById("_selectedSurvey").value;
+        }
+        if (anketId == -1  ) {
+            Swal.fire({
+                icon: 'success',
+                text: 'Lütfen Anket Adı Seçiniz.',
+                confirmButtonText: 'Tamam',
+            });
+        }
+        else {
+
+            surveyForm.style.display = "none";
+            document.querySelector(".btn_5").style.display = 'none';
+            survey_question();
+
+            survey.style.display = "block";
+            document.querySelector(".btn_4").style.display = 'block';
+            //$.when(survey_question()).then(survey_next);
+        }
+    }
+
+    // Seçilen ankete göre soruları çek:
+    var survey_question = () => {
+        $.post('@Url.Action("GetSurveyName", "Anket")', { anketId: anketId }, (d, s) => {
+            var anketAdi = d.data;
+
+            $.post('@Url.Action("SurveyQuestion", "Anket")', { anketId: anketId }, (d, s) => {
+                for ( f = 0; f < d.data.length; f++) {
+                    $('#question').append(` <div class="q-${f}" id="q-${f}" value="${d.data[f].Id}">
+                                                <h3>${d.data[f].Soru}</h3><p>(${anketAdi})</p>
+                                            </div>
+                    `);
+                    document.querySelector(".q-" + f).style.display = 'none';
+
+                    questionCount.push(d.data[f].Id);
+                }
+                progressBar();
+
+            })
+        })
+    }
+
+    // Sorular bitince Form açılsın
+    var survey_next = () => {
+        document.getElementById('answers').innerHTML = "";
+
+        $.post('@Url.Action("SurveyQuestion", "Anket")', { anketId: anketId }, (d, s) => {
+            if (i >= d.data.length) {
+                $.post('@Url.Action("ContactInformation", "Anket")', { anketId : anketId }, (d, s) => {
+                    if (d.data == true) {
+                        document.querySelector(".survey").style.display = 'none';
+                        document.querySelector(".btn_4").style.display = 'none';
+                        document.querySelector(".formBox").style.display = 'block';
+                        document.querySelector(".btn_3").style.display = 'block';
+                        document.querySelector(".charLimit").style.display = 'block';
+                        document.getElementById("ad").focus();
+                        
+                    } else {
+                        AnswerControllerEnd();
+                    }
+                })
+            }
+            else {
+                var z = i + 1;
+                progressBar_next(z);
+                var a = i-1;
+                var h = a + 1;
+                if (i == 0) {
+                    document.querySelector(".btn_2").style.display = 'none';
+                } else {
+                    document.querySelector(".btn_2").style.display = 'block';
+                }
+                document.querySelector(".q-" + i).style.display = 'block';
+
+                if (i != 0) {
+                    document.querySelector(".q-" + a).style.display = 'none';
+                }
+                var soruId = d.data[i].Id;
+
+                i++;
+
+                if (d.data[i - 1].CevapTipi == 0) {
+
+                    if (answerCount[h] == undefined || answerCount[h] == '') {
+                        $('#answers').append(`<textarea class="suggestSth" id="a-${d.data[i - 1].Id}" name="a-${d.data[i - 1].Id}" maxlength="200"></textarea>`);
+                        var answerId1 = d.data[i - 1].Id;
+                        document.getElementById("a-" + answerId1).focus();
+
+                    } else {
+                        $('#answers').append(`<textarea class="suggestSth" id="a-${d.data[i - 1].Id}" name="a-${d.data[i - 1].Id}" maxlength="200"></textarea>`);
+                        var answerId2 = d.data[i - 1].Id;
+                        document.getElementById("a-" + answerId2).focus();
+                        document.getElementById('a-' + questionCount[h]).value = answerCount[h];
+                    }
+
+                } else {
+                    $.post('@Url.Action("QuestionAnswers", "Anket")', { soruID: soruId }, (d, s) => {
+                        if (d.Data.length < 2) {
+                            survey_next();
+                        } else
+                        {
+                            for (f = 0; f < d.Data.length; f++) {
+
+                                if (d.Data[f].Id == answerCount[h]) {
+                                    $('#answers').append(` <li>
+                                    <div class="checkbox_radio_container">
+                                        <input type="radio" id="${d.Data[f].Id}" name="answer_required" class="required" value="${d.Data[f].Id}" checked>
+                                        <label class="radio" for="${d.Data[f].Id}"></label>
+                                        <label for="${d.Data[f].Id}" class="wrapper">${d.Data[f].Icerik}</label>
+                                    </div>
+                                </li>`);
+                                } else {
+                                    $('#answers').append(` <li>
+                                    <div class="checkbox_radio_container">
+                                        <input type="radio" id="${d.Data[f].Id}" name="answer_required" class="required" value="${d.Data[f].Id}" nchecked>
+                                        <label class="radio" for="${d.Data[f].Id}"></label>
+                                        <label for="${d.Data[f].Id}" class="wrapper">${d.Data[f].Icerik}</label>
+                                    </div>
+                                </li>`);
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    // Geri Dönüş:
+    var survey_back = () => {
+        document.getElementById('answers').innerHTML = "";
+
+        if (i-2 == 0) document.querySelector(".btn_2").style.display = 'none';
+        else document.querySelector(".btn_2").style.display = 'block';
+
+        if (i - 2 < 0) {
+            getSelect1();
+
+            document.querySelector(".survey").style.display = 'none';
+            document.querySelector(".btn_4").style.display = 'none';
+            document.querySelector(".btn_2").style.display = 'none';
+            document.querySelector(".surveyForm").style.display = 'block';
+            document.querySelector(".btn_5").style.display = 'block';
+        }
+        else {
+            var z = i - 1;
+            progressBar_back(z);
+            $.post('@Url.Action("SurveyQuestion", "Anket")', { anketId: anketId }, (d, s) => {
+
+                i--;
+                let y = i - 1;
+
+                document.querySelector(".q-" + y).style.display = "block";
+                document.querySelector(".q-" + i).style.display = "none";
+
+                var soruId_back = d.data[y].Id;
+
+                if (d.data[y].CevapTipi == 0) {
+                    if (answerCount[y] == '') {
+                        $('#answers').append(`<textarea class="suggestSth" id="a-${d.data[y].Id}" name="a-${d.data[y].Id}" maxlength="200"></textarea>`);
+                        var answerId3 = d.data[y].Id;
+                        document.getElementById("a-" + answerId3).focus();
+                    } else {
+                        $('#answers').append(`<textarea class="suggestSth" id="a-${d.data[y].Id}" name="a-${d.data[y].Id}" maxlength="200"></textarea>`);
+                        var answerId4 = d.data[y].Id;
+                        document.getElementById("a-" + answerId4).focus();
+                        document.getElementById('a-' + questionCount[y]).value = answerCount[y];
+                    }
+
+                } else
+                {
+                    $.post('@Url.Action("QuestionAnswers", "Anket")', { soruID: soruId_back }, (d, s) => {
+                        if (d.Data.length < 2) {
+                            survey_back();
+                        } else {
+
+                        for (f = 0; f < d.Data.length; f++) {
+                            if (d.Data[f].Id == answerCount[y]) {
+                                $('#answers').append(` <li>
+                                <div class="checkbox_radio_container">
+                                    <input type="radio" id="${d.Data[f].Id}" name="answer_required" class="required" value="${d.Data[f].Id}" checked>
+                                    <label class="radio" for="${d.Data[f].Id}"></label>
+                                    <label for="${d.Data[f].Id}" class="wrapper">${d.Data[f].Icerik}</label>
+                                </div>
+                            </li>`);
+
+
+                            } else {
+
+                                $('#answers').append(` <li>
+                                <div class="checkbox_radio_container">
+                                    <input type="radio" id="${d.Data[f].Id}" name="answer_required" class="required" value="${d.Data[f].Id}" nchecked>
+                                    <label class="radio" for="${d.Data[f].Id}"></label>
+                                    <label for="${d.Data[f].Id}" class="wrapper">${d.Data[f].Icerik}</label>
+                                </div>
+                            </li>`);
+                            }
+                        }
+                        }
+                    })
+                }
+            })
+        }
+    }
+
+    // 'İleri' Butonu:
+    jQuery('.btn_4').on('click', function () {
+        AnswerController_nextbtn();
+    })
+
+    var AnswerController_nextbtn = () => {
+        let x = i - 1;
+        if (document.getElementsByClassName("required").length > 2) {
+
+            let radioButton = document.getElementsByClassName("required");
+            let radioButtonChecked = false;
+            for (let i = 0; i < radioButton.length; i++) {
+                if (radioButton[i].checked) {
+                    radioButtonChecked = true;
+                    break;
+                }
+            }
+            if (!radioButtonChecked) {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Lütfen soruyu cevaplayınız.',
+                    confirmButtonText: 'Tamam'
+                })
+            }
+            else {
+                answerId++;
+                let checkedAnswers_nextbtn = document.querySelectorAll('.required:checked');
+                for (let required of checkedAnswers_nextbtn) {
+                    answerControlIDs.push(required.id.replace('checked', ''));
+                }
+                answerCount[x] = answerControlIDs[answerId];
+
+                survey_next();
+            }
+        }
+        else {
+            var textControl = document.getElementById("a-" + questionCount[x]).value;
+            if (!textControl  || textControl[0] == " ") {
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Lütfen soruyu cevaplayınız.',
+                    confirmButtonText: 'Tamam'
+                })
+            } else {
+                answerCount[x] = textControl;
+                survey_next();
+            }
+        }
+    }
+
+    // 'Geri' Butonu:
+    jQuery('.btn_2').on('click', function () {
+        AnswerController_backbtn();
+    })
+
+    var AnswerController_backbtn = () => {
+        let x = i - 1;
+
+        if (document.getElementsByClassName("required").length >2) {
+
+            let radioButton = document.getElementsByClassName("required");
+            let radioButtonChecked = false;
+            for (let i = 0; i < radioButton.length; i++) {
+                if (radioButton[i].checked) {
+                    radioButtonChecked = true;
+                    break;
+                }
+            }
+            if (!radioButtonChecked) {
+                survey_back();
+            }
+            else {
+                answerId++;
+                let checkedAnswers_backbtn = document.querySelectorAll('.required:checked');
+                for (let required of checkedAnswers_backbtn) {
+                    answerControlIDs.push(required.id.replace('checked', ''));
+                }
+                answerCount[x] = answerControlIDs[answerId];
+                survey_back();
+            }
+        } else {
+            var textControl = document.getElementById("a-" + questionCount[x]).value;
+
+            answerCount[x] = textControl;
+            survey_back();
+        }
+    }
+
+    // 'Gönder' Butonu:
+    jQuery('.btn_3').on('click', function () {
+        AnswerController_sendbtn();
+    })
+
+    var AnswerController_sendbtn = () => {
+
+        let mekanId = document.getElementById("_selectedLocation").value;
+        var Ad = $('[name = "ad"]').val();
+        var Soyad = $('[name = "soyad"]').val();
+        var Email = $('[name = "email"]').val();
+        var Tel   = $('[name = "tel"]').val();
+        var Oneri = $('[name = "oneri"]').val();
+        if (!Ad || !Soyad || !Email || !Tel || Ad[0] == " " || Soyad[0] == " " || Email[0] == " ") {
+            Swal.fire({
+                icon: 'warning',
+                text: 'Lütfen (*)boşlukları doldurunuz.',
+                confirmButtonText: 'Tamam'
+            })
+        } else {
+            $.post('@Url.Action("SaveSurveyAnswer", "Anket")', { answerList: answerCount, questionList: questionCount, surveyId: anketId, locationId: mekanId, Ad: Ad, Soyad: Soyad, Email: Email, Tel: Tel, Oneri: Oneri }, (d, s) => {
+            if (d.Status == true) {
+                document.querySelector(".formBox").style.display = 'none';
+                document.querySelector(".btn_3").style.display = 'none';
+                document.querySelector(".endForm").style.display = "block";
+                document.querySelector(".btn_6").style.display = 'block';
+            }
+        })
+        }
+    }
+
+    var AnswerControllerEnd = () => {
+
+        let mekanId = document.getElementById("_selectedLocation").value;
+        $.post('@Url.Action("SaveSurveyAnswer", "Anket")', { answerList: answerCount, questionList: questionCount, surveyId: anketId, locationId: mekanId }, (d, s) => {
+            if (d.Status == true) {
+                document.querySelector(".survey").style.display = 'none';
+                document.querySelector(".btn_4").style.display = 'none';
+                document.querySelector(".endForm").style.display = "block";
+                document.querySelector(".btn_6").style.display = 'block';
+            }
+        })
+    }
+
+    // 'Başa Dön' Butonu:
+    jQuery('.btn_6').on('click', function () {
+        document.location.reload();
+    })
+
+    var maxLength = 200;
+    $('#suggestSth').keyup(function () {
+        var textlen = maxLength - $('#suggestSth').val().length;
+        $('#rchars').text(textlen);
+        if ($("#suggestSth").val().length >= 180) {
+            $("#rchars").addClass('txtLimit');
+            $("#suggestSth").addClass('txtBgLimit');
+        }
+        else {
+            $("#rchars").removeClass('txtLimit');
+            $("#suggestSth").removeClass('txtBgLimit');
+        }
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function phoneMask() {
+        var txt = $(this).val().replace(/\D/g, '');
+        let newtxt = '';
+        for (let i = 0; i < Math.min(txt.length, 10); i++) {
+            newtxt += txt[i];
+            if ((i == 2) || (i == 5)) {
+                newtxt += ' ';
+            }
+        }
+        if (newtxt[newtxt.length - 1] == ' ') newtxt = newtxt.substring(0, newtxt.length - 1);
+        this.value = newtxt;
+
+    }
+    $('[type="tel"]').keyup(phoneMask);
+
+</script>

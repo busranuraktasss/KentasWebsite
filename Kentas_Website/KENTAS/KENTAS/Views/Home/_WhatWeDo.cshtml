@@ -1,0 +1,13 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Whatwedoes.FirstOrDefault();
+}
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3  ">
+    <p class="" style="color:white; line-height:100%;"> @Html.Raw(data.whatwedoHeaderDesc)</p>
+</div>
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class=" " style="color:white; line-height:100%;">  @Html.Raw(data.whatwedoDesc) </div>
+</div>

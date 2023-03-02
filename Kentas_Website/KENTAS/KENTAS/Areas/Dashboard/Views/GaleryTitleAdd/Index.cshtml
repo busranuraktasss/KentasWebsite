@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KENTAS.Models.GaleriBasliklari>
+
+@{
+    ViewBag.Title = "Galeri Başlık Ekle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class=" btn btn-info mb-3" style="color: InfoText; margin-bottom: 10px;">
+    @Html.ActionLink("Yeni Ekle", "Create")
+</div>
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            BAŞLIKLAR
+        </th>
+       
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.Title)
+            </td>
+            
+            <td>
+                <div class="btn-group">
+
+                    @Html.ActionLink("Güncelle", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-success" })
+                    @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "btn btn-sm btn-danger" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

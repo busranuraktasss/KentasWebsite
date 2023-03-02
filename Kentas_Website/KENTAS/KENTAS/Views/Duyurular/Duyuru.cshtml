@@ -1,0 +1,81 @@
+﻿@model IEnumerable<KENTAS.Models.Advert>
+
+@{
+    ViewBag.Title = "Duyurular";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+
+    <style type="text/css">
+        body{
+            overflow-x:hidden;
+        }
+
+        .metin {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .hbg {
+            background: url(../Content/images/f_bg.jpg) center center no-repeat;
+            background-size: cover;
+        }
+
+
+        @@media only screen and (min-width: 280px) {
+            .pl-5, .px-5 {
+                padding-left: 30px !important;
+            }
+
+            .pr-5, .px-5 {
+                padding-right: 30px !important;
+            }
+        }     
+
+        @@media only screen and (min-width: 375px) {
+            .col-xl-4 /*Nav Logolar*/ {
+                margin-bottom: 10px;
+                justify-content: space-around;
+            }
+
+            .justify-content-center {
+                margin-top: 8px;
+            }
+        }
+    </style>
+}
+
+<div class="container bgwhite mt-4">
+    <div class="row p-1">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3 hbg" style="background-color: #00a0af; background-image: url(/Content/images/f_bg.jpg)">
+            <h6 class="pl-3 my-auto" style="color:white">DUYURULAR</h6>
+        </div>
+    </div>
+    <div class="heightCont" sstyle="overflow-y:scroll; overflow-x:hidden;">
+        <div class="row metin">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 py-2 px-5">
+                @foreach (var item in Model.ToList())
+                {
+                    <div class="row border radius_contains mb-3">
+                        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 pt-2 pb-2">
+                            <img src="@Url.Content(item.adImage)" class="radius_contains" style="width:100%;" alt="duyuru" />
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 pt-xl-4 pt-lg-4 pt-md-2 ">
+                            <h6 class="mb-1 mt-2 text-uppercase newsListHeaderElipsis" style="color:midnightblue;"> @Html.Raw(item.adHeaderDesc)</h6>
+                            <h6 class="mb-1 newsListDescElipsis" style="color:midnightblue;">  @Html.Raw(item.adDesc)</h6>
+                            <a style="font-size:14px; color:#00a0af; " class="mt-1">@Html.ActionLink("Detaylı İncele", "Details", new { id = item.adId })</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+    </script>
+}
+

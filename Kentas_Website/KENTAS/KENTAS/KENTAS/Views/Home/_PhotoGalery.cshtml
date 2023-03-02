@@ -1,0 +1,15 @@
+﻿@{
+    var ct = new KENTAS.Models.Entities();
+    var data = ct.PhotoGaleries.ToList();
+
+}
+
+
+@foreach (var item in data)
+{
+
+    <div class="item radius_contains border p-1 ">
+        <img src="@Url.Content(item.photoGaleryImage)" class="img-fluid radius_contains" style="width:100%; height:200px;" />
+    </div>
+
+}

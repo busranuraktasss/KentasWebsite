@@ -1,0 +1,46 @@
+﻿@model IEnumerable<KENTAS.Models.GeneralManager>
+
+@{
+    ViewBag.Title = "Genel Müdür Bilgileri";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="">
+            GENEL MÜDÜR LOGO
+        </th>
+        <th class="">
+            GENEL MÜDÜR ADI
+        </th>
+        <th class="">
+            GENEL MÜDÜR ÜNVAN
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="@Url.Content(@item.GeneralManagerLogo)" alt="general" style="width:250px;" />
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeneralManagerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeneralManagerDescription)
+            </td>
+
+            <td>
+                @Html.ActionLink("Güncelle", "Edit", new { id = item.GeneralManagerId }, new { @class = "btn btn-sm btn-success" })
+
+            </td>
+
+        </tr>
+    }
+
+</table>

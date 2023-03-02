@@ -1,0 +1,51 @@
+﻿@model IEnumerable<KENTAS.Models.Activity>
+
+@{
+    ViewBag.Title = "Faaliyetlerimiz";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+ 
+<div class=" btn btn-info" style="color:InfoText;">
+    @Html.ActionLink("Yeni Ekle", "Create")
+</div>
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            FAALİYETLERİMİZ BAŞLIK AÇIKLAMA
+        </th>
+        <th class="text-center">
+            FAALİYETLERİMİZ AÇIKLAMA
+        </th>
+        <th class="text-center">
+            FAALİYETLERİMİZ FOTOĞRAF
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.activitiesHeaderDesc)
+            </td>
+            <td>
+                @Html.Raw(item.activitiesDesc)
+            </td>
+            <td>
+                <img src="@Url.Content(item.activitiesImage)" style="height:60px;" alt="Activite" />
+            </td>
+            <td>
+                <div class="btn-group">
+
+                    @Html.ActionLink("Güncelle", "Edit", new { id = item.activitiesId }, new { @class = "btn btn-sm btn-success" })
+                    @Html.ActionLink("Sil", "Delete", new { id = item.activitiesId }, new { @class = "btn btn-sm btn-danger" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

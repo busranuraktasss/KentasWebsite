@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "eArşiv Görüntüleme Ekranı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class='container bgwite mt-4 pb-3' style='background-color:white;'>
+
+    <div class='row p-1 mb-3'>
+
+        <div class='col-md-12 radius_contains p-3' style='background-color:#00a0af; background-image:url(/Content/images/otois1.png)'>
+            <h6 class='pl-3 my-auto' style='color:white'> eArşiv Görüntüleme </h6>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <h3><b>Plaka:</b>  @ViewBag.Plaka</h3>
+            <h3><b>Satır No:</b>  @ViewBag.SatirId</h3>
+            @{
+
+                if (!string.IsNullOrEmpty(ViewBag.InvoiceUrl))
+                {
+                    string fileName = $"{ViewBag.Plaka}_{ViewBag.SatirId}.pdf";
+                    <a href="@ViewBag.InvoiceUrl" download="@fileName" target="_blank"><i class="fa fa-2x fa-download"></i> İndir </a>
+                }
+                else
+                {
+                    <h3>Henüz eArşiv Oluşturulmamış.</h3>
+                }
+
+            }
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<KENTAS.Models.Whatwedo>
+
+@{
+    ViewBag.Title = "Neler Yapıyoruz";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            NELER YAPIYORUZ BAŞLIK AÇIKLAMA
+        </th>
+        <th class="text-center">
+            NELER YAPIYORUZ AÇIKLAMA
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.whatwedoHeaderDesc)
+        </td>
+        <td>
+            @Html.Raw(item.whatwedoDesc)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.whatwedoId }, new { @class = "btn btn-sm btn-success" }) 
+        </td>
+    </tr>
+}
+
+</table>

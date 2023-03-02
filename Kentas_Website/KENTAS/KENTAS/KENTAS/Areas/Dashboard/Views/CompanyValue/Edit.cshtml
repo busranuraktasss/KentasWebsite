@@ -1,0 +1,56 @@
+﻿@model KENTAS.Models.CompanyValue
+
+@{
+    ViewBag.Title = "Güncelle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    CKEDITOR.replace('editor')
+</script>
+
+
+@using (Html.BeginForm("Edit", "CompanyValue", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CompanyValueId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyValuesPhotos, "ŞİRKET DEĞERLERİ FOTOĞRAF", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="CompanyValuesPhotos" class="form-control" required placeholder="Dosya Seç." />
+                @Html.ValidationMessageFor(model => model.CompanyValuesPhotos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyValuesTitle, "ŞİRKET DEĞERLERİ BAŞLIK", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CompanyValuesTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyValuesTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyValuesDescription, "ŞİRKET DEĞERLERİ AÇIKLAMA", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <textarea name="CompanyValuesDescription" class="ckeditor">@Model.CompanyValuesDescription</textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

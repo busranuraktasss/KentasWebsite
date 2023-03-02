@@ -1,0 +1,16 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Contacts.FirstOrDefault();
+}
+
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 font-weight-bold text-center" style="color:#022A5E;">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+            <small style="color:#022A5E"><b>Tel</b></small><a href="tel:@data.contactPhoneNumber"><span class="font-weight-lighter " style="color:#022A5E; ">@data.contactPhoneNumber</span></a>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+            <small class="" style="color:#022A5E"><b>Fax</b></small><span class="font-weight-lighter" style="color:#022A5E;  ">@data.contactFaxNumber</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <style type="text/css">
+        #map_canvas {
+            height: 360px;
+            width: 100%;
+        }
+
+        .slide {
+            width: 100% !important;
+        }
+
+        .gm-style-iw {
+            max-height: 512px !important;
+            max-width:fit-content !important;
+        }
+        .gm-style-iw-d {
+            max-height:fit-content !important;
+        }
+    </style>
+}
+<div class="container">
+    <div class="row d-flex justify-content-center top1bottom1 radius_contains">
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            @{
+                Html.RenderAction("_Slider", "Home");
+            }
+
+            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon sliderbtn-l" aria-hidden="true"> </span>
+                <span class="sr-only"> Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                <span class="carousel-control-prev-icon sliderbtn-r" aria-hidden="true"> </span>
+                <span class="sr-only"> Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row bgwhite radius_contains mt-3 ">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 border-bottom  pt-3 pb-2 ">
+            <h5 class="float-left font-weight-bold pl-2" style="color: midnightblue;"><i class="fa fa-map-marker"></i> HİZMET NOKTALARIMIZ</h5>
+            <h6 class="small ">
+                <a href="javascript:fullMap();">
+                    <i class="fas fa-bars float-right text-muted pt-2 pr-4">
+                        TÜMÜNÜ GÖR
+                    </i>
+                </a>
+            </h6>
+
+            <div id="map_canvas"></div>
+        </div>
+    </div>
+
+    <div class="row p-4 aboutbg radius_contains mt-3 ">
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12" style="height:275px;">
+            <div class="row mt-4 align-items-center pr-4 ">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <img src="~/Content/images/hakkimizda.png" class=" float-left " alt="" />
+                    <h5 class="float-left font-weight-bold pl-2  " style="color: midnightblue;">@ViewBag.aboutHeader</h5>
+                </div>
+                <div style="overflow-y:auto; overflow-x:hidden; height:200px;">
+                    @{
+                        Html.RenderAction("_About", "Home");
+                    }
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12  agriddb " style="height: 275px;  background-image: url('../../Content/images/neler_yapiyoruz_2.png'); background-repeat: no-repeat; background-position: right;">
+
+            <div class="row mt-4 align-items-center pr-4">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <img src="~/Content/images/neler_yapiyoruz.png" class=" float-left " alt="" />
+                    <h5 class="float-left font-weight-bold pl-2  " style="color: white;">@ViewBag.whatwedoHeader</h5>
+                </div>
+                <div style="overflow-y:auto; overflow-x:hidden; height:200px;">
+                    @{
+                        Html.RenderAction("_WhatWeDo", "Home");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bgwhite radius_contains mt-3 ">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 border-bottom  pt-3 pb-2 ">
+
+            <img src="~/Content/images/haberler.png" class=" float-left pl-3" alt="" />
+            <h5 class="float-left font-weight-bold pl-2  " style="color: midnightblue;">@ViewBag.newsHeader</h5>
+            <h6 class="small ">
+                <a href="@Url.Action("Haber", "Haberler")">
+                    <i class="fas fa-bars float-right text-muted pt-2 pr-4">
+                        TÜMÜNÜ GÖR
+                    </i>
+                </a>
+            </h6>
+        </div>
+        <div class="vertical-tab  " role="tabpanel">
+            @{
+                Html.RenderAction("_News", "Home");
+            }
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 border-top py-4">
+
+        </div>
+    </div>
+
+    <div class="row bgwhite radius_contains mt-3 ">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 border-bottom  pt-3 pb-2 ">
+
+            <img src="~/Content/images/haberler.png" class=" float-left pl-3" alt="" />
+            <h5 class="float-left font-weight-bold pl-2  " style="color: midnightblue;">@ViewBag.advertsHeader</h5>
+            <h6 class="small ">
+                <a href="@Url.Action("Duyuru", "Duyurular")">
+                    <i class="fas fa-bars float-right text-muted pt-2 pr-4">
+                        TÜMÜNÜ GÖR
+                    </i>
+                </a>
+            </h6>
+        </div>
+        <div class="vertical-tab " role="tabpanel">
+            @{
+                Html.RenderAction("_Adverts", "Home");
+            }
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 border-top py-4">
+
+        </div>
+    </div>
+
+    <div class="row" id="vision_contact">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+            <div class="row pr-1">
+                <div class="radius_contains" style="background-color:#00a0af; background-image:url('../../Content/images/mvk.png'); background-repeat:no-repeat; background-position:center; height:480px;">
+                    <div class="col-12 pt-4">
+
+                        <p class="  text-white font-weight-bold  " style="font-size:larger;">@ViewBag.visionHeader</p>
+                        @{
+                            Html.RenderAction("_Vision", "Home");
+                        }
+
+                    </div>
+                    <div class="col-12 mt-5 ">
+                        <p class=" mt-2 text-white font-weight-bold " style="font-size:larger;">@ViewBag.missionHeader</p>
+                        @{
+                            Html.RenderAction("_Mission", "Home");
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mt-3">
+
+            <div class="row pl-1 " id="vision_contact">
+
+                <div class="radius_contains" style="background-color:#022a5e; height:480px;">
+                    <div class="col-12 pt-4 ">
+                        <img src="~/Content/images/iletisim.png" class="float-left" />
+                        <p class=" text-white font-weight-bold float-left " style="font-size:larger;">@ViewBag.contactHeader</p>
+
+                    </div>
+                    @{
+                        Html.RenderAction("_Contact", "Home");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bgwhite radius_contains mt-3 ">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 border-bottom  pt-3 pb-2 ">
+
+            <img src="~/Content/images/foto_galeri.png" class=" float-left pl-3" alt="" />
+            <h5 class="float-left font-weight-bold pl-2  " style="color: midnightblue;">@ViewBag.photoGaleryHeader</h5>
+            <h6 class="small ">
+                <a href="@Url.Action("Galeri", "Galeri")">
+                    <i class="fas fa-bars float-right text-muted pt-2 pr-4">
+                        TÜMÜNÜ GÖR
+                    </i>
+                </a>
+            </h6>
+        </div>
+        <div class="col-12 ">
+            <div id="carousel-with-lb" class=" container mt-3 " data-ride="carousel">
+
+                <div id="ps" class="carousel-inner carousel slide mdb-lightbox pb-4" role="listbox" data-ride="carousel">
+
+
+                    <div id="galery" class="owl-carousel owl-theme">
+                        @{ Html.RenderAction("_PhotoGalery", "Home"); }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts {
+    <script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx5ma4IL_UxSVattayQ9xUm7JsejzWdbU&callback=initMap"></script>
+    <script type="text/javascript">
+        var ico = '/Content/images/pin.png'
+        var map;
+        var markers = [];
+        var infowindow;
+
+        $(() => {
+            $($('[href="' + location.pathname + '"]')[0].parentElement).addClass('active');
+            console.clear();
+            getMapsCor();
+        })
+
+        var getMapsCor = () => {
+            $.getJSON('@Url.Action("getMapsMarker", "Home")', (d, s) => {
+                if (s === "success") {
+                    if (d.status == true) {
+                        var i = 0;
+                        for (let item of d.data) {
+                            item.Lat = parseFloat(item.Lat);
+                            item.Lng = parseFloat(item.Lng);
+                            addMarkerWithTimeout(item, i++ * 200);
+                        }
+                    }
+                }
+            })
+        }
+
+        var  initMap = () => {
+            map = new google.maps.Map(document.getElementById('map_canvas'), {
+                zoom: 11,
+                fullscreenControl: true,
+                scrollwheel: false,
+                center: new google.maps.LatLng(39.774695, 30.517201),
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                    mapTypeIds: ['satellite', 'roadmap', 'terrain', 'hybrid']
+                }
+            });
+        }
+
+        var  addMarkerWithTimeout = (data, timeout)=> {
+            infowindow = new google.maps.InfoWindow();
+            window.setTimeout(function() {
+                markers = new google.maps.Marker({
+                    position: { lat: data.Lat, lng: data.Lng },
+                    map: map,
+                    icon: ico,
+                    animation: google.maps.Animation.DROP
+                });
+
+                markers.addListener('click', function () {
+                    let str = `<div style="width:310px; height : auto;">
+                                    <div class='thumbnail' style='border:none; padding:0; margin:0;'>
+                                        <div class='caption' style='margin:0; padding:0; text-align:center'>
+                                            <strong style='font-size:18px; font-weight:900'>${data.Title}</strong><br />
+                                            <strong style='font-size:17px; font-weight:500'>${data.Subtitile}</strong>
+                                            <p style='padding:0; margin:0;font-size:16px;'>${data.Adress}</p>
+                                            <p style='padding:0; margin:0;font-size:15px;'>${data.WorkingHours}</p>
+                                            <hr />
+                                            <p><a href='https://www.google.com/maps/dir//${data.Lat},${data.Lng}/data=!3m1!4b1$' target="_blank" class='btn btn-warning btn-block'>Yol Tarifi</a></p>
+                                        </div>
+                                    </div>
+                                </div>`;
+                    infowindow.setContent(str);
+
+                    map.setCenter(new google.maps.LatLng(data.Lat, data.Lng));
+                    infowindow.open(map, this);
+                    map.setZoom(16);
+                });
+
+                markers.addListener('mouseover', function () {
+                    //infowindow.open(map, this);
+                });
+
+                markers.addListener('mouseout', function () {
+                    //infowindow.close()
+                });
+
+                markers.addListener('closeclick', function () {
+                    map.setCenter(new google.maps.LatLng(data.Lat, data.Lng));
+                    map.setZoom(16);
+                });
+
+            }, timeout);
+        }
+
+        var fullMap = () => {
+            $('#map_canvas > div > div > div:nth-child(9) > button').trigger('click');
+        }
+    </script>
+}

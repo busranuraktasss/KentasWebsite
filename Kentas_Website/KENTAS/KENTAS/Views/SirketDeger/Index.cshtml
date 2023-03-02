@@ -1,0 +1,55 @@
+﻿@model IEnumerable<KENTAS.Models.CompanyValue>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <style type="text/css">
+        .metin {
+            text-align: justify;
+        }
+
+        @@media only screen and (min-width: 375px) {
+            .col-xl-4 /*Nav Logolar*/ {
+                margin-bottom: 10px;
+                justify-content: space-around;
+            }
+
+            .justify-content-center {
+                margin-top: 8px;
+            }
+        }
+    </style>
+}
+
+<div class="container bgwite mt-4 radius_contains" style="background-color:white;">
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af;">
+            <h6 class="pl-3 my-auto" style="color:white">ŞİRKET DEĞERLERİ</h6>
+        </div>
+
+    </div>
+    <div class="row metin">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-5"><img style="width:100%;" class="radius_contains" src="@Url.Content(@item.CompanyValuesPhotos)" alt="companyValue" /></div>
+            <div class="col-md-6">
+                <label style="font-size:large; color:midnightblue; font-weight:bold;">@Html.Raw(item.CompanyValuesTitle)</label><br />
+                <label class="companyValueElipsis text-indent" style="font-size:large;">
+                    @Html.Raw(item.CompanyValuesDescription)
+                </label>
+            </div>
+
+        }
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KENTAS.Models.Admin>
+
+@{
+    ViewBag.Title = "Adminler";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Adminler</h2>
+
+<div class=" btn btn-info" style="color:InfoText;">
+    @Html.ActionLink("Yeni Ekle", "Create")
+</div>
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+        <th class="text-center">
+            E-POSTA
+        </th>
+        <th class="text-center">
+            ŞİFRE
+        </th>
+        <th class="text-center">
+            YETKİ
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.Email)
+        </td>
+        <td>
+            @Html.Raw(item.Password)
+        </td>
+        <td>
+            @Html.Raw(item.Authorization)
+        </td>
+        <td>
+            @Html.ActionLink("Güncelle", "Edit", new { id=item.AdminId }, new { @class = "btn btn-sm btn-success" }) 
+
+            @Html.ActionLink("Sil", "Delete", new { id=item.AdminId }, new { @class = "btn btn-sm btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

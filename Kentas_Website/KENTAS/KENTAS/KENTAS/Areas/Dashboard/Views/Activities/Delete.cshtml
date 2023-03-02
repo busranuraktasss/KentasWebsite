@@ -1,0 +1,49 @@
+﻿@model KENTAS.Models.Activity
+
+@{
+    ViewBag.Title = "Faaliyet Sil";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Silmek İstediğinize emin misiniz?</h3>
+<div>
+    <h4>Faaliyetlerimiz</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            BAŞLIK AÇIKLAMA
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.activitiesHeaderDesc)
+        </dd>
+
+        <dt>
+             AÇIKLAMA
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.activitiesDesc)
+        </dd>
+
+        <dt>
+          FOTOĞRAF
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.activitiesImage)" style="height:60px;" alt="Activite" />
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" /> |
+            @Html.ActionLink("Geri Dön", "Index")
+        </div>
+    }
+</div>

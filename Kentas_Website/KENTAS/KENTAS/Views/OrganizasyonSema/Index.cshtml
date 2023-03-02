@@ -1,0 +1,47 @@
+﻿@model IEnumerable<KENTAS.Models.OrganizationChart>
+
+@{
+    ViewBag.Title = "Organizasyon Şeması";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <style type="text/css">
+        @@media only screen and (min-width: 375px) {
+            .col-xl-4 /*Nav Logolar*/ {
+                margin-bottom: 10px;
+                justify-content: space-around;
+            }
+
+            .justify-content-center {
+                margin-top: 8px;
+            }
+        }
+    </style>
+}
+
+<div class="container bgwite mt-4 radius_contains" style="background-color:white;">
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af;">
+            <h6 class="pl-3 my-auto" style="color:white">ORGANİZASYON ŞEMASI</h6>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-12  p-2">
+                <img class="" src="@Url.Content(@item.OrganizationChartPhoto)" style="width:100%; " alt="organizasyon" />
+            </div>
+
+        }
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<KENTAS.Models.Contact>
+
+@{
+    ViewBag.Title = "İletişim";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<table class="table table-bordered table-striped table-responsive-sm">
+    <tr>
+
+        <th class="text-center">
+            TELEFON NUMARASI
+        </th>
+        <th class="text-center">
+            FAX NUMARASI
+        </th>
+        <th class="text-center">
+            ADRES
+        </th>
+        <th class="text-center">
+            KONUM
+        </th>
+        <th class="text-center">
+            İŞLEMLER
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        @Html.Raw(item.contactPhoneNumber)
+    </td>
+    <td>
+        @Html.Raw(item.contactFaxNumber)
+    </td>
+    <td>
+        @Html.Raw(item.contactAddress)
+    </td>   
+    <td>
+        <div style="width:400px; word-break:break-word;">
+            @Html.Raw(item.contactImageSrc)
+        </div>
+       
+    </td>
+    <td>
+        @Html.ActionLink("Güncelle", "Edit", new { id = item.contactId }, new { @class = "btn btn-sm btn-success" })
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="027ff0340400449294c849e7c69994ae" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="Kentas1Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.About" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Activity" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Activities_Images" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Admin" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Advert" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Adverts_Images" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Brand" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.CompanyValue" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Contact" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Footer" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.GaleriBasliklari" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="Kentas1Model.GeneralManager" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Header" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.HumanResource" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Identity" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.JobApplicationForm" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Kvkk" Width="1.5" PointX="6.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Mission" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.News" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Kentas1Model.News_Images" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="Kentas1Model.OrganizationChart" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Kentas1Model.OurService" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Kentas1Model.PageHeader" Width="1.5" PointX="2.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Kentas1Model.PhotoGalery" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="Kentas1Model.PrePayment" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Slider" Width="1.5" PointX="4.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Kentas1Model.SSSorular" Width="1.5" PointX="6.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Kentas1Model.SubscriptionForm" Width="1.5" PointX="12.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Kentas1Model.sysdiagram" Width="1.5" PointX="8.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Vision" Width="1.5" PointX="10.75" PointY="12.75" />
+        <EntityTypeShape EntityType="Kentas1Model.Whatwedo" Width="1.5" PointX="12.75" PointY="12.75" />
+        <AssociationConnector Association="Kentas1Model.FK_PhotoGaleries_GaleriBasliklari" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

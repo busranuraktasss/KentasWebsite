@@ -1,0 +1,83 @@
+﻿@model KENTAS.Models.JobApplicationForm
+
+@{ ViewBag.Title = "İnsan Kaynakları İş Başvuru Formu";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@using (Html.BeginForm("Create", "InsanKaynaklariBasvuruFormu", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    Html.AntiForgeryToken();
+
+<div class="container bgwhite">
+
+    <div class="form-horizontal m-1">
+        <div class="row p-1">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3 hbg" style="background-color:#00a0af">
+                <h6 class="pl-3 my-auto" style="color:white; text-align:center;">İNSAN KAYNAKLARI BAŞVURU FORMU</h6>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="text-danger">@ViewBag.Uyari</h2>
+                <h2 class="text-success">@TempData["Kayit"]</h2>
+            </div>
+
+            <div class="col-md-12 m-2">
+                <h4 class=" text-center p-3" style="color:#022A5E;">KİŞİSEL BİLGİLER</h4>
+                <div class="row form-group" style="color:#022A5E;">
+                    @Html.LabelFor(model => model.BasvurulanPozisyon, "BAŞVURULAN POZİSYON", htmlAttributes: new { @class = "control-label col-md-4 text-right mt-2" })
+                    <div class="col-md-8 ">
+                        @Html.EditorFor(model => model.BasvurulanPozisyon, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BasvurulanPozisyon, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group" style="color:#022A5E;">
+                    @Html.LabelFor(model => model.Ad, "AD", htmlAttributes: new { @class = "control-label col-md-4 text-right mt-2" })
+                    <div class="col-md-8 ">
+                        @Html.EditorFor(model => model.Ad, null, new { htmlAttributes = new { @class = "form-control", required = "Lütfen Adınızı Giriniz." } })
+                        @Html.ValidationMessageFor(model => model.Ad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group" style="color:#022A5E;">
+                    @Html.LabelFor(model => model.Soyad, "SOYAD", htmlAttributes: new { @class = "control-label col-md-4 text-right mt-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Soyad, new { htmlAttributes = new { @class = "form-control", required = "Lütfen Soyadınızı Giriniz." } })
+                        @Html.ValidationMessageFor(model => model.Soyad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group" style="color:#022A5E;">
+                    @Html.LabelFor(model => model.CepTel, "CEP TELEFONU", htmlAttributes: new { @class = "control-label col-md-4 text-right mt-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CepTel, new { htmlAttributes = new { @class = "form-control", Type = "number", min = "1111111111", max = "99999999999" } })
+                        @Html.ValidationMessageFor(model => model.CepTel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row form-group" style="color:#022A5E;">
+                    @Html.LabelFor(model => model.CVUrl, "CV DOSYASI EKLE", htmlAttributes: new { @class = "control-label col-md-4 text-right mt-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CVUrl, new { htmlAttributes = new { @class = "form-control", Type = "file", accept = ".pdf, .docx, .doc" } })
+                        @Html.ValidationMessageFor(model => model.CVUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="row form-group">
+                    <div class="col-md-12 text-center" style="">
+                        <input type="submit" value="Kaydet" class="btn btn-outline-primary " style="width : 250px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>}
+
+@section scripts{
+    <script type="text/javascript">
+        $('#navbarDropdown').addClass('active');
+    </script>
+}

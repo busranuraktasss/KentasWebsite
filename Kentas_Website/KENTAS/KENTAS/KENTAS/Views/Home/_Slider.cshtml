@@ -1,0 +1,50 @@
+﻿@{
+    var ct = new KENTAS.Models.Entities();
+    var data = ct.Sliders.ToList();
+
+}
+
+<style type="text/css">
+    .my-carousel-caption {
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translate(50%, 0%);
+        z-index:10;
+        color:#fff;
+        text-shadow:0 0 2px #000;
+    }
+</style>
+
+@{var active = "active";}
+
+
+    <ol class="carousel-indicators">
+        @for (int i = 0; i < data.Count; i++)
+        {
+            <li data-target="#carouselExampleCaptions" data-slide-to="@i" class="@active"></li>
+        }
+    </ol>
+
+    <div style=" background-image: url('../../Content/images/gorunmeyenbg_slider.png'); margin:0 auto;">
+
+
+    <div class="carousel-inner " style="border-radius:6px;">
+
+        @foreach (var item in data)
+        {
+            <div class="carousel-item @active">
+                <img src="@Url.Content(item.sliderImage)" class="d-block w-100 " alt="Slider Resimleri" style="height:380px; width:1670px;object-fit:cover;">
+                <div class="my-carousel-caption ">
+                    <h1 class="font-weight-bold" style="margin:0px auto;">@Html.Raw(item.sldierDesc)</h1>
+                    <div class="cf"></div>
+                </div>
+            </div>
+
+            active = "";
+        }
+
+    </div>
+</div>
+
+  

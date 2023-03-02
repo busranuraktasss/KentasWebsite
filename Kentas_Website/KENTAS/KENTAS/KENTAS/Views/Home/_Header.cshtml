@@ -1,0 +1,115 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Headers.FirstOrDefault();
+}
+
+<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 text-center d-flex">
+<a href="/" style="background: url('@Url.Content(data.headerLogo)') center center no-repeat;background-size: cover;height: 101px !important;width: 195px !important;display: inline-flex;"></a>
+<a href="/" style="background: url('/Content/images/oid.png') center center no-repeat;background-size: contain;height: 101px !important;width: 92.5px !important;display: inline-flex;"></a>
+<a href="/" style="background: url('/Content/images/k_ebb11.png') center center no-repeat;background-size: contain;height: 101px !important;width: 92.5px !important;display: inline-flex;"></a>
+</div>
+
+<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 border-left  ">
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  d-flex justify-content-center ">
+            <img src="~/Content/images/map_Pin.png" style="width:32px; height:32px; ">
+        </div>
+        @{
+            Html.RenderAction("_HeaderContactAddress", "Home");
+        }
+    </div>
+
+</div>
+
+<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2   border-left">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center">
+            <img src="~/Content/images/call.png" style="width:32px; height:30px; ">
+        </div>
+        @{
+            Html.RenderAction("_HeaderContact", "Home");
+        }
+
+    </div>
+</div>
+
+<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 border-left">
+
+    <div class="row align-items-center">
+
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 ">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center ml-md-3 mt-1   ">
+
+                    <img src="@Url.Content(data.headerPresidentLogo)" style="width:80px; height:90px; " class="rounded-circle " alt="..." />
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8  text-xl-left text-lg-left text-md-center text-center  pl-4  p-md-0   ">
+            <div class="row align-items-center">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ml-md-4  mt-3 ">
+                    <h6 class="font-weight-bold" style="color:#022A5E; line-height:15px;">@data.headerPresidentName</h6>
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  ml-md-4  ">
+                    <p style="color:#022A5E; line-height:normal;  ">@data.headerPresidentDescription</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@*<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 border-right p-1">
+        <img src="@Url.Content(@data.headerLogo)" style="width:100%;" />
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 border-right p-1">
+
+        <div class="d-flex justify-content-center">
+            <img src="~/Content/images/map_Pin.png" style="width:32px; height:32px; ">
+        </div>
+
+        <div class="cf"></div>
+        <div class="font-weight-bold text-center" style="color:#022A5E">
+            @data.headerAddress
+        </div>
+    </div>
+
+    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 border-right p-1">
+        <div class="d-flex justify-content-center">
+            <img src="~/Content/images/call.png" style="width:32px; height:32px; ">
+        </div>
+        <div class="cf mt-1"></div>
+
+        <div style="line-height:125%;" class="text-center">
+            <small class="" style="color:#022A5E">Tel</small><a href="tel://+90 222 211 5500"><span class="font-weight-bold " style="color:#022A5E"> @data.headerPhoneNumber</span></a>
+            <small class="" style="color:#022A5E">Fax</small><span class="font-weight-bold " style="color:#022A5E">@data.headerFaxNumber</span>
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 border-right">
+        <div class="row p-0">
+            <div class="col-5 p-0">
+                <img src="@Url.Content(@data.headerPresidentLogo)" class="" alt="..." style="width:100%;" />
+            </div>
+            <div class="col-7 p-0">
+                <div class="pt-4">
+                    <h6 class="font-weight-bold" style="color:#022A5E; line-height:100%;">@data.headerPresidentName</h6>
+                    <p style="color:#022A5E; line-height:100%;">@data.headerPresidentDescription</p>
+                </div>
+            </div>
+        </div>
+
+    </div>*@

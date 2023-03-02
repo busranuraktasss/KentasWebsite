@@ -1,0 +1,45 @@
+﻿@model KENTAS.Models.GaleriBasliklari
+
+@{
+    ViewBag.Title = "Başlık Ekle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Galeri Başlık Ekle</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, "BAŞLIK ADI", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="title" class="form-control" required placeholder="Başlık yaz." />
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yükle" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class=" btn btn-info mb-3" style="color: InfoText; @*margin:10px 0px 0px 2200px;*@ ">
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

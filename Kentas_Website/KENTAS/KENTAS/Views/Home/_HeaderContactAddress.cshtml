@@ -1,0 +1,8 @@
+﻿@{
+    var db = new KENTAS.Models.Entities();
+    var data = db.Contacts.FirstOrDefault();
+}
+
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12  font-weight-bold text-center " style="color:#022A5E; ">
+    @data.contactAddress
+</div>

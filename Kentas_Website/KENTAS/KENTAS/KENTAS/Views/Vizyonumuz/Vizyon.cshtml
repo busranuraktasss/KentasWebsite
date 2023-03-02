@@ -1,0 +1,34 @@
+﻿@model IEnumerable<KENTAS.Models.Vision>
+
+@{
+    ViewBag.Title = "Vizyon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.visionDesc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Raw(item.visionDesc)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.visionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.visionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.visionId })
+        </td>*@
+    </tr>
+}
+
+</table>

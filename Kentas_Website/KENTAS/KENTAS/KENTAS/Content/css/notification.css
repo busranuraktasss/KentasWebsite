@@ -1,0 +1,139 @@
+﻿* {
+    --color-primary: #e50914;
+    --color-secondary: #221f1f;
+}
+
+.notification {
+    position: fixed;
+    top: 16%;
+    right: -20px;
+    min-width: 310px;
+    min-height: 40px;
+    transition: right 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index:9999;
+    filter:drop-shadow(0.33rem 0.33rem 0.52rem rgb(0 0 0));
+}
+
+    .notification::before, .notification::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0%;
+        left: -2.5%;
+        width: 100.5%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .notification::before {
+        left: -4%;
+        background-color: var(--color-primary);
+        transform: translateX(100%);
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
+    }
+
+    .notification::after {
+        transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+        transform: translateX(100%);
+        background-color: var(--color-secondary);
+    }
+
+    .notification.-active {
+        right: 10px;
+    }
+
+        .notification.-active::after, .notification.-active::before {
+            transform: translateX(0%);
+        }
+
+        .notification.-active::after {
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+        }
+
+        .notification.-active::before {
+            transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+        }
+
+        .notification.-active .notification__content {
+            transform: translateX(0%);
+            left: 0;
+            transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.1s, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+        }
+
+.notification__content {
+    border-radius: 4px;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    padding: 17px 40px 13px 40px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    left: 100%;
+    transition: left 1s cubic-bezier(0.23, 1, 0.32, 1) 0s, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+}
+
+    .notification__content > *:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+.notification__title {
+    text-transform: uppercase;
+    font-weight: 900;
+    margin: 0 0 8px !important;
+    line-height: 0.6;
+    font-size: 16px;
+}
+
+.notification__message {
+    margin: 0;
+    font-size: 13px;
+}
+
+.notification__button {
+    font-size: 11px;
+    text-decoration: none;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 4px 8px;
+    display: inline-block;
+    border-radius: 3px;
+    font-weight: 700;
+    position:absolute;
+    top:5px;
+    right:5px;
+}
+
+    .notification__button + .notification__button {
+        margin-left: 5px;
+    }
+
+    .notification__button.-secondary {
+        background-color: transparent;
+        color: var(--color-primary);
+        box-shadow: inset 0 0 0 2px var(--color-primary);
+        transition: all 0.24s ease-in-out;
+    }
+
+        .notification__button.-secondary:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+.toggle-button {
+    border: 0;
+    cursor: pointer;
+    font-size: 11px;
+    text-decoration: none;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 25px;
+    display: inline-block;
+    border-radius: 3px;
+    font-weight: 700;
+}
+#alert-title > i{
+    position:absolute;
+    top:50%;
+    left:5px;
+    transform:translate(-10%, -50%);
+}

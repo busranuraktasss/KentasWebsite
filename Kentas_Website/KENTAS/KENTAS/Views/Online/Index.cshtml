@@ -1,0 +1,666 @@
+﻿@model KENTAS.Models.ResultData
+
+@{
+    ViewBag.Title = "EsPark Borç Sorgulama ve Ödeme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link href="~/Content/css/odeme.css" rel="stylesheet" />
+    <link href="~/Content/css/order.css" rel="stylesheet" />
+    <link href="~/Content/css/notification.css" rel="stylesheet" />
+    <style type="text/css">
+        .g-recaptcha {
+            width: 100% !important;
+        }
+        #demo-form{
+            display:none;
+        }
+        ::placeholder{
+            color:#c6c6c6 !important;
+        }
+
+        @@media only screen and (min-width: 375px) {
+            .col-xl-4 /*Nav Logolar*/ {
+                margin-bottom: 10px;
+                justify-content: space-around;
+            }
+
+            .justify-content-center {
+                margin-top: 8px;
+            }
+        }
+    </style>
+}
+
+<div class="container bgwite mt-4" style="background-color:white;">
+
+    <div class="row p-1 mb-3">
+
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 radius_contains p-3" style="background-color:#00a0af; background-image:url(/Content/images/otois1.png)">
+            <h6 class="pl-3 my-auto" style="color:white">OTOPARK İŞLEMLERİ </h6>
+        </div>
+
+    </div>
+
+    <h4 class="mb-3" style="color: midnightblue;">PLAKA SORGULAMA</h4>
+    <p style="color: midnightblue;">
+        Araçlarınızın plakalarını girerek ve güvenlik aşamasını geçerek EsPark Cadde parklanma sisteminde eğer varsa geçmiş dönem borçlarınızı görüntüleyebilir ve kredi kartı ile ödeyebilirsiniz.
+        &nbsp;<a href="javascript:openModal();">Ön bilgilendirme formu için tıklayınız.</a> 
+    </p>
+
+    <form class="mb-3 pb-4" style="width: 100%;" id="form_detail" data-validate="parsley">
+        <div class="form-group form-inline">
+            <input id="txtPlaka" class="form-control mt-2 mr-2 col-auto" style="width: 30%;" type="text" name="Plaka" placeholder="PLAKA SORGULA" aria-label="Search" autocomplete="off"
+                   data-parsley-trigger="change" data-reuired="true" data-msg="Lütfen geçerli plaka giriniz" data-parsley-length="[7, 15]" />
+
+            <button id="dtySorgula" class="btn btn-info col-auto mt-2 px-4" type="button"><i class="fas fa-search-plus mr-2"></i>Sorgula</button>
+        </div>
+
+        <div class="form-group mt-1">
+            <div class="g-recaptcha" data-sitekey="6LcaTHoaAAAAAEq2BBVypfkyljZ_cfvCFUo5f0Yx"></div>
+        </div>
+
+    </form>
+
+    <div id="detailDiv" style="display:none;" class="pb-3">
+        <table id="detailTable" class="dataTable table table-responsive-md table-striped table-hover" style="width:100%;">
+            <thead>
+                <tr>
+                    <th scope="col">SEÇ</th>
+                    <th scope="col">PLAKA</th>
+                    <th scope="col">BORÇ</th>
+                    <th scope="col">TARİH</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="position:relative;">
+                <h4 class="modal-title">
+                    ÖDEME SEÇENEKLERİ
+                </h4>
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <small class="card-text" style="position:absolute; bottom:1px; left:15px">Kredi Kartı/Banka Kartı Bilgilerinizi giriniz</small>
+
+            </div>
+            <div class="modal-body">
+
+                <div id="customer">
+                    <div class="form-row">
+                        <label for="tip" class="form-label col-md-3 mt-2 text-right">Müşteri tipi :</label>
+                        <div class="col-md-9">
+                            <select id="tip" name="tip" class="form-control">
+                                <option value="Kişisel">Kişisel</option>
+                                <option value="Tüzel">Tüzel</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="sahip" class="form-label col-md-3 mt-2 text-right">Sahiplik :</label>
+                        <div class="col-md-9">
+                            <select id="sahip" name="sahip" class="form-control">
+                                <option value="Ruhsat Sahibi">Ruhsat Sahibi</option>
+                                <option value="Diğer">Diğer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="ad" class="form-label col-md-3 mt-2 text-right">Ad Soyad/Firma Adı :</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="ad" id="ad" placeholder="Ad Soyad/Firma Adı yazınız" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="tcno" class="form-label col-md-3 mt-2 text-right">T.C/Vergi No :</label>
+                        <div class="col-md-9">
+                            <input type="number" maxlength="11" max="9999999999" class="form-control" name="tcno" id="tcno" placeholder="Tc/Vergi Numarası" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="tel" class="form-label col-md-3 mt-2 text-right">Tel :</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" name="tel" id="tel" maxlength="11" placeholder="İletişim için telefon numarası yazınız" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="mail" class="form-label col-md-3 mt-2 text-right">Email :</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="mail" id="mail" placeholder="İletişim için mail adresi yazınız" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="adres" class="form-label col-md-3 mt-2 text-right">Adres :</label>
+                        <div class="col-md-9">
+                            <textarea rows="3" class="form-control" name="adres" id="adres" placeholder="İletişim için mail adresi yazınız"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <label class="chc_container">
+                            <input type="checkbox" class="datatable-checkboxes" id="soz" />
+                            <span class="checkmark"></span><i>Firma/kişisel bilgilerimizi tam ve eksiksiz olarak doldurduğumuzu beyan eder, hatalı ve eksik bilgilerden dolayı sorumluluğun tarafımıza ait olduğunu kabul ederiz.</i>
+                        </label>
+                    </div>
+
+                    <div class="form-row mt-4">
+
+                        <div class="btn-group btn-block">
+                            <a href="javascript:void(0);" class="btn btn-success btn-block" onclick="javascirpt: setCustomerInfo();">Devam</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form data-validate="parsley" id="demo-form">
+
+                    <div id="step-2">
+
+                        <div class="cart-container preload">
+                            <div class="creditcard">
+                                <div class="front">
+                                    <div id="ccsingle"></div>
+                                    <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                                    <g id="Front">
+                                    <g id="CardBackground">
+                                    <g id="Page-1_1_">
+                                    <g id="amex_1_"><path id="Rectangle-1_1_" class="lightcolor grey" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40C0,17.9,17.9,0,40,0z" /></g></g>
+                                    <path class="darkcolor greydark" d="M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z" /></g>
+                                    <text transform="matrix(1 0 0 1 60.106 295.0121)" id="svgnumber" class="st2 st3 st4">0000 0000 0000 0000</text>
+                                    <text transform="matrix(1 0 0 1 54.1064 428.1723)" id="svgname" class="st2 st5 st6"></text>
+                                    <text transform="matrix(1 0 0 1 54.1074 389.8793)" class="st7 st5 st8">Kart Sahibi</text>
+                                    <text transform="matrix(1 0 0 1 479.7754 388.8793)" class="st7 st5 st8">Son Kullanım</text>
+                                    <text transform="matrix(1 0 0 1 65.1054 241.5)" class="st7 st5 st8">Kart Numarası</text>
+                                    <g>
+                                    <text transform="matrix(1 0 0 1 574.4219 433.8095)" id="svgexpire" class="st2 st5 st9">01/23</text>
+                                    <text transform="matrix(1 0 0 1 479.3848 417.0097)" class="st2 st10 st11">VALID</text>
+                                    <text transform="matrix(1 0 0 1 479.3848 435.6762)" class="st2 st10 st11">THRU</text>
+                                    <polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9" /></g>
+                                    <g id="cchip">
+                                    <g>
+                                    <path class="st2" d="M168.1,143.6H82.9c-10.2,0-18.5-8.3-18.5-18.5V74.9c0-10.2,8.3-18.5,18.5-18.5h85.3c10.2,0,18.5,8.3,18.5,18.5v50.2C186.6,135.3,178.3,143.6,168.1,143.6z" /></g>
+                                    <g><g><rect x="82" y="70" class="st12" width="1.5" height="60" /></g>
+                                    <g><rect x="167.4" y="70" class="st12" width="1.5" height="60" /></g>
+                                    <g><path class="st12" d="M125.5,130.8c-10.2,0-18.5-8.3-18.5-18.5c0-4.6,1.7-8.9,4.7-12.3c-3-3.4-4.7-7.7-4.7-12.3c0-10.2,8.3-18.5,18.5-18.5s18.5,8.3,18.5,18.5c0,4.6-1.7,8.9-4.7,12.3c3,3.4,4.7,7.7,4.7,12.3C143.9,122.5,135.7,130.8,125.5,130.8z M125.5,70.8c-9.3,0-16.9,7.6-16.9,16.9c0,4.4,1.7,8.6,4.8,11.8l0.5,0.5l-0.5,0.5c-3.1,3.2-4.8,7.4-4.8,11.8c0,9.3,7.6,16.9,16.9,16.9s16.9-7.6,16.9-16.9c0-4.4-1.7-8.6-4.8-11.8l-0.5-0.5l0.5-0.5c3.1-3.2,4.8-7.4,4.8-11.8C142.4,78.4,134.8,70.8,125.5,70.8z" /></g>
+                                    <g><rect x="82.8" y="82.1" class="st12" width="25.8" height="1.5" /></g>
+                                    <g><rect x="82.8" y="117.9" class="st12" width="26.1" height="1.5" /></g>
+                                    <g><rect x="142.4" y="82.1" class="st12" width="25.8" height="1.5" /></g>
+                                    <g><rect x="142" y="117.9" class="st12" width="26.2" height="1.5" /></g></g></g></g>
+                                    <g id="Back"></g></svg>
+                                </div>
+                                <div class="back">
+                                    <svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                                    <g id="Front">
+                                    <line class="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" /></g>
+                                    <g id="Back">
+                                    <g id="Page-1_2_">
+                                    <g id="amex_2_">
+                                    <path id="Rectangle-1_2_" class="darkcolor greydark" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40C0,17.9,17.9,0,40,0z" /></g></g>
+                                    <rect y="61.6" class="st2" width="750" height="78" /><g> <path class="st3" d="M701.1,249.1H48.9c-3.3,0-6-2.7-6-6v-52.5c0-3.3,2.7-6,6-6h652.1c3.3,0,6,2.7,6,6v52.5C707.1,246.4,704.4,249.1,701.1,249.1z" /><rect x="42.9" y="198.6" class="st4" width="664.1" height="10.5" /><rect x="42.9" y="224.5" class="st4" width="664.1" height="10.5" /><path class="st5" d="M701.1,184.6H618h-8h-10v64.5h10h8h83.1c3.3,0,6-2.7,6-6v-52.5C707.1,187.3,704.4,184.6,701.1,184.6z" /></g>
+                                    <text transform="matrix(1 0 0 1 621.999 227.2734)" id="svgsecurity" class="st6 st7">000</text>
+                                    <g class="st8"><text transform="matrix(1 0 0 1 518.083 280.0879)" class="st9 st6 st10">güvenlik kodu</text></g>
+                                    <rect x="58.1" y="378.6" class="st11" width="375.5" height="13.5" /><rect x="58.1" y="405.6" class="st11" width="421.7" height="13.5" /><text transform="matrix(1 0 0 1 59.5073 228.6099)" id="svgnameback" class="st12 st13"></text></g></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-container">
+
+                            <div class="field-container">
+                                <label for="CardHolderName">Adınız Soyadınız</label>
+                                <i class="fa fa-user"></i>
+                                <input id="CardHolderName" name="CardHolderName"
+                                       data-msg="Kartın Üzerinde Yer Alan Ad Soyadı Giriniz"
+                                       data-parsley-trigger="change" data-reuired="true" data-parsley-length="[3, 20]"
+                                       class="form-control" maxlength="20" type="text" autocomplete="off">
+                            </div>
+
+                            <div class="field-container">
+                                <label for="CardNumber">Kart Numarası</label>
+                                <i class="fa fa-credit-card"></i>
+                                <input id="CardNumber" class="form-control" type="text"
+                                       data-msg="Lütfen Kartınızın Üzerinde Bulunan 16 Haneli Kart Kumarasını Giriniz"
+                                       pattern="[0-9]*" inputmode="numeric" name="CardNumber" autocomplete="off" />
+                                <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink">
+                                </svg>
+                            </div>
+                            <div class="field-container">
+                                <label for="ExpireMonth">Son Kullanım (mm/yy)</label>
+                                <i class="fa fa-calendar"></i>
+                                <input id="ExpireMonth" name="ExpireMonth" type="text" class="form-control" pattern="[0-9]*" inputmode="numeric"
+                                       data-msg="Son Kullanım Tarihi Giriniz" autocomplete="off" />
+                            </div>
+                            <div class="field-container">
+                                <label for="Cvc">Güvenlik Kodu</label>
+                                <i class="fa fa-user-secret"></i>
+                                <input id="Cvc" name="Cvc" type="text" class="form-control" pattern="[0-9]*" inputmode="numeric"
+                                       data-msg="Kartınızın Arka Yüzünde Bulunan CVC (Güvenlik) Kodunu Giriniz" autocomplete="off" />
+                            </div>
+
+                            <div class="field-container">
+                                <label class="chc_container">
+                                    3D Secure
+                                    <input type="checkbox" id="chcSatis" name="chcSatis" checked disabled />
+                                    <span class="checkmark"></span>
+                                </label>
+
+
+                            </div>
+                            <div class="field-container">
+                                <label class="chc_container">
+                                    <a href="javascript:openModal();" style="color:#5eb9c4;">Ön Bilgilendirme Formu</a>'nu okudum ve onaylıyorum.
+                                    <input type="checkbox" id="chcveri" name="chcveri"
+                                           data-parsley-required="true" data-parsley-trigger="click" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="field-container btn-group">
+                                <button class="btn btn-primary px-5 py-2 rounded mb-3" style="background-color: midnightblue; font-weight: bold;" type="button" id="submit">Ödeme Yap</button>
+                            </div>
+
+                        </div>
+
+                        <div class="text-center">
+
+                            <div class="css-xg8u7b-CreditCardsHolder edgfz1w0">
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/advantage.svg" alt="Advantage" class="css-gqjs6f-Logo edgfz1w4">
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/Axess-v1.svg" alt="Axess" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/Bonus.svg" alt="Bonus" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/Cardfinans-v1.svg" alt="Cardfinans" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/Maximum.svg" alt="Maximum" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/Paraf.svg" alt="Paraf" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/World.svg" alt="World" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                                <div class="css-5t5yrz-LogoContainer edgfz1w3">
+                                    <img src="https://static.iyzipay.com/checkoutform/svg/updated/BankkartCombo.svg" alt="BankkartCombo" class="css-gqjs6f-Logo edgfz1w4" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="obfModalLabel" role="dialog" tabindex="-1" id="obfModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="position:relative;">
+                <h4 class="modal-title">Ön Bilgilendirme Formu</h4>
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            </div>
+            <div class="modal-body">
+                <iframe frameborder="0" align="middle" src="~/Uploads/onbilgilendirmeformu.html" style="height:600px; width:100%;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="0" name="PurchaseAmount" id="CurrencyAmount" />
+<input type="hidden" value="949" name="Currency" id="CurrencyCode" />
+<input type="hidden" name="ExpiryDate" id="ExpiryDate" />
+<input type="hidden" name="BrandName" id="BrandName" value="100" />
+
+<div class="processing" id="example_processing"><h5>Yükleniyor..</h5></div>
+
+@section scripts {
+    <script src="~/Content/Parsley/parsley.js"></script>
+    <script src="~/Content/Parsley/i18n/tr.js"></script>
+
+    <script src="~/Scripts/imask.min.js"></script>
+    <script src="~/Scripts/odeme.js"></script>
+    <script src="~/Scripts/alert_modal.js"></script>
+
+    <script src="https://cdn.datatables.net/plug-ins/1.10.24/api/sum().js"></script>
+    <script type="text/javascript">
+        var ödendi = false;
+        var table = null;
+        var plaka = "";
+        var payment = {};
+        var ids = [];
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        var totalPayment = parseFloat(0);
+        var totalPay = parseFloat(0);
+
+        function checkboxClicked(chbox) {
+            let borc = parseFloat($(chbox).attr('borc'));
+            if (chbox.checked) {
+                if (!ids.includes(chbox.id)) {
+                    ids.push(chbox.id);
+                    totalPayment += borc;
+                }
+            }
+            else {
+                if (ids.indexOf(chbox.id) > -1) {
+                    ids.splice(ids.indexOf(chbox.id), 1);
+                    totalPayment =  parseFloat( (totalPayment - borc));
+                }
+            }
+            $('#btnPayment').text(`Ödeme Yap (₺${totalPayment})`);
+        }
+
+        $('#txtPlaka').keypress(
+            function (event) {
+                if (event.which == '13') {
+                    event.preventDefault();
+                    $('#dtySorgula').trigger('click');
+                }
+            }
+        );
+
+        $((_$) => {
+
+            $('#otoparkislemleri').addClass('active');
+
+
+            document.querySelector("#txtPlaka").focus();
+            var plakaMask = IMask(document.getElementById('txtPlaka'), { mask: [{ mask: '00[aaa][0000]' }] });
+
+            $("#form_detail").parsley().on('field:validated', function () {
+                gec = $('.parsley-error').length === 0;
+            });
+
+            document.getElementById('txtPlaka').addEventListener('keyup', (e) => {
+                let txt = $('#txtPlaka').val();
+                $('#txtPlaka').val(txt.toUpperCase());
+            });
+
+            document.getElementById("dtySorgula").addEventListener('click', () => {
+
+                if (!$('#txtPlaka').val()) {
+                    myAlert('UYARI !', 'Plaka yazınız', 2);
+                    return;
+                }
+
+                plaka = $('#txtPlaka').val();
+                $("#example_processing").show();
+
+                $("#detailDiv").hide();
+                $("#detailTable").hide();
+                $('#table-footer').remove();
+                $('#CurrencyAmount').val('0');
+                totalPay = 0;
+                totalPayment = 0;
+                if (table) {
+                    table.fnClearTable();
+                    table.fnDestroy();
+                    table = null;
+                }
+
+                var formData = new FormData(document.getElementById('form_detail'));
+
+                $.ajax({
+                    url: '@Url.Action("GetDetailDepts", "online")',
+                    data: formData,//JSON.stringify({ Plaka: plaka }),
+                    type: "POST",
+                    async: true,
+                    processData: false,
+                    contentType: false,
+                    success: function (responseJson) {
+
+                        if (responseJson.status == false) {
+                            $("#example_processing").hide();
+                            myAlert('UYARI !', responseJson.msg, 2);
+                            return;
+                        }
+                        var response = JSON.parse(responseJson.response.Data.items);
+                        if (response && response.Data && response.Data.ResultData && response.Code == 200) {
+                            let tblVariables = Array();
+
+                            if (!table) {
+                                table = $('#detailTable').dataTable({
+                                    scrollY: 200,
+                                    deferRender: true,
+                                    scroller: false,
+                                    deferRender: true,
+                                    scrollX: false,
+                                    scrollCollapse: false,
+                                    stateSave: true,
+                                    language: {
+                                        "url": "../../Content/dil.json"
+                                    },
+                                    order: [
+                                        [3, 'asc']
+                                    ],
+                                    columnDefs: [
+                                        {
+                                            targets: [0],
+                                            orderable: false,
+                                            className:'text-center',
+                                            width: '13%',
+                                            render: (data) => {
+                                                let chc = `<label class="chc_container">
+                                                                <input type="checkbox" class="datatable-checkboxes" id="${data.id}" borc="${data.BORC}" onchange="checkboxClicked(this)"  />
+                                                                <span class="checkmark"></span>
+                                                            </label>`;
+
+                                                return chc;//'<input type="checkbox" class="datatable-checkboxes" id="' + data.id + '" borc="' + data.BORC + '" onchange="checkboxClicked(this)"/>';
+                                            }
+                                        }
+                                    ],
+                                    lengthMenu: [
+                                        [10, 15, 20, -1],
+                                        [10, 15, 20, "All"] // change per page values here
+                                    ],
+                                    pageLength: 10
+                                });
+                            }
+                            table.fnClearTable(); //DataTable Clear
+                            $("#detailDiv").show();
+                            $("#detailTable").show();
+                            response.Data.ResultData.forEach(function (data) {
+
+                                totalPay += data.BORC;
+                                tblVariables.push([
+                                    { ...data, id: data.PARKINGDEBTID },
+                                    response.Data.Plaka,
+                                    data.BORC = "₺ " + data.BORC,
+                                    tarih = `${data.STARTDATE.split(' ')[0]} - ${data.OUTDATE.split(' ')[0]}` 
+                                ]);
+                            });
+                            table.fnAddData(tblVariables);
+                             let str = `<tfoot id="table-footer">
+                                    <tr>
+                                        <td scope="col">
+                                            <button id="btnPayment" class="btn btn-primary px-4" style="background-color: midnightblue; font-weight: bold; " type="button">Ödeme Yap</button>
+                                        </td>
+                                        <td scope="col">&nbsp;</td>
+                                        <td scope="col">&nbsp;</td>
+                                        <td scope="col">&nbsp;</td>
+                                        <td scope="col" class="text-right">
+                                            <label class="mb-3" id="">TOPLAM BORÇ: <b style="color: midnightblue; font-weight: bold;" id="lblToplamBorc">₺0</b></label>
+                                        </td>
+                                    </tr>
+                                   </tfoot>`;
+                            $('#detailTable').append(str);
+
+                            document.getElementById("btnPayment").addEventListener('click', () => {
+
+                                if ($('.datatable-checkboxes:checked').length == 0) {
+                                    myAlert('UYARI !', 'En az birtane borç seçilmelidir', 2);
+                                    return;
+                                }
+
+                                $('#myModal').modal('show');
+                                $('#submit').html(`Ödeme Yap (₺${totalPayment})`);
+                                $('#CurrencyAmount').val(totalPayment);
+
+
+                            });
+
+                            $('#lblToplamBorc').html(`₺${totalPay}`);
+                            $("#example_processing").hide();
+                        }
+                        else {
+                            $("#example_processing").hide();
+                            myAlert('BİLGİ', `<b>${plaka}</b> Plakalı araca ait borç kaydı bulunamadı.`, 4);
+                        }
+
+                    }
+                });
+            });
+
+            document.getElementById('submit').addEventListener('click', (e) => {
+
+
+                if (!$('#CardHolderName').val()) {
+                    myAlert('UYARI !', 'Lütfen Kart Sahibinin ismini giriniz', 2);
+                    return;
+                }
+                if (!$('#CardNumber').val()) {
+                    myAlert('UYARI !', 'Lütfen Kart bilgilerini giriniz', 2);
+                    return;
+                }
+                if (!$('#ExpireMonth').val()) {
+                    myAlert('UYARI !', 'Lütfen Kart son kullanım bilgilerini giriniz', 2);
+                    return;
+                }
+                if (!$('#Cvc').val()) {
+                    myAlert('UYARI !', 'Lütfen Kartın güvenlik kodunu giriniz', 2);
+                    return;
+                }
+                if (!document.getElementById('chcveri').checked) {
+                    myAlert('UYARI !', 'Lütfen Önbilgilendirme formunu okuyup işaretleyiniz.', 2);
+                    return;
+                }
+
+                var ayyil = $('#ExpireMonth').val().split("/");
+                payment.CardHolderName = $('#CardHolderName').val();//Kart Üzerindeki İsim
+                payment.CardNumber = $('#CardNumber').val().replace(' ', '').replace(' ', '').replace(' ', '');// Kart Numarası
+                payment.ExpireMonth = ayyil[0];//Ay
+                payment.ExpireYear = ayyil[1];//Yıl
+                payment.Cvc = $('#Cvc').val();//CVC
+                payment.Currency = $('#CurrencyCode').val();//Currency
+                payment.Amount =  $('#CurrencyAmount').val();//Currency
+                payment.BrandName = $('#BrandName').val();//Currency
+
+
+                $("#example_processing").show();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("getPayment","Online")',
+                    async: true,
+                    data: JSON.stringify(payment),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    processData: false,
+                    success: function (d) {
+                        console.log('Sonuc -> ', d);
+                        $("#example_processing").hide();
+
+                        if (d.status == true) {
+                            if (d.html) {
+
+                                localStorage.setItem('VerifyEnrollmentRequestId', d.requestId);
+                                localStorage.setItem('md', d.md);
+                                localStorage.setItem('plaka', plaka);
+                                localStorage.setItem('DebtsIds', ids);
+
+                                localStorage.setItem('p_pan', payment.CardNumber);
+                                localStorage.setItem('p_cvc', payment.Cvc);
+                                localStorage.setItem('p_expiry', `20${payment.ExpireYear}${payment.ExpireMonth}`);
+                                localStorage.setItem('p_eci', payment.Currency);
+                                localStorage.setItem('p_amount', payment.Amount);
+
+                                $('#post-form-content').html(d.html);
+                                setTimeout(() => { postPage(); }, 200);
+
+                            }
+                        }
+                        else {
+
+                            myAlert("HATA !", "Hata kodu: " + d.errorCode + "<br />Açıklama: " + d.msg, 3);
+                            gec = false;
+                        }
+                    },
+                    error: function (ma, st) {
+                        if (ma.status === 0) { alert('bağlantı yok, ağı doğrulayın.'); }
+                        else if (ma.status == 404) { alert('İstenen sayfa bulunamadı. [404]'); }
+                        else if (ma.status == 500) { alert('Dahili Sunucu Hatası [500].'); }
+                        else if (st === 'parsererror') { alert('İstenen JSON ayrıştırması başarısız'); }
+                        else if (st === 'timeout') { alert('Zaman aşımı hatası.'); }
+                        else if (st === 'abort') { alert('Ajax isteği reddedildi.'); }
+                        else { alert('Yakalanmamış Hata.\n' + ma.responseText); }
+                        $("#example_processing").hide();
+                        gec = false;
+                    }
+                });
+            });
+        });
+
+        function IPAdres() { return '@Request.UserHostAddress'; }
+
+        function postPage() { document.forms["frmMpiForm"].submit(); }
+
+        var openModal = (d = 1) => {
+            $('#obfModal').modal('show');
+
+            if (d == 1)
+                document.getElementById('chcveri').checked = true;
+        }
+
+        var setCustomerInfo = () => {
+            let beyan = document.getElementById('soz').checked;
+
+            if (!$('#ad').val() || $('#ad').val().length < 3) {
+                $('#ad').focus();
+                myAlert("UYARI", "Ad soyad/ Ünvan bilgilerini yazınız");
+                return;
+            }
+            if (!$('#tel').val()) {
+                $('#tel').focus();
+                myAlert("UYARI", "İletişim için numaranızı yazınız");
+                return;
+            }
+            if ($('#tel').val().length < 10 || $('#tel').val().length > 11) {
+                $('#tel').focus();
+                myAlert("UYARI", "geçerli bir telefon numarası yazınız");
+                return;
+            }
+            if (!beyan) {
+                myAlert("UYARI", "Kabul beyanını işaretleyiniz.");
+                return;
+            }
+
+            localStorage.setItem('mtip', $('#tip').val());
+            localStorage.setItem('sahip', $('#sahip').val());
+            localStorage.setItem('ad', $('#ad').val());
+            localStorage.setItem('tcno', $('#tcno').val());
+            localStorage.setItem('tel', $('#tel').val());
+            localStorage.setItem('mail', $('#mail').val());
+            localStorage.setItem('adres', $('#adres').val());
+
+            $('#demo-form').slideDown();
+            $('#customer').slideUp();
+
+        }
+
+    </script>
+
+}
+<div style="display:none;" id="post-form-content"></div>

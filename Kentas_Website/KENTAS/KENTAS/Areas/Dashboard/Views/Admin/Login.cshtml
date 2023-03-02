@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-9" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1254" />
+    <meta http-equiv="content-type" content="text/html; charset=x-mac-turkish" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="TR" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Kentaş Admin Panel Girişi</title>
+    <!-- Bootstrap CSS -->
+    <link href="/Content/AdminLayout/css/bootstrap.min.css" rel="stylesheet">
+    <!-- bootstrap theme -->
+    <link href="/Content/AdminLayout/css/bootstrap-theme.css" rel="stylesheet">
+    <!--external css-->
+    <!-- font icon -->
+    <link href="/Content/AdminLayout/css/elegant-icons-style.css" rel="stylesheet" />
+    <link href="/Content/AdminLayout/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="/Content/AdminLayout/css/style.css" rel="stylesheet">
+    <link href="/Content/AdminLayout/css/style-responsive.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <form class="login-form" method="post" action="/Admin/Login/">
+            <div class="login-wrap">
+                @if (Session["adminId"]==null)
+                {
+                    Url.Action("Login", "Admin");
+                }
+
+
+                <p class="login-bg">
+                    <a href="@Url.Action("Login", "Admin")">
+                        <img src="~/Content/images/ebb.png" alt="logo" style="width:auto; height:150px;" />
+                    </a>
+                </p>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_profile"></i></span>
+                    <input type="text" class="form-control" name="Email" placeholder="E-Posta" autofocus>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                    <input type="password" class="form-control" name="Password" placeholder="Sifre">
+                </div>
+             
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Giriş Yap</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@model KENTAS.Models.Slider
+
+@{
+    ViewBag.Title = "Slider Ekle";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    CKEDITOR.replace('editor')
+</script>
+
+<h2>Slider Ekleme</h2>
+
+@using (Html.BeginForm("Create", "Sliders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+       
+        @Html.LabelFor(model => model.sldierDesc,"AÇIKLAMA", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*<textarea name="sliderDesc" class="ckeditor"></textarea>*@
+            @Html.EditorFor(model => model.sldierDesc, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.sldierDesc, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sliderImage,"FOTOĞRAF", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="sliderImage" class="form-control" required placeholder="Dosya Seç." />
+                @Html.ValidationMessageFor(model => model.sliderImage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

@@ -1,0 +1,41 @@
+﻿@model KENTAS.Models.Slider
+
+@{
+    ViewBag.Title = "Slider Sil";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sil</h2>
+
+<h3>Silmek İstediğinize Emin misiniz?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            AÇIKLAMA
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.sldierDesc)
+        </dd>
+
+        <dt>
+           FOTOĞRAF
+        </dt>
+
+        <dd>
+            <img src="@Url.Content(Model.sliderImage)" style="height:60px;" alt="slider" />
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" /> |
+            @Html.ActionLink("Geri Dön", "Index")
+        </div>
+    }
+</div>
